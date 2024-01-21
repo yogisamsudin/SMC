@@ -1,0 +1,78 @@
+﻿body 
+{
+    min-width:800px;
+    min-height:400px;
+}
+.Logo
+{
+    background-image: url('../../Image/Logo-1.png');
+    background-repeat: no-repeat;
+    background-position: center top;
+    height: 100px;
+}
+h2
+{
+    text-align: center;
+    font-family: Constantia;
+    font-size: larger;
+}
+.Login
+{
+    padding: 20px 20px 50px 20px;
+    background-color: #EBEBEB;
+    width: 250px;
+    text-align: center;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0px 3px 3px 0px #7D7D7D;
+}
+.Login table
+{
+    width:100%;
+    padding: 20px 0px 0px 0px;
+}
+.Login input[type=text], input[type=password]
+{
+    padding: 5px;
+    border: thin solid #999999;
+    width: 200px;
+    font-family: Tahoma;
+    font-size: medium;
+}
+.Login input[type=text]:hover, input[type=password]:hover
+{
+    border: thin solid #333333;
+}
+.Login input[type=text]:focus,input[type=password]:focus
+{
+    border: thin solid #3399FF;
+    box-shadow: inset 0px 1px 2px 0px #7D7D7D;
+}
+.Login input[type=button]
+{
+    width: 210px;
+    border: thin solid #999999;
+    padding: 5px;
+    border-radius: 3px 3px 3px 3px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #CCCCCC;
+}
+.Login input[type=button]:hover
+{    
+    border: thin solid #333333;
+    background: -webkit-linear-gradient(top, #CCCCCC, #909090);
+    background: -moz-linear-gradient(top, #CCCCCC, #909090);
+    background: -o-linear-gradient(top, #CCCCCC, #909090);    
+    /*background: -webkit-linear-gradient(top, #DFE5F2, #3399FF);
+    background: -moz-linear-gradient(top, #DFE5F2, #3399FF);
+    background: -o-linear-gradient(top, #DFE5F2, #3399FF);    
+*/
+}
+.LoginLogo
+{
+    background-image: url('../../Image/Login-logo-2.png');
+    background-repeat: no-repeat;
+    background-position: center top;
+    height:122px;
+    width:100px;
+}

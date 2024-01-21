@@ -1,0 +1,281 @@
+﻿i
+{
+    font-size: small;
+    color: #3366CC;    
+}
+textArea,textArea[disabled=disabled]
+{
+    height: 50px;
+    min-height: 75px;
+    /*max-height: 50px;*/
+    width: 350px;
+    min-width: 350px;
+    max-width: 350px;
+    background-color:Transparent;
+}
+input[type=text], input[type=password], input[type=search], input[type=url], input[type=email], input[type=number], input[type=date], input[type=tel],select,textArea,input[type=file]
+{
+    padding: 2px 3px 2px 3px;
+    border: thin solid #CCCCCC;
+    font-family: Tahoma;
+    font-size: small;
+    height: 20px;
+    -webkit-transition: all 0.5s Ease;
+    -moz-transition: all 0.5s Ease;
+    -o-transition: all 0.5s Ease;            
+}
+input[type=text]:hover, input[type=password]:hover, input[type=search]:hover, input[type=url]:hover, input[type=email]:hover, input[type=number]:hover, input[type=date]:hover, input[type=tel]:hover,select:hover,textArea:hover,input[type=file]:hover
+{
+    border: thin solid #333333;
+}
+input[type=text]:focus,input[type=password]:focus, input[type=search]:focus, input[type=url]:focus, input[type=email]:focus, input[type=number]:focus, input[type=date]:focus, input[type=tel]:focus,select:focus,textArea:focus,input[type=file]:focus
+{
+    border: thin solid #3399FF;
+    box-shadow: inset 0px 1px 2px 0px #7D7D7D;
+}
+input[type=button], input[type=submit], .buttonCari
+{
+    cursor: pointer;
+    margin-left: 2px;
+    padding: 5px 10px 5px 10px;
+    font-weight: bold;
+    font-family: Arial;
+    font-size: small;
+    border: thin solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    background-color: #DFFFFF;
+    color: #666666;
+    -webkit-transition: all 0.5s Ease;
+    -moz-transition: all 0.5s Ease;
+    -o-transition: all 0.5s Ease;            
+}
+
+
+input[type=button]:hover, input[type=submit]:hover
+{
+    border: thin solid #333333;
+    background: -webkit-linear-gradient(top, #DFFFFF,#00CACA); /* #BBBBBB);*/
+    background: -moz-linear-gradient(top, #DFFFFF, #00CACA);
+    background: -o-linear-gradient(top, #DFFFFF, #00CACA);
+    color: #000000;
+}
+textarea[readonly=readonly]
+{
+    background: -o-linear-gradient(top, #EBEBEB, White);
+}
+.tambah,.edit,.hapus,.info,.cari,.cetak,.select,.refresh
+{
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin: 2px 0 2px 0;
+    border:thin solid transparent;
+}
+.tambah:hover,.hapus:hover,.edit:hover,info:hover,.cari:hover,.cetak:hover,.select:hover,.refresh:hover
+{
+    
+    border-radius: 3px 3px 3px 3px;    
+    box-shadow: 0px 2px 1px 0px #7D7D7D;
+    margin: 1px 0 3px 0;
+}
+.tambah
+{    
+    background-image: url('../../Image/Tambah.png');    
+}
+.hapus
+{
+    background-image: url('../../Image/Hapus.png');    
+}
+.edit
+{
+    background-image: url('../../Image/Edit.png');    
+}
+.info
+{
+    background-image: url('../../Image/Info.png');    
+}
+.cari
+{
+    background-image: url('../../Image/cari.png');    
+}
+.cetak
+{
+    background-image: url('../../Image/cetak.png');    
+}
+.select
+{
+    background-image: url('../../Image/select.png');    
+}
+.refresh
+{
+    background-image: url('../../Image/refresh.png');    
+}
+.tambah:hover
+{    
+    background-image: url('../../Image/Tambah_hov.png');    
+}
+.hapus:hover
+{
+    background-image: url('../../Image/Hapus_hov.png');    
+}
+.edit:hover
+{
+    background-image: url('../../Image/Edit_hov.png');    
+}
+.info:hover
+{
+    background-image: url('../../Image/Info_hov.png');    
+}
+.cari:hover
+{
+    background-image: url('../../Image/cari_hov.png');    
+}
+.cetak:hover
+{
+    background-image: url('../../Image/cetak_hov.png');    
+}
+.select:hover
+{
+    background-image: url('../../Image/select_hov.png');    
+}
+.refresh:hover
+{
+    background-image: url('../../Image/refresh_hov.png');    
+}
+.formview
+{
+    /*border-bottom:thin solid grey;*/
+    padding-bottom:15px;
+    padding-top:15px;     
+    margin-bottom:3px;    
+}
+.formview th
+{
+    
+    font-weight:bold;
+    font-family:tahoma;
+    text-align:right;
+    padding-right:20px;
+    vertical-align:middle;
+    font-size:small;
+    vertical-align:top;
+}
+.formview td
+{
+    vertical-align:top;
+}
+.gridView
+{
+    border:thin solid grey;
+    border-radius: 3px 3px 3px 3px;         
+    border-spacing:1px;
+    cursor:default;
+    padding:3px;
+    background-color:White;
+}
+.gridView th
+{
+    background: -webkit-linear-gradient(top, #D4D4D4, #C0C0C0); /*#15C5FF, #0099CC*/
+    background: -moz-linear-gradient(top, #D4D4D4, #C0C0C0);
+    background: -o-linear-gradient(top, #D4D4D4, #C0C0C0);
+    border-bottom: thin solid grey;
+    padding-left: 5px;
+    width:auto;
+    text-align:left;
+}
+.gridView td
+{
+    padding-left:5px;
+    padding-right:5px;
+    width:auto;
+}
+.gridView tr
+{
+    white-space:nowrap;
+}
+.frameList
+{
+    padding:0px;
+    overflow:auto;
+    border:thin solid grey;
+    border-radius: 3px 3px 3px 3px;     
+    width:100%;   
+    height:355px;
+}
+
+.buttonCari
+{
+    background-position: 15px center;
+    background-image: url('../../Image/Cari.png');
+    background-repeat: no-repeat;
+    width: 60px;    
+    padding-left: 45px;
+}
+.buttonCari:hover
+{
+    border: thin solid #333333;
+    background-color: #06FFFF;
+    color: #000000;
+    background-image: url('../../Image/Cari_hov.png');
+}
+select
+{
+    height:25px;
+}
+input[type=text]:disabled, input[type=password]:disabled, input[type=search]:disabled, input[type=url]:disabled, input[type=email]:disabled, input[type=number]:disabled, input[type=date]:disabled, input[type=tel]:disabled,select:disabled
+{
+    color:Gray;
+    background-color:transparent;
+}
+input[type=text]:disabled:hover, input[type=password]:disabled:hover, input[type=search]:disabled:hover, input[type=url]:disabled:hover, input[type=email]:disabled:hover, input[type=number]:disabled:hover, input[type=date]:disabled:hover, input[type=tel]:disabled,select:disabled:hover
+{
+    border: thin solid #CCCCCC;
+}
+.home
+{
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin: 2px 0 2px 0;
+    border: thin solid transparent;
+    background-image: url('../../Image/home.png');
+}
+.gridviewFrame
+{
+    
+    width:100%;
+    height:350px;
+    overflow:hidden;
+    margin-bottom:10px;
+    margin-top:10px;
+    border:thin solid grey;
+    border-radius: 3px 3px 3px 3px;   
+}
+.panelDBUpdate
+{
+    border-top-style: solid;
+    border-top-width: thin;
+    border-top-color: #CCCCCC;
+    padding-top: 5px;
+}
+hr
+{
+    border-top:solid thin #CCCCCC;    
+    border-left:solid thin transparent;
+    border-right:solid thin transparent;
+    border-bottom:solid thin transparent;
+}
+.button_panel 
+{
+    margin:0;
+    padding:0;
+    padding-top:5px;
+    border-top:solid thin #CCCCCC;    
+    border-left:solid thin transparent;
+    border-right:solid thin transparent;
+    border-bottom:solid thin transparent;
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+  <configSections>
+    <!--<sectionGroup name="businessObjects"><sectionGroup name="crystalReports"><section name="rptBuildProvider" type="CrystalDecisions.Shared.RptBuildProviderHandler, CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, Custom=null"/></sectionGroup></sectionGroup>-->
+    <sectionGroup name="businessObjects">
+      <sectionGroup name="crystalReports">
+        <section name="rptBuildProvider" type="CrystalDecisions.Shared.RptBuildProviderHandler, CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, Custom=null"/>
+      </sectionGroup>
+    </sectionGroup>
+  </configSections>
+  <appSettings>
+    <add key="key_api_map" value="AIzaSyD6gIDzA2LtGhqeG_AOtZBXbWdqZSxESYA"/>
+  </appSettings>
+  <!--
+    For a description of web.config changes see http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    The following attributes can be set on the <httpRuntime> tag.
+      <system.Web>
+        <httpRuntime targetFramework="4.8" />
+      </system.Web>
+  -->
+  <system.web>
+    <webServices>
+      <protocols>
+        <add name="HttpGet"/>
+        <add name="HttpPost"/>
+      </protocols>
+    </webServices>
+    <compilation debug="true" targetFramework="4.5">
+      <assemblies>
+        <add assembly="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692FBEA5521E1304"/>
+        <add assembly="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692FBEA5521E1304"/>
+        <add assembly="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304"/>
+        <add assembly="CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304"/>
+        <add assembly="CrystalDecisions.ReportAppServer.ClientDoc, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304"/>
+      </assemblies>
+      <!--<buildProviders><add extension=".rpt" type="CrystalDecisions.Web.Compilation.RptBuildProvider, CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304"/></buildProviders>-->
+      <buildProviders>
+        <add extension=".rpt" type="CrystalDecisions.Web.Compilation.RptBuildProvider, CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304"/>
+      </buildProviders>
+    </compilation>
+    <customErrors mode="Off"/>
+    <pages controlRenderingCompatibilityVersion="4.0"/>
+  </system.web>
+  <connectionStrings>
+    <!--<add name="csApp" connectionString="Data Source=192.168.0.31;Initial Catalog=test4;Persist Security Info=True;User ID=sa;Password=123;" providerName="System.Data.SqlClient"/>-->
+    <add name="csApp" connectionString="Data Source=DESKTOP-6IQGM5R\SQLEXPRESS;Initial Catalog=test4;Persist Security Info=True;User ID=sa;Password=123;" providerName="System.Data.SqlClient"/>
+  </connectionStrings>
+  <system.webServer>
+    <defaultDocument>
+      <files>
+        <add value="login.aspx"/>
+      </files>
+    </defaultDocument>
+  </system.webServer>
+  <!--<businessObjects><crystalReports><rptBuildProvider><add embedRptInResource="true"/></rptBuildProvider></crystalReports></businessObjects>-->
+  <businessObjects>
+    <crystalReports>
+      <rptBuildProvider>
+        <add embedRptInResource="true"/>
+      </rptBuildProvider>
+    </crystalReports>
+  </businessObjects>
+</configuration>

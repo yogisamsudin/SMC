@@ -1,0 +1,30 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-v_4",
+      "appliesTo": "/",
+      "type": "launch"
+    },
+    {
+      "taskLabel": "task-v_4",
+      "appliesTo": "/",
+      "type": "launch"
+    },
+    {
+      "taskLabel": "task-v_4",
+      "appliesTo": "/",
+      "type": "launch"
+    },
+    {
+      "taskLabel": "task-ambil_barang",
+      "appliesTo": "report/expedition/ambil_barang.rpt",
+      "type": "launch"
+    },
+    {
+      "taskLabel": "task-v_4",
+      "appliesTo": "/",
+      "type": "launch"
+    }
+  ]
+}

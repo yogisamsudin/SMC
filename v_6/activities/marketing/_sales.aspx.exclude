@@ -1,0 +1,269 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/page.master" Theme="Page" %>
+
+<%@ Register Src="~/activities/marketing/wuc_info_customer.ascx" TagPrefix="uc1" TagName="wuc_info_customer" %>
+<%@ Register Src="~/activities/marketing/wuc_location_activity.ascx" TagPrefix="uc1" TagName="wuc_location_activity" %>
+<%@ Register Src="~/activities/map/wuc_map.ascx" TagPrefix="uc1" TagName="wuc_map" %>
+
+
+<script runat="server">
+    _test.App a;
+    
+    void Page_Load(object o, EventArgs e)
+    {
+        a = new _test.App(Request, Response);
+    }
+</script>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <script type="text/javascript" src="../../js/Komponen.js"></script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
+    <asp:ScriptManager runat="server" ID="sm">
+        <Services>
+            <asp:ServiceReference Path="../activities.asmx" />
+        </Services> 
+    </asp:ScriptManager>  
+
+    <table class="formview">
+        <tr>
+            <th>Customer</th>
+            <td><input type="text" id="cari_customer" size="35"/></td>            
+        </tr>
+        <tr>
+            <th></th>
+            <td><div class="buttonCari" onclick="cari.load();">Cari</div></td>
+        </tr>
+    </table>
+    
+    <iframe class="frameList" id="fr_list"></iframe> 
+
+    <uc1:wuc_info_customer runat="server" ID="mdlinq_customer" parent_id="frm_page" cover_id="mdl"/> 
+    <uc1:wuc_location_activity runat="server" ID="mdl_location" parent_id="frm_page" cover_id="mdl" selected_function="mdl.location_selected" />
+
+    <div id="mdl" class="modal">
+        <fieldset>
+            <legend></legend>
+            
+            <table class="formview">
+                <tr>
+                    <th>Tanggal</th>
+                    <td><label id="mdl_date"></label></td>
+                </tr>
+                <tr>
+                    <th>Nama Pelanggan</th>
+                    <td><div id="mdl_customer" style="float:left;"> </div>&nbsp;<a onclick="info()" style="cursor:pointer;font-weight:bold;">Info</a></td>
+                </tr>
+                <tr>
+                    <th>Atas Nama</th>
+                    <td><select id="mdl_an"></select></td>
+                </tr>
+                <tr>
+                    <th>Kontak</th>
+                    <td><select id="mdl_contact"></select></td>
+                </tr>
+                <tr>
+                    <th>Alamat Kurir #1</th>
+                    <td>
+                        <textarea id="mdl_delivery_address" style="float:left" disabled="disabled"></textarea>
+                        <div style="float:left;" class="select" onclick="mdl.open_location()"></div>
+                        <div style="float:left;" class="tambah" onclick="mdl.add_location()"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Alamat Kurir #2</th>
+                    <td><input type="text" id="mdl_delivery_address2" size="100" maxlength="300"/></td>
+                </tr>
+                <tr style="display:none;">
+                    <th>Map</th>
+                    <td>
+                        <uc1:wuc_map runat="server" ID="map" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Catatan</th>
+                    <td><textarea id="mdl_note" style="max-width:100%;width:600px;height:200px;font-family:'Courier New';"></textarea></td>
+                </tr>
+                <tr>
+                    <th>Fee</th>
+                    <td><input type="text" id="mdl_fee" style="text-align:right;"/></td>
+                </tr>
+            </table>                    
+
+            <div style="padding-top:5px;" class="button_panel">
+                <input type="button" value="Add" />
+                <input type="button" value="Save"/>
+                <input type="button" value="Delete" />
+                <input type="button" value="Cancel"/>
+            </div>
+        </fieldset>
+    </div>
+
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="script" Runat="Server">
+    <script type="text/javascript">
+        var cari = {
+            tb_customer: apl.func.get("cari_customer"),
+            fl: apl.func.get("fr_list"),            
+            load: function () {
+                var customer = cari.tb_customer.value;
+                var user = "<%= a.cookieUserIDValue %>";
+                cari.fl.src = "sales_list.aspx?customer="+escape(customer)+"&user="+escape(user);
+            },
+            fl_refresh: function () {
+                cari.fl.contentWindow.document.refresh();                
+            }
+        }
+        
+        var mdl = apl.createModal("mdl",
+            {
+                delivery_address_location_id: 0,
+                sales_id: 0,
+                group_customer_id: 0,
+                lb_date: apl.func.get("mdl_date"),
+                ac_customer: apl.createAutoComplete("mdl_customer", activities.ac_customer, 400,
+                    function (value, text)
+                    {
+                        mdl.dl_an.value = "";
+                        mdl.dl_contact.value = "";
+                        activities.act_customer_data(value,
+                            function (data) {
+                                mdl.group_customer_id = data.group_customer_id;                                
+                            }, apl.func.showError, ""
+                        );
+                    }, undefined,
+                    function () {
+                        mdl.dl_an.setValue("");
+                        mdl.dl_contact.setValue("");
+                        mdl.dl_an.load("");
+                        mdl.dl_contact.load("");
+                    }
+                ),
+                dl_an: apl.createDropdownWS("mdl_an", activities.dl_contact_an_by_customer_id, undefined, undefined, true, function () { return " customer_id=" + mdl.get_customer_id(mdl.ac_customer.getValue()); }),
+                dl_contact: apl.createDropdownWS("mdl_contact", activities.dl_contact_an_by_customer_id, undefined, undefined, true, function () { return " customer_id=" + mdl.get_customer_id(mdl.ac_customer.getValue()); }),
+                //dl_status: apl.createDropdownWS("mdl_status", activities.dl_lvlmktsts),
+                tb_delivery_address: apl.func.get("mdl_delivery_address"),
+                tb_delivery_address2: apl.func.get("mdl_delivery_address2"),
+                tb_note: apl.func.get("mdl_note"),
+                //tb_sent_date: apl.createCalender("mdl_sent_date"),
+                tb_fee: apl.createNumeric("mdl_fee",true),
+                val_customer: apl.createValidator("save", "mdl_customer", function () { return (mdl.ac_customer.getValue() == "") ? true : false; }, "Salah input"),
+                val_delivery_address: apl.createValidator("save", "mdl_delivery_address", function () { return apl.func.emptyValueCheck(mdl.tb_delivery_address.value); }, "Salah input"),
+                val_an: apl.createValidator("save", "mdl_an", function () { return apl.func.emptyValueCheck(mdl.dl_an.value); }, "Salah input"),
+                val_contact: apl.createValidator("save", "mdl_contact", function () { return apl.func.emptyValueCheck(mdl.dl_contact.value); }, "Salah input"),
+                //val_status: apl.createValidator("save", "mdl_status", function () { return apl.func.emptyValueCheck(mdl.dl_status.value); }, "Salah input"),
+                val_note: apl.createValidator("save", "mdl_note", function () { return (mdl.tb_note.value == "") ? true : false; }, "Salah input"),
+                //val_delivery_date: apl.createValidator("save", "mdl_sent_date", function () { return (mdl.tb_sent_date.value == "") ? true : false; }, "Salah input"),
+                val_fee: apl.createValidator("save", "mdl_fee", function () { return (mdl.tb_fee.value == "") ? true : false; }, "Salah input"),
+                
+                get_customer_id: function (nilai) {
+                    if (apl.func.emptyValueCheck(nilai)) {
+                        return "1"
+                    } else {
+                        return nilai;
+                    }
+                },
+                kosongkan: function () {
+                    mdl.sales_id = 0;
+                    mdl.lb_date.innerHTML = "<%= a.cookieApplicationDateValue %>";
+                    mdl.ac_customer.setValue("", "");
+                    mdl.dl_an.value = "";
+                    mdl.dl_contact.value = "";
+                    //mdl.dl_status.value = "";
+                    mdl.tb_delivery_address.value = "";
+                    mdl.tb_delivery_address2.value = "";
+                    mdl.tb_note.value = "";
+                    //mdl.tb_sent_date.value = "";
+                    mdl.tb_fee.value = "";
+                    apl.func.validatorClear("save");
+                },
+                tambah: function () {
+                    mdl.kosongkan();
+                    mdl.showAdd("Sales - Tambah");
+
+                    document.map.latitude = "";
+                    document.map.longitude = "";
+                    //document.map.open("", "");
+                },
+                edit: function (id) {
+                    mdl.kosongkan();
+                    apl.func.showSinkMessage("Memuat Data");
+                    activities.act_sales_data(id,
+                        function (data) {
+                            mdl.sales_id = id;
+                            mdl.group_customer_id = data.group_customer_id;
+                            mdl.ac_customer.setValue(data.customer_id, data.customer_name);
+                            mdl.dl_an.load(data.an_id);                            
+                            mdl.dl_contact.load(data.contact_id);
+                            //mdl.dl_status.value = data.lvlmktsts_id;
+                            mdl.tb_delivery_address2.value = data.delivery_address;
+                            mdl.tb_note.value = data.note;
+                            //mdl.tb_sent_date.value = data.sent_date;
+                            mdl.tb_delivery_address.value = data.delivery_address_location;
+                            mdl.delivery_address_location_id = data.delivery_address_location_id;
+                            mdl.tb_fee.setValue(data.fee);
+                            mdl.showEdit("Sales - Edit")
+
+                            document.map.latitude = data.latitude;
+                            document.map.longitude = data.longitude;
+                            //document.map.open(data.latitude, data.longitude);
+                            apl.func.hideSinkMessage();
+                        }, apl.func.showError, ""
+                    );
+                },
+                refresh_modal: function () {
+                    mdl.hide();
+                    cari.fl_refresh();
+                    apl.func.hideSinkMessage();
+                },
+                open_location: function () {
+                    if (mdl.ac_customer.getValue() != "") document.mdl_location.open(1, mdl.group_customer_id);
+                },
+                add_location: function () {
+                    if (mdl.ac_customer.getValue() != "") document.mdl_location.open(2);
+                },
+                location_selected: function (location_id, location_address, customer_address, lat, lng) {
+                    mdl.delivery_address_location_id = location_id;
+                    mdl.tb_delivery_address.value = location_address;
+                    mdl.tb_delivery_address2.value = customer_address;
+
+                    document.map.latitude = lat;
+                    document.map.longitude = lng;
+                    //document.map.open(lat, lng);
+                }
+            },
+            function () {
+                if (apl.func.validatorCheck("save")) {
+                    apl.func.showSinkMessage("Simpan");                    
+                    activities.act_sales_add(mdl.ac_customer.getValue(), mdl.dl_an.value, mdl.dl_contact.value, mdl.tb_delivery_address2.value, mdl.tb_note.value, mdl.delivery_address_location_id, mdl.tb_fee.getIntValue(),document.map.latitude,document.map.longitude, mdl.refresh_modal, apl.func.showError, "");
+                }
+            },
+            
+            function () {
+                if (apl.func.validatorCheck("save")) {
+                    apl.func.showSinkMessage("Simpan");
+                    activities.act_sales_edit(mdl.sales_id, mdl.ac_customer.getValue(), mdl.dl_an.value, mdl.dl_contact.value, mdl.tb_delivery_address2.value, mdl.tb_note.value, mdl.delivery_address_location_id,mdl.tb_fee.getIntValue(),"",document.map.latitude,document.map.longitude, mdl.refresh_modal, apl.func.showError, "");
+                }
+            },            
+            function () {
+                if (confirm("Yakin akan dihapus?")) {
+                    apl.func.showSinkMessage("Hapus");
+                    activities.act_sales_delete(mdl.sales_id, mdl.refresh_modal, apl.func.showError, "");
+                }
+            }, "frm_page", "cover_content", ""
+        );
+
+        document.list_tambah = mdl.tambah;
+        document.list_edit = mdl.edit;
+
+        info = function () {
+            var id = mdl.ac_customer.getValue();
+            if (id > 0) document.mdlinq_customer.info(id);
+        }
+
+        window.addEventListener("load", function () {
+            cari.load();
+        });
+
+    </script>
+</asp:Content>
+

@@ -1,0 +1,22 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/page.master" Theme="Page" %>
+
+<script runat="server">
+
+</script>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <script type="text/javascript" src="../../js/Komponen.js"></script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
+    <asp:ScriptManager runat="server" ID="sm">
+        <Services>
+            <asp:ServiceReference Path="../activities.asmx" />
+        </Services>
+    </asp:ScriptManager> 
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="script" Runat="Server">
+    <script type="text/javascript">
+
+    </script>
+</asp:Content>
+

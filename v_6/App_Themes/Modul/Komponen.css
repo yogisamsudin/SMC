@@ -1,0 +1,478 @@
+﻿.calender
+{
+    width:250px;
+    border:thin solid gray;
+    position:absolute;
+    display:none;
+    background:white;
+}
+.calender td
+{
+    text-align:center;
+}
+.calenderHeader
+{
+    margin: 2px;
+    font-weight: bold;
+    padding-right: 3px;
+    padding-left: 3px;
+    height: 27px;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: #333333;
+    background-color: #CCCCCC;
+}
+.calenderHeaderBulan
+{
+    float:left;
+    cursor:pointer;
+}
+.calenderHeaderTahun
+{
+    float:right;   
+    cursor:pointer;         
+}
+.calenderDaftarBulan
+{
+    clear: both;
+    display: none;
+    font-family: Tahoma;
+    font-size: small;
+    background:white;
+}
+.calenderDaftarBulan table
+{
+    width:100%;            
+            
+}
+.calenderDaftarBulan table td
+{
+    border:thin solid transparent;
+}
+.calenderDaftarBulan table td:hover
+{
+    border:thin solid gray;
+    cursor:pointer;
+}
+.calenderDaftarTahun
+{
+    clear:both;
+    display:none;
+    font-family: Tahoma;
+    font-size: small;            
+    background:white;
+}
+.calenderDaftarTahun table
+{
+    width:100%;            
+            
+}
+.calenderDaftarTahun table td
+{
+    border:thin solid transparent;
+}
+.calenderDaftarTahun table td:hover
+{
+    border:thin solid gray;
+    cursor:pointer;
+}
+.calenderDaftarTahun input[type=button]
+{
+    padding: 0px;
+    margin: 0px;
+    font-size: xx-small;
+}
+.calenderDaftarTanggal
+{
+    clear:both;
+            
+    font-family: Tahoma;
+    font-size: small;        
+    width:100%;      
+}
+        .calenderDaftarTanggal table
+{
+            width: 100%;
+            border-spacing: 0px;
+        }
+.calenderDaftarTanggal table th
+{
+    font-weight:bold;            
+    padding:0;
+    text-align:center;
+}
+.calenderDaftarTanggal table td
+{
+    padding:0;
+    border:thin solid transparent;    
+}
+.calenderDaftarTanggal table td:hover
+{
+    border:thin solid gray;
+    cursor:pointer;
+}
+.numericDnUp
+{
+    border: thin solid #666666;      
+    float:left;      
+}
+.usCalender
+{
+    width:100px;
+}
+.valMessage
+{
+    margin-left:-16px;
+    margin-top:0px;
+    position:absolute;
+    cursor: pointer;
+    padding: 1px 5px 1px 5px;
+    font-size: medium;
+    -webkit-border-radius: 3px 0px 0px 3px;
+    -moz-border-radius: 3px 0px 0px 3px;
+    border-radius: 3px 0px 0px 3px;
+    background-color: #990000;
+    font-weight: bold;
+    color: #FFFFFF;
+    font-family: System;
+    -webkit-box-shadow: 0 3px 3px black;
+    -moz-box-shadow:    0 3px 3px black;
+    box-shadow:         0 3px 3px black;
+    display:none;
+}  
+.valMessage:hover > div
+{
+    visibility:visible;
+    opacity:1;
+    clear:both;
+}
+.valMessage div
+{
+    width: 200px;
+    position: absolute;
+    border: thin solid #666666;
+    color: #333333;
+    background-color: #FFF7F2;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: opacity .55s ease .1s;
+    -moz-transition: opacity .55s ease .1s;
+    -o-transition: opacity .55s ease .1s;
+    -ms-transition: opacity .55s ease .1s;
+    -webkit-border-radius: 0px 3px 3px 3px;
+    -moz-border-radius: 0px 3px 3px 3px;
+    border-radius: 0px 3px 3px 3px;
+    margin-left: 9px;
+    margin-top: -17px;
+    padding-right: 4px;
+    padding-left: 4px;
+    padding-bottom: 3px;
+    -webkit-box-shadow: 0 3px 3px black;
+    -moz-box-shadow: 0 3px 3px black;
+    box-shadow: 0 3px 3px black;
+}
+.valMessage div span
+{
+    font-family: Tahoma;
+    font-size: small;
+    font-weight: bold;
+                
+}
+.valMessage div label
+{
+    font-family: Tahoma;
+    font-size: x-small;
+    font-weight: normal;
+    font-style: italic;
+}
+.tabcontrol
+{
+    position:relative;
+}
+.tabcontrol > div
+{
+    padding:31px 0 0 0;
+}
+.tabcontrol > div > div
+{
+    border:thin solid #CCCCCC;    
+    /*padding: 3px;*/
+    position:relative;
+    padding:0;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    border-radius: 3px 3px 3px 3px;
+}
+.tabcontrol > ul
+{
+    list-style-type:none;
+    position:absolute;
+    margin:0 0 0 15px;
+    padding:0;   
+    position:absolute;    
+    left:0;
+    top:0;
+}
+.tabcontrol > ul > li
+{
+    border-radius: 5px 5px 0 0;    
+    float:left;    
+    cursor:pointer;    
+    border-top:thin solid #CCCCCC;
+    border-left:thin solid #CCCCCC;
+    border-right:thin solid #CCCCCC;        
+}
+.tabcontrol > ul > li label
+{
+    padding:0px 15px 0px 15px;     
+    font-family:System;
+}
+.antiblock
+{
+    width:100%;
+    height:100%;        
+    position:absolute;
+    background-color:Transparent;
+}
+.tabunactive
+{
+    background: -webkit-linear-gradient(top, #FFFFFF, #DDDDDD);
+    background: -moz-linear-gradient(top, #FFFFFF, #DDDDDD);
+    background: -o-linear-gradient(top, #FFFFFF, #DDDDDD);    
+    border-bottom:thin solid #CCCCCC;
+    margin-top:5px;    
+    color:Grey;
+    height:25px;    
+}
+.tabunactive:hover
+{
+    background: -webkit-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background: -moz-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background: -o-linear-gradient(top, #FFFFFF, #FFFFFF);/*EBEBEB*/
+}
+.tabactive,.tabactive:hover
+{
+    background: -webkit-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background: -moz-linear-gradient(top, #FFFFFF, #FFFFFF);
+    background: -o-linear-gradient(top, #FFFFFF, #FFFFFF);   
+    border-bottom:thin solid transparent; 
+    color:Black;
+    height:30px;    
+}
+.modal
+{
+    display:none;
+    position:relative;
+    width:100%;
+    top:0;
+    left:0;
+    padding-top:45px;        
+}
+.modal fieldset
+{
+    background-color:White;
+    border:thin solid grey;
+    border-radius:5px 5px 5px 5px;
+    box-shadow: 0px 2px 3px 0px #7D7D7D;
+    margin-left:50px;    
+    min-height:300px;
+}
+.modal legend
+{
+    padding: 3px 15px 3px 15px;
+    margin-left: 15px;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-right-width: thick;
+    border-left-width: thick;
+    border-right-color: #666666;
+    border-left-color: #666666;
+    background-color: #CCCCCC;
+    font-weight: bold;
+    font-family: System;
+    font-size: medium;
+    cursor: default;
+    border-top:thin solid #E4E4E4;
+    border-bottom:thin solid gray;
+}
+
+
+
+
+
+.modalFieldset
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: none;
+    
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.2);
+
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+    
+}
+.modalFieldset fieldset
+{
+    border: thin solid #CCCCCC;
+    background-color: #FFFFFF;
+    margin-right: 20%;
+    margin-left: 20%;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    margin-top: 10px;
+}
+
+.modalFieldset legend
+{
+    background: -webkit-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -moz-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -o-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -ms-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: linear-gradient(top, #538CC6 0%,#336699 100%);
+    padding: 3px 10px 3px 10px;
+    background: linear-gradient(top, #97BEFF 0%,#48f 100%);
+    border-color: #97BEFF;
+    font-family: Arial;
+    font-size: medium;
+    font-weight: bold;
+    color: #F8BF24;
+    border-radius: 5px 5px 0px 0px;
+}
+.form_modul
+{
+    display: none;
+    position: relative;
+}
+.form_modul fieldset
+{
+    position: relative;
+    clear: both;
+    border-style: solid;
+    border-width: thick thin thin thin;
+    border-color: #666666;
+    min-width: 800px;
+    padding: 10px;
+    border-radius: 3px 3px 3px 3px;
+    top: 45px;
+    left: 0px;
+    box-shadow: 0px 2px 3px 0px #7D7D7D;
+    background-color: White;
+}
+.form_modul legend
+{
+    padding: 3px 15px 3px 15px;
+    margin-left: 15px;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-right-width: thick;
+    border-left-width: thick;
+    border-right-color: #666666;
+    border-left-color: #666666;
+    background-color: #CCCCCC;
+    font-weight: bold;
+    font-family: System;
+    font-size: medium;
+    cursor: default;
+}
+.form_modul_bodycontent
+{
+    height:100%;
+    position:absolute;
+    width:100%;
+    left:0;
+    top:0;
+    background-color:Grey;
+    opacity:0.25;
+}
+.range
+{
+    
+    
+}
+.range input[type=text], .range input[type=number]
+{
+    cursor:default;
+    text-align:right;
+    float:left;
+}
+.range input[type=range]
+{
+    background-color:White;
+    border-radius: 0px 3px 3px 0px;
+/*    border: thin solid #333333;*/
+    border: thin solid #CCCCCC;
+    padding:4px 3px 3px 3px;
+
+            
+    -webkit-transition: all 0.5s Ease;
+    -moz-transition: all 0.5s Ease;
+    -o-transition: all 0.5s Ease;            
+    display:block;
+    width:15px;    
+}
+.range:hover input[type=range]
+{
+    box-shadow: 0px 2px 1px 0px #7D7D7D;
+border: thin solid #333333;
+    width:150px;
+}
+.range:hover input[type=number],.range:hover input[type=text]
+{
+    border: thin solid #3399FF;
+    box-shadow: inset 0px 1px 2px 0px #7D7D7D;
+}
+.autocomplete
+{
+    border: thin solid #CCCCCC;
+    cursor:text;
+    height:23px;
+    width:300px;
+    padding-left:3px;
+    margin:0px;
+    
+}
+.autocompletelive
+{
+    overflow:hidden;
+    background-color:White;
+    border: thin solid #CCCCCC;
+    cursor:text;    
+    width:300px; 
+    position:absolute;    
+    visibility:hidden;
+    padding:0px;
+    transition:all 0.5s Ease;    
+}
+.autocompletelive > table
+{
+    border-spacing: 0px;    
+    width:100%;
+}
+.autocompletelive  input
+{
+    width:300px;    
+}
+.autocompletelive .autocompletelivegrid
+{
+    width:100%;
+    max-height:200px;
+    overflow:auto;    
+}
+.autocompletelive .autocompletelivegrid table
+{
+    width:100%;
+}
+.autocompletelive .autocompletelivegrid table tr:hover
+{
+    background-color:#CCCCCC;
+    cursor:pointer;
+}

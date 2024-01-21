@@ -1,0 +1,14 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="page_list.master.cs" Inherits="page_list" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>    
+</head>
+<body>
+    <form id="frm_list" runat="server">
+        <asp:ContentPlaceHolder id="Body_Content" runat="server"></asp:ContentPlaceHolder>    
+    </form>
+</body>
+</html>

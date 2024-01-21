@@ -1,0 +1,35 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="page.master.cs" Inherits="page" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>#</title>
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body>
+    <div id="main_panel">
+        <div id="second_panel">
+            <form id="frm_page" runat="server">
+                <div id="cover_content">
+                    <asp:ContentPlaceHolder ID="body" runat="server"></asp:ContentPlaceHolder>
+                </div>
+            </form>
+
+            <div id="grid_list"></div>
+        </div>
+    </div>
+    <div id="sink_message">Save</div>
+    <script type="text/javascript">
+        (function (o) {
+            //alert(window.innerWidth-100);
+            o.style.top = (window.innerHeight - 35).toString() + "px";
+            o.style.left = (window.innerWidth - 150).toString() + "px";
+
+        })(document.getElementById("sink_message"));
+
+    </script>
+    <asp:ContentPlaceHolder ID="script" runat="server"></asp:ContentPlaceHolder>
+</body>
+
+</html>

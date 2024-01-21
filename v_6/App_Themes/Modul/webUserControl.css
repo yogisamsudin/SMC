@@ -1,0 +1,114 @@
+﻿.tanggal
+{
+    border: thin solid #C0C0C0;
+    padding: 0px;
+    margin: 0px;    
+    width: 110px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    border-radius: 3px 3px 3px 3px;
+}
+.tanggal .img
+{
+    background-image: url('../../Image/Tanggal.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+.iUp
+{
+    background-image: url('../../Image/SmallUp.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 8px;
+    height: 5px;
+    cursor: pointer;
+}
+.iUp:hover
+{
+    -moz-box-shadow: inset 0 0 5px #FFFFFF;
+    -webkit-box-shadow: inset 0 0 5px #FFFFFF;
+    box-shadow: inset 0 0 5px #FFFFFF;
+}
+.iDown
+{
+    background-image: url('../../Image/SmallDw.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 8px;
+    height: 5px;
+    cursor: pointer;
+}
+.iDown:hover
+{
+    -moz-box-shadow: inset 0 0 5px #FFFFFF;
+    -webkit-box-shadow: inset 0 0 5px #FFFFFF;
+    box-shadow: inset 0 0 5px #FFFFFF;
+}
+.valMessage
+{
+    margin-left:-16px;
+    margin-top:0px;
+    position:absolute;
+    cursor: pointer;
+    padding: 1px 5px 1px 5px;
+    font-size: medium;
+    -webkit-border-radius: 3px 0px 0px 3px;
+    -moz-border-radius: 3px 0px 0px 3px;
+    border-radius: 3px 0px 0px 3px;
+    background-color: #990000;
+    font-weight: bold;
+    color: #FFFFFF;
+    font-family: System;
+    -webkit-box-shadow: 0 3px 3px black;
+    -moz-box-shadow:    0 3px 3px black;
+    box-shadow:         0 3px 3px black;
+    display:none;
+}        
+.valMessage:hover > div
+{
+    visibility:visible;
+    opacity:1;
+    clear:both;
+}
+.valMessage div
+{
+    width: 200px;
+    position: absolute;
+    border: thin solid #666666;
+    color: #333333;
+    background-color: #FFF7F2;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: opacity .55s ease .1s;
+    -moz-transition: opacity .55s ease .1s;
+    -o-transition: opacity .55s ease .1s;
+    -ms-transition: opacity .55s ease .1s;
+    -webkit-border-radius: 0px 3px 3px 3px;
+    -moz-border-radius: 0px 3px 3px 3px;
+    border-radius: 0px 3px 3px 3px;
+    margin-left: 9px;
+    margin-top: -17px;
+    padding-right: 4px;
+    padding-left: 4px;
+    padding-bottom: 3px;
+    -webkit-box-shadow: 0 3px 3px black;
+    -moz-box-shadow: 0 3px 3px black;
+    box-shadow: 0 3px 3px black;
+}
+.valMessage div span
+{
+    font-family: Tahoma;
+    font-size: small;
+    font-weight: bold;
+                
+}
+.valMessage div label
+{
+    font-family: Tahoma;
+    font-size: x-small;
+    font-weight: normal;
+    font-style: italic;
+}

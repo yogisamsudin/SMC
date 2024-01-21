@@ -1,0 +1,343 @@
+﻿/* form view */
+.formView
+{
+    width:100%;
+    padding: 15px;
+    border: thin solid #336699;
+    border-spacing: 0px;    
+    background: -webkit-linear-gradient(top, #FFFFFF 0%,#F4F4F4 100%);
+    background: -moz-linear-gradient(top, #FFFFFF 0%,#F4F4F4 100%);
+    background: -o-linear-gradient(top, #FFFFFF 0%,#F4F4F4 100%);
+    background: -ms-linear-gradient(top, #FFFFFF 0%,#F4F4F4 100%);
+    background: linear-gradient(top, #FFFFFF 0%,#F4F4F4 100%);
+}
+.formView th
+{
+    padding-right: 29px;
+    padding-left: 9px;
+    text-align: right;
+}
+.formView td
+{
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+/* panel */
+.panel
+{
+    border: thin solid #336699;
+    border-spacing: 0px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    padding-bottom: 5px;
+}
+.panel th
+{
+    background-color: #336699;
+    padding: 5px;
+    border-width: thin;
+    border-color: #CCCCCC;
+    font-family: calibri;
+    font-size: medium;
+    font-weight: bold;
+    color: #F8BF24;
+    background: -webkit-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -moz-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -o-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -ms-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: linear-gradient(top, #538CC6 0%,#336699 100%);
+    background-color: #336699;
+}
+/* grid view */
+.gridView
+{
+    width:100%;
+    border: thin solid #336699;
+    border-spacing: 0px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    padding-bottom: 5px;
+    
+}
+.gridView th
+{
+    text-align:left;
+    background-color: #336699;
+    padding: 5px;
+    border-width: thin;
+    border-color: #CCCCCC;
+    font-family: calibri;
+    font-size: medium;
+    font-weight: bold;
+    color: #F8BF24;
+    background: -webkit-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -moz-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -o-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -ms-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: linear-gradient(top, #538CC6 0%,#336699 100%);
+    background-color: #336699;
+}
+.gridView th a
+{
+    color: #F8BF24;
+    text-decoration: none;
+}
+.gridView td
+{
+    border-width: thin;
+    border-color: #F5F5F5;
+    padding-right: 5px;
+    padding-left: 5px;
+    border-right-style: solid;
+}
+.gridView td:last-child { border-right-style: none; }
+.gridView span,div
+{
+    cursor:default;
+}
+.gridView tr:hover
+{
+    background: -webkit-linear-gradient(top, #FFFFFF 0%,#CCCCCC 100%);
+    background: -moz-linear-gradient(top, #FFFFFF 0%,#CCCCCC 100%);
+    background: -o-linear-gradient(top, #FFFFFF 0%,#CCCCCC 100%);
+    background: -ms-linear-gradient(top, #FFFFFF 0%,#CCCCCC 100%);
+    background: linear-gradient(top, #FFFFFF 0%,#CCCCCC 100%);
+    
+}
+/*  tab setting
+------------------------------------------------------------
+*/
+.tab
+{
+    width:100%;
+}
+.tab ul
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: Calibri;
+    font-size: medium;
+    font-weight: bold;
+    
+}
+.tab a
+{
+    width:100%;
+    height:100%;
+    cursor: pointer;
+}
+.tab li:hover
+{ 
+    border-color: #97BEFF;
+}
+.tab li
+{
+    height: 25px;
+    border-width: thin;
+    border-color: #F4F4F4;
+    float: left;
+    -webkit-border-radius: 10px 10px 0px 0px;
+    -moz-border-radius: 10px 10px 0px 0px;
+    border-radius: 10px 10px 0px 0px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    padding-right: 10px;
+    padding-left: 10px;
+    background: -webkit-linear-gradient(top, #F4F4F4 0%,#C0C0C0 100%);
+    background: -moz-linear-gradient(top, #F4F4F4 0%,#C0C0C0 100%);
+    background: -o-linear-gradient(top, #F4F4F4 0%,#C0C0C0 100%);
+    background: -ms-linear-gradient(top, #F4F4F4 0%,#C0C0C0 100%);
+    background: linear-gradient(top, #F4F4F4 0%,#C0C0C0 100%);
+}
+.tab li.cur {
+    background: -webkit-linear-gradient(top, #97BEFF 0%,#48f 100%);
+    background: -moz-linear-gradient(top, #97BEFF 0%,#48f 100%);
+    background: -o-linear-gradient(top, #97BEFF 0%,#48f 100%);
+    background: -ms-linear-gradient(top, #97BEFF 0%,#48f 100%);
+    background: linear-gradient(top, #97BEFF 0%,#48f 100%);    
+    border-color: #97BEFF;
+}
+.tab div
+{
+    border: #48f solid 3px;
+    clear: left;    
+}
+/*  
+MENU,GROUP,USER
+--------------------------
+*/
+.menuList ul
+{
+    list-style-type: none;
+}    
+.menuList li
+{
+    clear:left;
+    margin-top: 3px;
+}
+.menuList div
+{
+    float:left;
+}
+.menuList a
+{
+    margin-left:3px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+.menuList a:hover
+{
+    background: -webkit-linear-gradient(top, #F8BF24 0%,#C48C06 100%);
+    background: -moz-linear-gradient(top, #F8BF24 0%,#C48C06 100%);
+    background: -o-linear-gradient(top, #F8BF24 0%,#C48C06 100%);
+    background: -ms-linear-gradient(top, #F8BF24 0%,#C48C06 100%);
+    background: linear-gradient(top, #F8BF24 0%,#C48C06 100%);
+    -webkit-border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    border-radius: 3px 3px 3px 3px;
+    cursor: pointer;
+    color: #FFFFFF;
+}
+
+.appGroupPriviledge ul
+{
+    list-style-type: none;
+}
+
+.modalModul
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: none;    
+    opacity:0.1;
+}
+/* MODAL STYLE
+-----------------------
+*/
+.modalFieldset
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: none;
+    
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.2);
+
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+    
+}
+.modalFieldset fieldset
+{
+    border: thin solid #CCCCCC;
+    background-color: #FFFFFF;
+    margin-right: 20%;
+    margin-left: 20%;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    margin-top: 10px;
+}
+
+.modalFieldset legend
+{
+    background: -webkit-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -moz-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -o-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -ms-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: linear-gradient(top, #538CC6 0%,#336699 100%);
+    padding: 3px 10px 3px 10px;
+    background: linear-gradient(top, #97BEFF 0%,#48f 100%);
+    border-color: #97BEFF;
+    font-family: Arial;
+    font-size: medium;
+    font-weight: bold;
+    color: #F8BF24;
+    border-radius: 5px 5px 0px 0px;
+}
+.modalReport
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: none;    
+}
+.modalReport fieldset
+{
+    border: thin solid #CCCCCC;
+    background-color: #FFFFFF;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    
+}
+.modalReport legend
+{
+    /*background: -webkit-linear-gradient(top, #97BEFF 0%,#48f 100%);
+    background: -moz-linear-gradient(top, #97BEFF 0%,#48f 100%);
+    background: -o-linear-gradient(top, #97BEFF 0%,#48f 100%);
+    background: -ms-linear-gradient(top, #97BEFF 0%,#48f 100%);*/
+    background: -webkit-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -moz-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -o-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: -ms-linear-gradient(top, #538CC6 0%,#336699 100%);
+    background: linear-gradient(top, #538CC6 0%,#336699 100%);
+    padding: 3px 10px 3px 10px;
+    background: linear-gradient(top, #97BEFF 0%,#48f 100%);
+    border-color: #97BEFF;
+    font-family: Arial;
+    font-size: medium;
+    font-weight: bold;
+    color: #F8BF24;
+}
+.modalReport iframe
+{
+    border: thin solid #0066CC;
+    width: 100%;
+    height: 400px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.cariNempelKanan
+{
+    border: thin solid #336699;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    background: -webkit-linear-gradient(top, #73A2CC 0%,#336699 100%);
+    background: -moz-linear-gradient(top, #73A2CC 0%,#336699 100%);
+    background: -o-linear-gradient(top, #73A2CC 0%,#336699 100%);
+    background: -ms-linear-gradient(top, #73A2CC 0%,#336699 100%);
+    width: 100%;
+    height: 100%;
+    -webkit-border-radius: 0px 15px 15px 0px;
+    -moz-border-radius: 0px 15px 15px 0px;
+    border-radius: 0px 15px 15px 0px;
+    
+}
+.ddlTransparant
+{
+    border: thin solid transparent;
+    text-align:center;     
+    background-color:Transparent;       
+}
+

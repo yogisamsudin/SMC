@@ -1,0 +1,214 @@
+﻿i
+{
+    font-size: small;
+    color: #3366CC;    
+}
+input[type=text], input[type=password], input[type=search], input[type=url], input[type=email], input[type=number], input[type=date], input[type=tel],select
+{
+    padding: 2px 3px 2px 3px;
+    border: thin solid #CCCCCC;
+    font-family: Tahoma;
+    font-size: small;
+    height: 20px;
+    -webkit-transition: all 0.5s Ease;
+    -moz-transition: all 0.5s Ease;
+    -o-transition: all 0.5s Ease;            
+}
+input[type=text]:hover, input[type=password]:hover, input[type=search]:hover, input[type=url]:hover, input[type=email]:hover, input[type=number]:hover, input[type=date]:hover, input[type=tel]:hover,select:hover
+{
+    border: thin solid #333333;
+}
+input[type=text]:focus,input[type=password]:focus, input[type=search]:focus, input[type=url]:focus, input[type=email]:focus, input[type=number]:focus, input[type=date]:focus, input[type=tel]:focus,select:focus
+{
+    border: thin solid #3399FF;
+    box-shadow: inset 0px 1px 2px 0px #7D7D7D;
+}
+input[type=button], input[type=submit], .buttonCari
+{
+    cursor: pointer;
+    margin-left: 2;
+    padding: 5px 10px 5px 10px;
+    font-weight: bold;
+    font-family: Arial;
+    font-size: small;
+    border: thin solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    background-color: #DFFFFF;
+    color: #666666;
+    -webkit-transition: all 0.5s Ease;
+    -moz-transition: all 0.5s Ease;
+    -o-transition: all 0.5s Ease;            
+}
+input[type=button]:hover, input[type=submit]:hover
+{
+    border: thin solid #333333;
+    background: -webkit-linear-gradient(top, #DFFFFF,#00CACA); /* #BBBBBB);*/
+    background: -moz-linear-gradient(top, #DFFFFF, #00CACA);
+    background: -o-linear-gradient(top, #DFFFFF, #00CACA);
+    color: #000000;
+}
+.tambah,.edit,.hapus,.info,.select
+{
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin: 2px 0 2px 0;
+    border:thin solid transparent;
+}
+.tambah:hover,.hapus:hover,.edit:hover,info:hover,.select:hover
+{
+    
+    border-radius: 3px 3px 3px 3px;    
+    box-shadow: 0px 2px 1px 0px #7D7D7D;
+    margin: 1px 0 3px 0;
+}
+.tambah
+{    
+    background-image: url('../../Image/Tambah.png');    
+}
+.hapus
+{
+    background-image: url('../../Image/Hapus.png');    
+}
+.edit
+{
+    background-image: url('../../Image/Edit.png');    
+}
+.info
+{
+    background-image: url('../../Image/Info.png');    
+}
+.select
+{
+    background-image: url('../../Image/select.png');    
+}
+.tambah:hover
+{    
+    background-image: url('../../Image/Tambah_hov.png');    
+}
+.hapus:hover
+{
+    background-image: url('../../Image/Hapus_hov.png');    
+}
+.edit:hover
+{
+    background-image: url('../../Image/Edit_hov.png');    
+}
+.info:hover
+{
+    background-image: url('../../Image/Info_hov.png');    
+}
+.select:hover
+{
+    background-image: url('../../Image/select_hov.png');    
+}
+.formview
+{
+    border-bottom:thin solid grey;
+    width:100%;     
+    padding-bottom:15px;
+    padding-top:15px;       
+}
+.formview th
+{
+    font-weight:bold;
+    font-family:tahoma;
+    text-align:right;
+    padding-right:20px;
+    vertical-align:middle;
+    font-size:small;            
+}
+.gridView
+{
+    /*
+    border:thin solid grey;
+    border-radius: 3px 3px 3px 3px;     
+*/
+    width:100%;   
+    border-spacing:1px;
+    cursor:default;
+    /*padding:3px;*/
+    background-color:White;
+}
+.gridView th
+{
+    background: -webkit-linear-gradient(top, #D4D4D4, #C0C0C0); /*#15C5FF, #0099CC*/
+    background: -moz-linear-gradient(top, #D4D4D4, #C0C0C0);
+    background: -o-linear-gradient(top, #D4D4D4, #C0C0C0);
+    border-bottom: thin solid grey;
+    padding-left: 5px;
+}
+.gridView td
+{
+    padding-left:5px;
+    padding-right:5px;
+}
+.gridView a
+{
+    color:Black;
+}
+.gridView tr
+{
+    white-space:nowrap;
+}
+.gridViewFrame
+{
+    border-spacing:1px;
+    cursor:default;
+    padding:0px;
+    width:100%;   
+}
+.gridViewFrame th
+{
+    background: -webkit-linear-gradient(top, #D4D4D4, #C0C0C0);/*#15C5FF, #0099CC*/
+    background: -moz-linear-gradient(top, #D4D4D4, #C0C0C0);
+    background: -o-linear-gradient(top, #D4D4D4, #C0C0C0);     
+    border-bottom:thin solid grey;    
+    padding-right: 5px;
+    padding-left: 5px;    
+}
+.gridViewFrame td
+{
+    padding-right: 5px;
+    padding-left: 5px;
+}
+.frameList
+{
+    padding:0px;
+    overflow:auto;
+    border:thin solid grey;
+    border-radius: 3px 3px 3px 3px;     
+    width:100%;   
+    height:350px;
+}
+
+.buttonCari
+{
+    background-position: 15px center;
+    background-image: url('../../Image/Cari.png');
+    background-repeat: no-repeat;
+    width: 60px;    
+    padding-left: 45px;
+}
+.buttonCari:hover
+{
+    border: thin solid #333333;
+    background-color: #06FFFF;
+    color: #000000;
+    background-image: url('../../Image/Cari_hov.png');
+}
+select
+{
+    height:25px;
+}
+input[type=text]:disabled, input[type=password]:disabled, input[type=search]:disabled, input[type=url]:disabled, input[type=email]:disabled, input[type=number]:disabled, input[type=date]:disabled, input[type=tel]:disabled,select:disabled
+{
+    color:Gray;
+    background-color:transparent;
+}
+input[type=text]:disabled:hover, input[type=password]:disabled:hover, input[type=search]:disabled:hover, input[type=url]:disabled:hover, input[type=email]:disabled:hover, input[type=number]:disabled:hover, input[type=date]:disabled:hover, input[type=tel]:disabled,select:disabled:hover
+{
+    border: thin solid #CCCCCC;
+}

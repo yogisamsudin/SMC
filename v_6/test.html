@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+
+<body>
+    <canvas id="myChart" height="100" ></canvas>
+    <script type="text/javascript" src="js/chart_min.js"></script>
+    <script type="text/javascript">
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+
+            // The data for our dataset
+            data: {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "My First dataset",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [0, 10, 5, 2, 20, 30, 45],
+                }, {
+                    label: "My Second dataset",
+                    backgroundColor: 'rgb(25, 9, 100)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [0, 10, 5, 2, 20, 30, 45],
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+                legend: {
+                    position: 'right',
+                    display: true,                    
+                    labels: {
+                        fontColor: 'rgb(255, 99, 132)'
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'My Custom Chart Title'
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Month'
+                        }
+                    }],
+                    yAxes: [{
+                        position: 'left',
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Value in Thousound'
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+</html>
