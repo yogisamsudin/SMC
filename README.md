@@ -1,0 +1,2 @@
+# SMC
+SMC Core System
