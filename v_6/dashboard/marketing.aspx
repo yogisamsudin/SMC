@@ -196,6 +196,7 @@
                         CellSpacing="1" CssClass="gridViewFrame" GridLines="Horizontal" PageSize="100">
                         <Columns>
                             <asp:BoundField DataField="description" HeaderText="Keterangan" HeaderStyle-HorizontalAlign="Left" />
+                            <asp:BoundField DataField="marketing_id" HeaderText="Marketing" HeaderStyle-HorizontalAlign="Left" />
                             <asp:BoundField DataField="invoice_value" HeaderText="Nilai" HeaderStyle-HorizontalAlign="Right" DataFormatString="{0:N0}" ItemStyle-HorizontalAlign="Right" />
                             <asp:BoundField DataField="profit_value" HeaderText="Profit" HeaderStyle-HorizontalAlign="Right" DataFormatString="{0:N0}" ItemStyle-HorizontalAlign="Right" />
                             <asp:BoundField DataField="quantity" HeaderText="Total" HeaderStyle-HorizontalAlign="Right" DataFormatString="{0:N0}" ItemStyle-HorizontalAlign="Right" />

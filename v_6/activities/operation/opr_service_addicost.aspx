@@ -205,11 +205,15 @@
                 </tr>
                 <tr style="background-color:gray;">
                     <th></th>
-                    <td><label style="font-weight:bold;"">TOTAL</label></td>
+                    <td><label style="font-weight:bold;">TOTAL</label></td>
                 </tr>
                 <tr>
                     <th>Modal</th>
                     <td><input type="text" id="mdl_total_cost" size="15" style="text-align:right;" disabled/></td>
+                </tr>
+                <tr>
+                    <th>Addi.Cost -</th>
+                    <td><input type="text" id="mdl_total_addicost" size="15" style="text-align:right;" disabled/></td>
                 </tr>
                 <tr>
                     <th>Net</th>
@@ -471,6 +475,7 @@
                 lb_pph: apl.func.get("mdl_pph"),
                 tb_total_price: apl.createNumeric("mdl_total_price",true),
                 tb_total_cost: apl.createNumeric("mdl_total_cost", true),
+                tb_total_addicost: apl.createNumeric("mdl_total_addicost", true),
                 tb_total_pph: apl.createNumeric("mdl_total_pph", true),
                 tb_total_ppn: apl.createNumeric("mdl_total_ppn", true),
                 tb_total_discount: apl.createNumeric("mdl_total_discount", true),
@@ -586,6 +591,7 @@
                     mdl.lb_pph.innerHTML = "";
                     mdl.lb_ppn.innerHTML = "";
                     mdl.tb_total_cost.value = "";
+                    mdl.tb_total_addicost.value = "";
                     mdl.tb_total_price.value = "";
                     mdl.tb_total_pph.value = "";
                     mdl.tb_total_ppn.value = "";
@@ -640,6 +646,7 @@
                             mdl.lb_pph.innerHTML = data.pph21;
                             mdl.lb_ppn.innerHTML = data.ppn;
                             mdl.tb_total_cost.setValue(data.total_cost);
+                            mdl.tb_total_addicost.setValue(data.total_addicost);
                             mdl.tb_total_price.setValue(data.total_price);
                             mdl.tb_total_pph.setValue(data.total_pph21);
                             mdl.tb_total_ppn.setValue(data.total_ppn);

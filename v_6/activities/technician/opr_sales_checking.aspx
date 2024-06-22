@@ -418,7 +418,7 @@
                     ]
                 ),
                 tbl_load: function (refresh_total_sts) {
-                    activities.opr_sales_device_list(mdl.sales_id,
+                    activities.opr_sales_device_nondraft_list(mdl.sales_id,
                         function (arrData) {
                             mdl.tbl.load(arrData);
                         }, apl.func.showError, ""

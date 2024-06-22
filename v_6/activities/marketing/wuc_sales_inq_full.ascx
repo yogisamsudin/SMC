@@ -22,6 +22,10 @@
                 <td><label id="<%= ClientID %>_date"></label></td>
             </tr>
             <tr>
+                <th>Nm.Marketing</th>
+                <td><label id="<%= ClientID %>_marketing"></label></td>
+            </tr>
+            <tr>
                 <th>Nama Pelanggan</th>
                 <td><label id="<%= ClientID %>_customer" style="float:left;"></label></td>
             </tr>
@@ -81,6 +85,7 @@
 <script type="text/javascript">
     window.addEventListener("load",
         function () {
+            
             var mdl = document["<%= ClientID %>"] = apl.createModal("<%= ClientID %>",
             {
                 lb_date: apl.func.get("<%= ClientID %>_date"),
@@ -96,10 +101,12 @@
                 lb_email: apl.func.get("<%= ClientID %>_email"),      
                 lb_fee: apl.func.get("<%= ClientID %>_fee", true),
                 lb_branch_customer: apl.func.get("<%= ClientID %>_branch_customer"),
+                lb_marketing: apl.func.get("<%= ClientID %>_marketing"),
+
                 edit: function (id) {
                     apl.func.showSinkMessage("Memuat Data");
                     activities.act_sales_data(id,
-                        function (data) {                            
+                        function (data) {
                             mdl.lb_date.innerHTML = data.sales_call_date;
                             mdl.lb_customer.innerHTML = data.customer_name;
                             mdl.lb_an.innerHTML = data.an;
@@ -113,6 +120,7 @@
                             mdl.lb_fax.innerHTML = data.customer_fax;
                             mdl.lb_email.innerHTML = data.customer_email;
                             mdl.lb_branch_customer.innerHTML = data.branch_customer;
+                            mdl.lb_marketing.innerHTML = data.marketing_id;
                             mdl.showEdit("Sales - Edit");
                             apl.func.hideSinkMessage();
                         }, apl.func.showError, ""

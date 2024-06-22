@@ -23,7 +23,11 @@
                 <tr>
                     <th>Nama Grup</th>
                     <td><input type="text" id="mdl_name" size="50"/></td>
-                </tr>                
+                </tr>      
+                <tr>
+                    <th>Nilai Target</th>
+                    <td><input type="text" id="mdl_target" size="20"/></td>
+                </tr>          
             </table>
             <div style="padding-top:5px;">
                 <input type="button" value="Add" />
@@ -49,13 +53,18 @@
         var mdl = apl.createModal("mdl",
             {
                 marketing_group_id: 0,
-                tb_name: apl.func.get("mdl_name"),                
+                tb_name: apl.func.get("mdl_name"),
+                tb_target: apl.createNumeric("mdl_target"),
 
-                val_name: apl.createValidator("save", "mdl_name", function () { return apl.func.emptyValueCheck(mdl.tb_name.value); }, "Inputan salah"),
+                av: [
+                    apl.createValidator("save", "mdl_name", function () { return apl.func.emptyValueCheck(mdl.tb_name.value); }, "Inputan salah"),
+                    apl.createValidator("save", "mdl_target", function () { return apl.func.emptyValueCheck(mdl.tb_target.value); }, "Inputan salah"),
+                ],
                 
                 kosongkan: function () {      
                     mdl.marketing_group_id = 0;
-                    mdl.tb_name.value = "";                    
+                    mdl.tb_name.value = "";
+                    mdl.tb_target.value = "";
                     apl.func.validatorClear("save");                    
                 },
                 tambah: function () {
@@ -69,6 +78,7 @@
                         function (data)
                         {
                             mdl.tb_name.value = data.marketing_group_name;
+                            mdl.tb_target.setValue(data.target_value);
                             mdl.showEdit("Marketing Group - Edit");
                         },
                         apl.func.showError, ""
@@ -80,10 +90,10 @@
                 }
             },
             function () {
-                if (apl.func.validatorCheck("save")) activities.act_marketing_group_add(mdl.tb_name.value, mdl.refresh, apl.func.showError, "");
+                if (apl.func.validatorCheck("save")) activities.act_marketing_group_add(mdl.tb_name.value,mdl.tb_target.getIntValue(), mdl.refresh, apl.func.showError, "");
             },
             function () {
-                if (apl.func.validatorCheck("save")) activities.act_marketing_group_edit(mdl.marketing_group_id, mdl.tb_name.value, mdl.refresh, apl.func.showError);
+                if (apl.func.validatorCheck("save")) activities.act_marketing_group_edit(mdl.marketing_group_id, mdl.tb_name.value, mdl.tb_target.getIntValue(), mdl.refresh, apl.func.showError);
             },
             function () {
                 if (confirm("Yakin akan dihapus?")) alert("delete");

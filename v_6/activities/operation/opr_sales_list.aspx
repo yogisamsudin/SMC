@@ -2,6 +2,7 @@
 
 <script runat="server">
     public string function_edit_name = "list_edit", function_add_name = "list_add", style_display = "";
+    public Boolean sts_allowed = true;
 
     void Page_Load(object o, EventArgs e)
     {
@@ -9,7 +10,13 @@
         if (Request.QueryString["edit"] != null) function_edit_name = Request.QueryString["edit"].ToString();
         if (Request.QueryString["displayadd"] != null) style_display = "display:none;";
         gvdata.DataBind();
+        
+        if(Request.QueryString["allow"] != null && Request.QueryString["allow"].ToString() == "0") sts_allowed= false;
+        gvdata.Columns[2].Visible = sts_allowed;
+        gvdata.Columns[7].Visible = sts_allowed;
     }
+    
+    
 </script>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="Body_Content" runat="Server">
@@ -40,9 +47,10 @@
                 </HeaderTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="offer_no" HeaderText="No.Penawaran" ReadOnly="True" SortExpression="offer_no" HeaderStyle-HorizontalAlign="Left" />
-            <asp:BoundField DataField="po_no" HeaderText="No.PO" ReadOnly="True" SortExpression="po_no" HeaderStyle-HorizontalAlign="Left" />
+            <asp:BoundField DataField="po_no" HeaderText="No.PO" ReadOnly="True" SortExpression="po_no" HeaderStyle-HorizontalAlign="Left"/>
             <asp:BoundField DataField="str_offer_date" HeaderText="Tanggal" ReadOnly="True" SortExpression="offer_date" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField DataField="customer_name" HeaderText="Pelanggan" ReadOnly="True" SortExpression="customer_name" HeaderStyle-HorizontalAlign="Left" />
+            <asp:BoundField DataField="marketing_id_real" HeaderText="Marketing" ReadOnly="True" SortExpression="marketing_id_real" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField DataField="sales_status" HeaderText="Status" ReadOnly="True" SortExpression="sales_status" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField DataField="sales_status_marketing" HeaderText="Mkt.Status" ReadOnly="True" SortExpression="sales_status_marketing" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField DataField="reason_marketing" HeaderText="Alasan" ReadOnly="True" SortExpression="reason_marketing" HeaderStyle-HorizontalAlign="Left" />

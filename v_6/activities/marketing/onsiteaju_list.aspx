@@ -15,11 +15,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="Body_Content" Runat="Server">
     <asp:SqlDataSource runat="server" ID="sdsdata" 
         ConnectionString="<%$ ConnectionStrings:csApp %>" 
-        SelectCommand="select onsite_id, onsite_no,dbo.f_convertDateToChar(request_date) str_request_date ,request_date, dbo.f_convertDateToChar(onsite_date)str_onsite_date,onsite_date, offer_no, customer_name, onsitests from v_tec_onsite where customer_name like @custname and offer_no like @offerno and onsitests_id = @status" SelectCommandType="Text">
+        SelectCommand="select onsite_id, onsite_no, customer_name, dbo.f_convertDateToChar(request_date)str_request_date,request_date,dbo.f_convertDateToChar(onsite_date)str_onsite_date,onsite_date,technician_name,marketing_id from v_tec_onsite where marketing_id like @marketing and customer_name like @custname and onsitests_id like @status" SelectCommandType="Text">
         <SelectParameters>
-            <asp:QueryStringParameter Name="custname" QueryStringField="custname" DefaultValue=" "/>            
-            <asp:QueryStringParameter Name="offerno" QueryStringField="offerno" DefaultValue=" "/>   
-            <asp:QueryStringParameter Name="status" QueryStringField="status" DefaultValue=" "/>         
+            <asp:QueryStringParameter Name="marketing" QueryStringField="marketing" DefaultValue=" "/>          
+            <asp:QueryStringParameter Name="custname" QueryStringField="custname" DefaultValue=" "/>
+            <asp:QueryStringParameter Name="status" QueryStringField="status" DefaultValue=" "/>
         </SelectParameters>
     </asp:SqlDataSource>
 
@@ -36,8 +36,9 @@
                 </HeaderTemplate>            
             </asp:TemplateField>
             <asp:BoundField DataField="customer_name" HeaderText="Pelanggan" ReadOnly="True" SortExpression="customer_name" HeaderStyle-HorizontalAlign="Left" />
-            <asp:BoundField DataField="offer_no" HeaderText="No.Penawaran" ReadOnly="True" SortExpression="offer_no" HeaderStyle-HorizontalAlign="Left" ItemStyle-Width="100px"/>
-            <asp:BoundField DataField="onsitests" HeaderText="Status" ReadOnly="True" SortExpression="onsitests" HeaderStyle-HorizontalAlign="Left" />
+            <asp:BoundField DataField="marketing_id" HeaderText="Marketing" ReadOnly="True" SortExpression="marketing_id" HeaderStyle-HorizontalAlign="Left" ItemStyle-Width="100px"/>
+            <asp:BoundField DataField="onsite_no" HeaderText="No" ReadOnly="True" SortExpression="onsite_no" HeaderStyle-HorizontalAlign="Left" ItemStyle-Width="100px"/>
+            <asp:BoundField DataField="str_request_date" HeaderText="Tgl.Aju" ReadOnly="True" SortExpression="request_date" HeaderStyle-HorizontalAlign="Left" />
         </Columns>
     </asp:GridView>
     <script type="text/javascript">

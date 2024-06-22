@@ -1,0 +1,13 @@
+1. menu MKS, bs ditambahkan kolom utk upload PO service & bs dibuka di menu invoice service jg - done
+2. penambahan penanda pekerjaan instalasi (CCTV dll yg berkaitan instalasi) shg bs ditarik report pendptan (profit) utk pekerjaan instalasi per bulan - done
+3. penghitungan komisi mrktg
+4. penambahan user name utk 10 mrktg baru
+5. Penambahan Menu utk permintaan onsite, shg progress report onsite bs diprint dr sistem
+   nah ini outputnya.. ditambahkan :
+   	nomer urut(otomatis)
+	nama marketing yg otomatis muncul sesuai siapa yg login
+	nama teknisi yg bisa diinput sama p. eko
+	pilihan service  & sales
+	kolom untuk tanggal segel. nah kalau pilihan nya service : otomatis muncul tulisan garansi, trigernya 3 bulan dari tgl segel
+	kl sales : otomatis muncul tulisan garansi trigernya 1 tahun dari tgl segel
+6. Tambahan Menu Additional Cost untuk invoice Service - done

@@ -147,6 +147,7 @@
                                 <th>Create Date</th>
                                 <th>Update ID</th>
                                 <th>Update Date</th>
+                                <th>Sts.Draft</th>
                                 <%--<th>PPH 21</th>--%>
                             </tr>
                         </table>
@@ -243,7 +244,7 @@
                     <td><input id="mdl_device_name"/></td>
                 </tr>
                 <tr>
-                    <th>Keterangan</th>
+                    <th>Spesifikasi</th>
                     <td><textarea id="mdl_device_description"></textarea></td>
                 </tr>
                 <tr>
@@ -312,6 +313,18 @@
                     <th>Vendor</th>
                     <td><input id="mdl_device_vendor"/></td>
                 </tr>
+                <tr>
+                    <th>Sts.Garansi</th>
+                    <td><input type="checkbox" id="mdl_guaranteests"/></td>
+                </tr>
+                <tr>
+                    <th>Ketersediaan Brg.</th>
+                    <td><select id="mdl_availability"></select></td>
+                </tr>
+                <tr>
+                    <th>Draft</th>
+                    <td><input type="checkbox" id="mdl_device_draft" /></td>
+                </tr>
             </table>
             <div style="padding-top:5px;" class="button_panel">
                 <input type="button" value="Add"/>
@@ -336,7 +349,7 @@
                 var status = "1";
                 var fs = "0";
                 var ssm = "%";
-                cari.fl.src = "opr_sales_list.aspx?no=" + no + "&cust=" + cust + "&status=" + status + "&fs=" + fs + "&branch=" + cari.dl_branch.value + "&ssm=" + ssm + "&displayadd=0&nopo=%";
+                cari.fl.src = "opr_sales_list.aspx?allow=0&no=" + no + "&cust=" + cust + "&status=" + status + "&fs=" + fs + "&branch=" + cari.dl_branch.value + "&ssm=" + ssm + "&displayadd=0&nopo=%";
             },
             fl_refresh: function () {
                 cari.fl.contentWindow.document.refresh();
@@ -404,6 +417,7 @@
                         apl.createTableWS.column("create_date"),
                         apl.createTableWS.column("update_id"),
                         apl.createTableWS.column("update_date"),
+                        apl.createTableWS.column("draft_sts", undefined, [apl.createTableWS.attribute("type", "checkbox"), apl.createTableWS.attribute("disabled", "disabled")], undefined, undefined, "input", "checked"),
                         //,apl.createTableWS.column("pph21_sts", undefined, [apl.createTableWS.attribute("type", "checkbox"), apl.createTableWS.attribute("disabled", "disabled")], undefined, undefined, "input","checked")
                     ]
                 ),
@@ -606,6 +620,7 @@
                         cb_all: apl.func.get("mdl_device_all_customer"),
                         //lb_info_pcg : apl.func.get("mdl_device_info_pcg"),
                         tb_principal_price: apl.createNumeric("mdl_device_principal_price"),
+                        cb_draft: apl.func.get("mdl_device_draft"),
 
                         val_device: apl.createValidator("device_save", "mdl_device_name", function () { return apl.func.emptyValueCheck(mdl_device.ac_device.id); }, "Salah input"),
                         //val_device: apl.createValidator("device_save", "mdl_device_name", function () { return true; }, "Salah input"),
@@ -666,6 +681,7 @@
                             mdl_device.tb_note.value = "";
                             mdl_device.cb_pph.checked = false;
                             mdl_device.ac_vendor.set_value("", "");
+                            mdl_device.cb_draft.checked = false;
                             mdl_device.tbl.clearAllRow();
                             //mdl_device.lb_info_pcg.innerHTML = "Pokok jual "+ mdl.pcg_principal_price+"% dari modal: ";
                             mdl_device.tbl_cost.clearAllRow();
@@ -701,6 +717,8 @@
                                     mdl_device.tb_description.value = data.description;
                                     mdl_device.tb_note.value = data.marketing_note;
                                     mdl_device.ac_vendor.set_value(data.vendor_id, data.vendor_name);
+                                    mdl_device.cb_draft.checked = data.draft_sts;
+
                                     mdl_device.showEdit("Device - Edit");
                                     apl.func.hideSinkMessage();
 
@@ -717,7 +735,7 @@
                         simpan: function () {
                             if (apl.func.validatorCheck("device_save")) {
                                 var vendor_id = (mdl_device.ac_vendor.id == "") ? 0 : mdl_device.ac_vendor.id;
-                                activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.ac_device.id, mdl_device.tb_cost.getIntValue(), mdl_device.tb_price.getIntValue(), mdl_device.tb_qty.getIntValue(), mdl_device.cb_pph.checked, mdl_device.tb_description.value, vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, '<%= user_id %>',
+                                activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.ac_device.id, mdl_device.tb_cost.getIntValue(), mdl_device.tb_price.getIntValue(), mdl_device.tb_qty.getIntValue(), mdl_device.cb_pph.checked, mdl_device.tb_description.value, vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, '<%= user_id %>', mdl_device.cb_draft.checked,
                                     function () {
                                         //mdl.tbl_load();
                                         mdl.edit(mdl.sales_id);

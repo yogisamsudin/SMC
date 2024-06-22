@@ -12,35 +12,93 @@ using _test;
 public class activities : System.Web.Services.WebService
 {
     //#struct
+    public struct s_tec_onsite_guarantee
+    {
+        public int guarantee_onsite_id;
+        public string guarantee_onsite_name;
+        public Boolean guarantee_sts;
+
+        public s_tec_onsite_guarantee(int _guarantee_onsite_id, string _guarantee_onsite_name, Boolean _guarantee_sts)
+        {
+            guarantee_sts = _guarantee_sts;
+            guarantee_onsite_id = _guarantee_onsite_id;
+            guarantee_onsite_name = _guarantee_onsite_name;
+        }
+    }
+    public struct s_tec_onsite_workorders_parts
+    {
+        public long workorder_id;
+        public int part_id, total;
+        public string part;
+
+        public s_tec_onsite_workorders_parts( long _workorder_id, int _part_id, int _total, string _part)
+        {
+            workorder_id = _workorder_id;
+            part_id = _part_id;
+            total = _total;
+            part = _part;
+        }
+    }
+    public struct s_tec_onsite_workorders
+    {
+        public long workorder_id,onsite_id;
+        public int device_id;
+        public string sn, note, complient_note, device, segeldate, onsitedevicests_id, onsitedevicests, guarantee_date;
+
+        public s_tec_onsite_workorders(long _workorder_id, long _onsite_id, int _device_id,
+            string _sn, string _note, string _complient_note, string _device, string _segeldate,
+            string _onsitedevicests_id, string _onsitedevicests, string _guarantee_date = "")
+        {
+            workorder_id = _workorder_id;
+            onsite_id = _onsite_id;
+            device_id = _device_id;
+            sn = _sn;
+            note = _note;
+            complient_note = _complient_note;
+            device = _device;
+            segeldate = _segeldate;
+            onsitedevicests_id = _onsitedevicests_id;
+            onsitedevicests = _onsitedevicests;
+            guarantee_date = _guarantee_date;
+        }
+ 
+    }
     public struct s_tec_onsite
     {
-        public long onsite_id,sales_id,customer_id;
-        public string onsite_no, onsite_date, request_date, technician_name, done_date, note, onsitests_id,
-            offer_date, offer_no, customer_name, customer_address, customer_address_location, onsitests, marketing_id;
+        public long onsite_id,customer_id, an_id;
+        public int guarantee_onsite_id;
+        public string onsite_no, onsite_date, onsite_date2, request_date, technician_name, done_date, note, onsitests_id,
+            customer_name, customer_address, customer_address_location, onsitests, marketing_id, contact_name,
+            guarantee_onsite_name;
+        public Boolean guarantee_sts;
   
-        public s_tec_onsite(long _onsite_id, long _sales_id, long _customer_id,
-            string _onsite_no, string _onsite_date, string _request_date, string _technician_name, string _done_date, string _note, string _onsitests_id,
-            string _offer_date, string _offer_no, string _customer_name, string _customer_address, string _customer_address_location, string _onsitests, string _marketing_id
+        public s_tec_onsite(long _onsite_id, long _customer_id, int _an_id,
+            string _onsite_no, string _onsite_date, string _onsite_date2, string _request_date, string _technician_name, string _done_date, string _note, string _onsitests_id,
+            string _customer_name, string _customer_address, string _customer_address_location, string _onsitests, string _marketing_id, string _contact_name,
+            int _guarantee_onsite_id = 0, string _guarantee_onsite_name = "", Boolean _guarantee_sts = true
+
         )
         {
             onsite_id = _onsite_id;
-            sales_id = _sales_id;
             customer_id = _customer_id;
             onsite_no = _onsite_no;
             onsite_date = _onsite_date;
+            onsite_date2 = _onsite_date2;
             request_date = _request_date;
             technician_name = _technician_name;
             done_date = _done_date;
             note = _note;
             onsitests_id = _onsitests_id;
-            offer_date = _offer_date;
-            offer_no = _offer_no;
             customer_name = _customer_name;
             customer_address = _customer_address;
             customer_address_location = _customer_address_location;
             onsitests = _onsitests;
             marketing_id = _marketing_id;
-
+            an_id = _an_id;
+            contact_name = _contact_name;
+            guarantee_onsite_id = _guarantee_onsite_id;
+            guarantee_onsite_name = _guarantee_onsite_name;
+            guarantee_sts = _guarantee_sts;
         }
     }
     public struct s_opr_service_addicost
@@ -568,11 +626,13 @@ public class activities : System.Web.Services.WebService
     {
         public int marketing_group_id;
         public string marketing_group_name;
+        public double target_value;
 
-        public s_act_marketing_group(int _marketing_group_id, string _marketing_group_name)
+        public s_act_marketing_group(int _marketing_group_id, string _marketing_group_name, double _target_value)
         {
             marketing_group_id = _marketing_group_id;
             marketing_group_name = _marketing_group_name;
+            target_value = _target_value;
         }
     }
     public struct s_fin_receivable_payment_reverse
@@ -1255,7 +1315,7 @@ public class activities : System.Web.Services.WebService
     {
         public double sales_id, device_id, cost, price, qty, vendor_id, principal_price, price_customer;
         public string device, description, vendor_name, marketing_note, creator_id, create_date, update_id, update_date;
-        public Boolean pph21_sts;
+        public Boolean pph21_sts, draft_sts;
 
         public s_sales_device(double _sales_id, double _device_id, double _cost, double _price, string _device, Boolean _pph21_sts, int _qty,
             string _description = "",
@@ -1263,7 +1323,8 @@ public class activities : System.Web.Services.WebService
             double _principal_price = 0,
             double _price_customer = 0,
             string _marketing_note = "",
-            string _creator_id = "", string _create_date = "", string _update_id = "", string _update_date = "")
+            string _creator_id = "", string _create_date = "", string _update_id = "", string _update_date = "",
+            Boolean _draft_sts = false)
         {
             sales_id = _sales_id;
             device_id = _device_id;
@@ -1282,6 +1343,7 @@ public class activities : System.Web.Services.WebService
             create_date = _create_date;
             update_id = _update_id;
             update_date = _update_date;
+            draft_sts = _draft_sts;
         }
     }
     public struct s_trimming
@@ -1515,7 +1577,7 @@ public class activities : System.Web.Services.WebService
         public string offer_date, discount_type_id, opr_note, broker_name, discount_type, customer_name, offer_no, service_status_id,
             service_status_marketing_id, service_status, service_status_marketing, update_status_date, service_status_marketing_updatedate;
         public Boolean tax_sts, npwp_sts;
-        public double ppn, pph21, total_price, total_cost, total_price_pph21, total_ppn, total_pph21, total_discount, net, grand_price, additional_fee;
+        public double ppn, pph21, total_price, total_cost, total_price_pph21, total_ppn, total_pph21, total_discount, net, grand_price, additional_fee, total_addicost;
         public string invoice_no, reason_marketing_id, reason_marketing, additional_fee_note;
 
         public s_opr_service(double _service_id, double _broker_id, double _discount_value, double _fee,
@@ -1525,7 +1587,7 @@ public class activities : System.Web.Services.WebService
             double _ppn = 0, double _pph21 = 0, double _total_price = 0, double _total_cost = 0, double _total_price_pph21 = 0, double _total_ppn = 0, double _total_pph21 = 0, double _total_discount = 0, double _net = 0, double _grand_price = 0,
             string _invoice_no = null, Boolean _npwp_sts = false, string _update_status_date = "", string _reason_marketing_id = "", string _reason_marketing = "",
             double _additional_fee = 0, string _additional_fee_note = "",
-            string _service_status_marketing_updatedate = "")
+            string _service_status_marketing_updatedate = "", double _total_addicost = 0)
         {
             service_id = _service_id;
             broker_id = _broker_id;
@@ -1563,6 +1625,7 @@ public class activities : System.Web.Services.WebService
             additional_fee_note = _additional_fee_note;
 
             service_status_marketing_updatedate = _service_status_marketing_updatedate;
+            total_addicost = _total_addicost;
         }
     }
     public struct s_opr_borker
@@ -2137,7 +2200,7 @@ public class activities : System.Web.Services.WebService
         List<s_drop_down> data = new List<s_drop_down>();
         string strWhere = (where == "") ? "" : where + " and ";
 
-        string strSQL = "select device_id value,device text from v_tec_device where device like '" + nilai + "' order by device";
+        string strSQL = "select device_id value,device text from v_tec_device where "+ where + " device like '" + nilai + "' order by device";
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
@@ -2180,6 +2243,51 @@ public class activities : System.Web.Services.WebService
         return data.ToArray();
     }
     //#dropdown
+    [WebMethod]
+    public s_drop_down[] dl_availalibity(string where)
+    {
+        List<s_drop_down> data = new List<s_drop_down>();
+
+        string strSQL = "select code,keterangan from appCommonParameter where type='availability' " + where;
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
+        {
+            data.Add(new s_drop_down(row["code"].ToString(), row["keterangan"].ToString()));
+        }
+
+        return data.ToArray();
+    }
+    [WebMethod]
+    public s_drop_down[] dl_onsiteguarantee(string where)
+    {
+        List<s_drop_down> data = new List<s_drop_down>();
+
+        string strSQL = "select guarantee_onsite_id,guarantee_onsite_name from v_tec_onsite_guarantee " + where;
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
+        {
+            data.Add(new s_drop_down(row["guarantee_onsite_id"].ToString(), row["guarantee_onsite_name"].ToString()));
+        }
+
+        return data.ToArray();
+    }
+    [WebMethod]
+    public s_drop_down[] dl_onsitedevicests(string where)
+    {
+        List<s_drop_down> data = new List<s_drop_down>();
+
+        string strSQL = "select code,keterangan from  appCommonParameter where type='onsitedevicests' " + where;
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
+        {
+            data.Add(new s_drop_down(row["code"].ToString(), row["keterangan"].ToString()));
+        }
+
+        return data.ToArray();
+    }
     [WebMethod]
     public s_drop_down[] dl_onsitests(string where)
     {
@@ -3351,16 +3459,121 @@ public class activities : System.Web.Services.WebService
     }
 
     //#query
+    private string tec_onsite_guarantee_select(string filter)
+    {
+        return "select guarantee_onsite_id,guarantee_onsite_name,guarantee_sts from v_tec_onsite_guarantee " + filter;
+    }
+    private s_tec_onsite_guarantee tec_onsite_guarantee_row(System.Data.DataRow row)
+    {
+        return new s_tec_onsite_guarantee(
+            Convert.ToInt32(row["guarantee_onsite_id"]), row["guarantee_onsite_name"].ToString(), Convert.ToBoolean(row["guarantee_sts"])
+            );
+    }
+    [WebMethod]
+    public s_tec_onsite_guarantee tec_onsite_workorders_parts_data(string guarantee_onsite_id)
+    {
+        s_tec_onsite_guarantee data = new s_tec_onsite_guarantee();
+        string strSQL = tec_onsite_guarantee_select(" where guarantee_onsite_id=" + guarantee_onsite_id);
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeTextQ_sdr(strSQL))
+        {
+            data = tec_onsite_guarantee_row(row);
+        }
+
+        return data;
+    }
+    private string tec_onsite_workorders_parts_select(string filter)
+    {
+        return "select workorder_id, part_id, total, part from v_tec_onsite_workorders_parts " + filter;
+    }
+    private s_tec_onsite_workorders_parts tec_onsite_workorders_parts_row(System.Data.DataRow row)
+    {
+        return new s_tec_onsite_workorders_parts(
+            Convert.ToInt64(row["workorder_id"]), Convert.ToInt32(row["part_id"]), Convert.ToInt32(row["total"]),
+            row["part"].ToString()
+            );
+    }
+    [WebMethod]
+    public s_tec_onsite_workorders_parts tec_onsite_workorders_parts_data(string workorder_id, string part_id)
+    {
+        s_tec_onsite_workorders_parts data = new s_tec_onsite_workorders_parts();
+        string strSQL = tec_onsite_workorders_parts_select(" where workorder_id=" + workorder_id + " and part_id=" + part_id);
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeTextQ_sdr(strSQL))
+        {
+            data = tec_onsite_workorders_parts_row(row);
+        }
+
+        return data;
+    }
+    [WebMethod]
+    public s_tec_onsite_workorders_parts[] tec_onsite_workorders_parts_list(string workorder_id)
+    {
+        List<s_tec_onsite_workorders_parts> data = new List<s_tec_onsite_workorders_parts>();
+        string strSQL = tec_onsite_workorders_parts_select(" where workorder_id=" + workorder_id);
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeTextQ_sdr(strSQL))
+        {
+            data.Add(tec_onsite_workorders_parts_row(row));
+        }
+
+        return data.ToArray();
+    }
+    private string tec_onsite_workorders_select(string filter)
+    {
+        return "SELECT workorder_id,onsite_id,device_id,sn,note,complient_note, device,dbo.f_convertDateToChar(segeldate)segeldate,onsitedevicests_id,onsitedevicests, dbo.f_convertDateToChar(guarantee_date)guarantee_date  FROM [TEST4].[dbo].[v_tec_onsite_workorders] " + filter;
+    }
+    private s_tec_onsite_workorders tec_onsite_workorders_row(System.Data.DataRow row)
+    {
+        return new s_tec_onsite_workorders(
+            Convert.ToInt64(row["workorder_id"]),Convert.ToInt64(row["onsite_id"]),Convert.ToInt32(row["device_id"]),
+            row["sn"].ToString(),row["note"].ToString(),row["complient_note"].ToString(),row["device"].ToString(),
+            row["segeldate"].ToString(), row["onsitedevicests_id"].ToString(), row["onsitedevicests"].ToString(),
+            row["guarantee_date"].ToString()
+            );
+    }
+    [WebMethod]
+    public s_tec_onsite_workorders tec_onsite_wordorders_data(string workorder_id)
+    {
+        s_tec_onsite_workorders data = new s_tec_onsite_workorders();
+        string strSQL = tec_onsite_workorders_select(" where workorder_id=" + workorder_id);
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeTextQ_sdr(strSQL))
+        {
+            data = tec_onsite_workorders_row(row);
+        }
+
+        return data;
+    }
+    [WebMethod]
+    public s_tec_onsite_workorders[] tec_onsite_wordorders_list(string onsite_id)
+    {
+        List<s_tec_onsite_workorders> data = new List<s_tec_onsite_workorders>();
+        string strSQL = tec_onsite_workorders_select(" where onsite_id=" + onsite_id);
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeTextQ_sdr(strSQL))
+        {
+            data.Add( tec_onsite_workorders_row(row));
+        }
+
+        return data.ToArray();
+    }
     private string tec_onsite_select(string filter)
     {
-        return "select onsite_id,sales_id,customer_id, onsite_no,dbo.f_convertDateToChar(onsite_date)onsite_date, dbo.f_convertDateToChar(request_date)request_date, technician_name,done_date,Note,onsitests_id, dbo.f_convertDateToChar(offer_date)offer_date, offer_no,customer_name,customer_address,customer_address_location,onsitests,marketing_id  from v_tec_onsite " + filter;
+        return "select onsite_id,customer_id, onsite_no,dbo.f_convertDateToChar(onsite_date)onsite_date,dbo.f_convertDateToChar(onsite_date2)onsite_date2, dbo.f_convertDateToChar(request_date)request_date, technician_name,done_date,Note,onsitests_id, customer_name,customer_address,customer_address_location,onsitests,marketing_id, an_id, contact_name, guarantee_onsite_id, guarantee_onsite_name, guarantee_sts  from v_tec_onsite " + filter;
     }
     private s_tec_onsite tec_onsite_row(System.Data.DataRow row)
     {
         return new s_tec_onsite(
-            Convert.ToInt64(row["onsite_id"]), Convert.ToInt64(row["sales_id"]), Convert.ToInt64(row["customer_id"]), 
-            row["onsite_no"].ToString(), row["onsite_date"].ToString(), row["request_date"].ToString(), row["technician_name"].ToString(), row["done_date"].ToString(), row["note"].ToString(), row["onsitests_id"].ToString(),
-            row["offer_date"].ToString(), row["offer_no"].ToString(), row["customer_name"].ToString(), row["customer_address"].ToString(), row["customer_address_location"].ToString(), row["onsitests"].ToString(), row["marketing_id"].ToString()
+            Convert.ToInt64(row["onsite_id"]), Convert.ToInt64(row["customer_id"]), Convert.ToInt32(row["an_id"]), 
+            row["onsite_no"].ToString(), row["onsite_date"].ToString(),row["onsite_date2"].ToString(), row["request_date"].ToString(), row["technician_name"].ToString(), row["done_date"].ToString(), row["note"].ToString(), row["onsitests_id"].ToString(),
+            row["customer_name"].ToString(), row["customer_address"].ToString(), row["customer_address_location"].ToString(), row["onsitests"].ToString(), row["marketing_id"].ToString(), row["contact_name"].ToString(),
+            Convert.ToInt32(row["guarantee_onsite_id"]), row["guarantee_onsite_name"].ToString(),Convert.ToBoolean(row["guarantee_sts"])
         );
     }
     [WebMethod]
@@ -4121,13 +4334,13 @@ public class activities : System.Web.Services.WebService
     {
         s_act_marketing_group data = new s_act_marketing_group();
 
-        string strSQL = "select marketing_group_id, marketing_group_name from v_act_marketing_group where marketing_group_id =" + marketing_group_id;
+        string strSQL = "select marketing_group_id, marketing_group_name, target_value from v_act_marketing_group where marketing_group_id =" + marketing_group_id;
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
         {
             data = new s_act_marketing_group(
-                Convert.ToInt32(row["marketing_group_id"]), row["marketing_group_name"].ToString()
+                Convert.ToInt32(row["marketing_group_id"]), row["marketing_group_name"].ToString(), Convert.ToInt32(row["target_value"])
             );
         }
         return data;
@@ -4762,7 +4975,7 @@ public class activities : System.Web.Services.WebService
     {
         List<s_sales_device> data = new List<s_sales_device>();
 
-        string strSQL = "select isnull(vendor_id,0) vendor_id, vendor_name, sales_id, device_id, cost, price, device, pph21_sts,qty, description from v_opr_sales_device where sales_id in (select sales_id from fin_sales_opr where invoice_sales_id=" + invoice_sales_id + ")";
+        string strSQL = "select isnull(vendor_id,0) vendor_id, vendor_name, sales_id, device_id, cost, price, device, pph21_sts,qty, description, draft_sts from v_opr_sales_device where sales_id in (select sales_id from fin_sales_opr where invoice_sales_id=" + invoice_sales_id + ")";
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
@@ -4770,7 +4983,7 @@ public class activities : System.Web.Services.WebService
             data.Add(
                 new s_sales_device(Convert.ToInt32(row["sales_id"]), Convert.ToInt32(row["device_id"]), Convert.ToInt32(row["cost"]), Convert.ToInt32(row["price"]),
                 row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), row["description"].ToString(),
-                Convert.ToInt32(row["vendor_id"]), row["vendor_name"].ToString()
+                Convert.ToInt32(row["vendor_id"]), row["vendor_name"].ToString(),0,0,"","","","","",Convert.ToBoolean(row["draft_sts"])
                 )
             );
         }
@@ -5007,7 +5220,7 @@ public class activities : System.Web.Services.WebService
     {
         s_sales_device data = new s_sales_device();
 
-        string strSQL = "select isnull(vendor_id,0) vendor_id, vendor_name, sales_id, device_id, cost, price, device, pph21_sts,qty, description,principal_price, marketing_note, creator_id, cast(create_date as varchar(25))create_date, update_id, cast(update_date as varchar(25))update_date from v_opr_sales_device where sales_id=" + sales_id + " and device_id=" + device_id;
+        string strSQL = "select isnull(vendor_id,0) vendor_id, vendor_name, sales_id, device_id, cost, price, device, pph21_sts,qty, description,principal_price, marketing_note, creator_id, cast(create_date as varchar(25))create_date, update_id, cast(update_date as varchar(25))update_date, draft_sts from v_opr_sales_device where sales_id=" + sales_id + " and device_id=" + device_id;
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
@@ -5016,7 +5229,8 @@ public class activities : System.Web.Services.WebService
                 row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), row["description"].ToString(),
                 Convert.ToInt32(row["vendor_id"]), row["vendor_name"].ToString(), Convert.ToInt32(row["principal_price"]), 0,
                 row["marketing_note"].ToString(),
-                row["creator_id"].ToString(), row["create_date"].ToString(), row["update_id"].ToString(), row["update_date"].ToString()
+                row["creator_id"].ToString(), row["create_date"].ToString(), row["update_id"].ToString(), row["update_date"].ToString(),
+                Convert.ToBoolean(row["draft_sts"])
                 );
 
         }
@@ -5027,7 +5241,7 @@ public class activities : System.Web.Services.WebService
     {
         List<s_sales_device> data = new List<s_sales_device>();
 
-        string strSQL = "select sales_id, device_id, cost, price, device, pph21_sts,qty, principal_price, price_customer, creator_id, cast(create_date as varchar(25))create_date, update_id, cast(update_date as varchar(25))update_date from v_opr_sales_device where sales_id=" + sales_id;
+        string strSQL = "select sales_id, device_id, cost, price, device, pph21_sts,qty, principal_price, price_customer, creator_id, cast(create_date as varchar(25))create_date, update_id, cast(update_date as varchar(25))update_date, draft_sts from v_opr_sales_device where sales_id=" + sales_id;
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
@@ -5036,7 +5250,29 @@ public class activities : System.Web.Services.WebService
                 new s_sales_device(Convert.ToInt32(row["sales_id"]), Convert.ToInt32(row["device_id"]), Convert.ToInt32(row["cost"]), Convert.ToInt32(row["price"]),
                 row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), "", 0, "", Convert.ToInt32(row["principal_price"]),
                 Convert.ToInt32(row["price_customer"]), "",
-                row["creator_id"].ToString(), row["create_date"].ToString(), row["update_id"].ToString(), row["update_date"].ToString()
+                row["creator_id"].ToString(), row["create_date"].ToString(), row["update_id"].ToString(), row["update_date"].ToString(),
+                Convert.ToBoolean(row["draft_sts"])
+            ));
+
+        }
+        return data.ToArray();
+    }
+    [WebMethod]
+    public s_sales_device[] opr_sales_device_nondraft_list(string sales_id)
+    {
+        List<s_sales_device> data = new List<s_sales_device>();
+
+        string strSQL = "select sales_id, device_id, cost, price, device, pph21_sts,qty, principal_price, price_customer, creator_id, cast(create_date as varchar(25))create_date, update_id, cast(update_date as varchar(25))update_date, draft_sts from v_opr_sales_device where draft_sts=0 and sales_id=" + sales_id;
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
+        {
+            data.Add(
+                new s_sales_device(Convert.ToInt32(row["sales_id"]), Convert.ToInt32(row["device_id"]), Convert.ToInt32(row["cost"]), Convert.ToInt32(row["price"]),
+                row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), "", 0, "", Convert.ToInt32(row["principal_price"]),
+                Convert.ToInt32(row["price_customer"]), "",
+                row["creator_id"].ToString(), row["create_date"].ToString(), row["update_id"].ToString(), row["update_date"].ToString(),
+                Convert.ToBoolean(row["draft_sts"])
             ));
 
         }
@@ -5188,7 +5424,7 @@ public class activities : System.Web.Services.WebService
     {
         s_opr_service data = new s_opr_service();
 
-        string strSQL = "select npwp_sts, invoice_no, ppn, pph21, total_price, total_cost, total_price_pph21, total_ppn, total_pph21, total_discount, net, grand_price,customer_id,service_status,service_status_marketing, service_status_id, service_status_marketing_id, service_id, dbo.f_convertDateToChar(offer_date)offer_date, broker_id,discount_type_id,tax_sts,opr_note,broker_name,discount_type, discount_value,customer_name,offer_no,fee,convert(varchar(20),update_status_date,105)+' '+convert(varchar(20),update_status_date,108) update_status_date, reason_marketing_id, reason_marketing, additional_fee, additional_fee_note,isnull(cast(service_status_marketing_updatedate as varchar(20)),'')service_status_marketing_updatedate from v_opr_service where service_id=" + service_id;
+        string strSQL = "select npwp_sts, invoice_no, ppn, pph21, total_price, total_cost, total_price_pph21, total_ppn, total_pph21, total_discount, net, grand_price,customer_id,service_status,service_status_marketing, service_status_id, service_status_marketing_id, service_id, dbo.f_convertDateToChar(offer_date)offer_date, broker_id,discount_type_id,tax_sts,opr_note,broker_name,discount_type, discount_value,customer_name,offer_no,fee,convert(varchar(20),update_status_date,105)+' '+convert(varchar(20),update_status_date,108) update_status_date, reason_marketing_id, reason_marketing, additional_fee, additional_fee_note,isnull(cast(service_status_marketing_updatedate as varchar(20)),'')service_status_marketing_updatedate, total_addicost from v_opr_service where service_id=" + service_id;
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
@@ -5201,7 +5437,7 @@ public class activities : System.Web.Services.WebService
                 Convert.ToInt32(row["ppn"]), Convert.ToInt32(row["pph21"]), Convert.ToInt32(row["total_price"]), Convert.ToInt32(row["total_cost"]), Convert.ToInt32(row["total_price_pph21"]),
                 Convert.ToInt32(row["total_ppn"]), Convert.ToInt32(row["total_pph21"]), Convert.ToInt32(row["total_discount"]), Convert.ToInt32(row["net"]), Convert.ToInt64(row["grand_price"]),
                 row["invoice_no"].ToString(), Convert.ToBoolean(row["npwp_sts"]), row["update_status_date"].ToString(), row["reason_marketing_id"].ToString(),
-                row["reason_marketing"].ToString(), Convert.ToInt32(row["additional_fee"]), row["additional_fee_note"].ToString(), row["service_status_marketing_updatedate"].ToString()
+                row["reason_marketing"].ToString(), Convert.ToInt32(row["additional_fee"]), row["additional_fee_note"].ToString(), row["service_status_marketing_updatedate"].ToString(),Convert.ToDouble(row["total_addicost"])
             );
 
         }
@@ -5644,12 +5880,91 @@ public class activities : System.Web.Services.WebService
     }
     //#exec
     [WebMethod]
-    public long tec_onsite_add(long sales_id, string note, string user_id)
+    public void tec_onsite_workorders_parts_add(long workorder_id, int part_id, int total)
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("tec_onsite_workorders_parts_add", new _DBcon.sComParameter[]{
+            new _DBcon.sComParameter("@workorder_id",System.Data.SqlDbType.BigInt,0,workorder_id),
+            new _DBcon.sComParameter("@part_id",System.Data.SqlDbType.Int,0,part_id),
+            new _DBcon.sComParameter("@total",System.Data.SqlDbType.Int,0,total),
+        });
+
+    }
+    [WebMethod]
+    public void tec_onsite_workorders_parts_edit(long workorder_id, int part_id, int total)
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("tec_onsite_workorders_parts_edit", new _DBcon.sComParameter[]{
+            new _DBcon.sComParameter("@workorder_id",System.Data.SqlDbType.BigInt,0,workorder_id),
+            new _DBcon.sComParameter("@part_id",System.Data.SqlDbType.Int,0,part_id),
+            new _DBcon.sComParameter("@total",System.Data.SqlDbType.Int,0,total),
+        });
+
+    }
+    [WebMethod]
+    public void tec_onsite_workorders_parts_delete(long workorder_id, int part_id)
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("tec_onsite_workorders_parts_delete", new _DBcon.sComParameter[]{
+            new _DBcon.sComParameter("@workorder_id",System.Data.SqlDbType.BigInt,0,workorder_id),
+            new _DBcon.sComParameter("@part_id",System.Data.SqlDbType.Int,0,part_id),
+        });
+
+    }
+    [WebMethod]
+    public long tec_onsite_workorders_add(long onsite_id, int device_id, string sn, string note, string complient_note,
+        string onsitedevicests_id, string segeldate, string guarantee_date)
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("tec_onsite_workorders_add", new _DBcon.sComParameter[]{
+            new _DBcon.sComParameter("@onsite_id",System.Data.SqlDbType.BigInt,0,onsite_id),
+            new _DBcon.sComParameter("@device_id",System.Data.SqlDbType.Int,0,device_id),
+            new _DBcon.sComParameter("@sn",System.Data.SqlDbType.VarChar,50,sn),
+            new _DBcon.sComParameter("@note",System.Data.SqlDbType.Text,0,note),
+            new _DBcon.sComParameter("@complient_note",System.Data.SqlDbType.Text,0,complient_note),
+            new _DBcon.sComParameter("@onsitedevicests_id",System.Data.SqlDbType.VarChar,1,onsitedevicests_id),
+            new _DBcon.sComParameter("@segeldate",System.Data.SqlDbType.VarChar,10,segeldate),
+            new _DBcon.sComParameter("@guarantee_date",System.Data.SqlDbType.VarChar,10,guarantee_date),
+            new _DBcon.sComParameter("@ret",System.Data.SqlDbType.BigInt,0,System.Data.ParameterDirection.Output)
+        });
+
+        return Convert.ToInt64(hasil["@ret"]);
+    }
+    [WebMethod]
+    public void tec_onsite_workorders_edit(long workorder_id, int device_id, string sn, string note, string complient_note,
+        string onsitedevicests_id, string segeldate, string guarantee_date)
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("tec_onsite_workorders_edit", new _DBcon.sComParameter[]{
+            new _DBcon.sComParameter("@workorder_id",System.Data.SqlDbType.BigInt,0,workorder_id),
+            new _DBcon.sComParameter("@device_id",System.Data.SqlDbType.Int,0,device_id),
+            new _DBcon.sComParameter("@sn",System.Data.SqlDbType.VarChar,50,sn),
+            new _DBcon.sComParameter("@note",System.Data.SqlDbType.Text,0,note),
+            new _DBcon.sComParameter("@complient_note",System.Data.SqlDbType.Text,0,complient_note),
+            new _DBcon.sComParameter("@onsitedevicests_id",System.Data.SqlDbType.VarChar,1,onsitedevicests_id),
+            new _DBcon.sComParameter("@segeldate",System.Data.SqlDbType.VarChar,10,segeldate),
+            new _DBcon.sComParameter("@guarantee_date",System.Data.SqlDbType.VarChar,10,guarantee_date),
+        });
+
+    }
+    [WebMethod]
+    public void tec_onsite_workorders_delete(long workorder_id)
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("tec_onsite_workorders_delete", new _DBcon.sComParameter[]{
+            new _DBcon.sComParameter("@workorder_id",System.Data.SqlDbType.BigInt,0,workorder_id),
+        });
+
+    }
+    [WebMethod]
+    public long tec_onsite_add(int customer_id, string note, string user_id, int an_id, int guarantee_onsite_id)
     {
         _DBcon d = new _DBcon();
         _DBcon.arrOutComPar hasil = d.executeProcNQ("tec_onsite_add", new _DBcon.sComParameter[]{
-            new _DBcon.sComParameter("@sales_id",System.Data.SqlDbType.BigInt,0,sales_id),
+            new _DBcon.sComParameter("@customer_id",System.Data.SqlDbType.Int,0,customer_id),
+            new _DBcon.sComParameter("@an_id",System.Data.SqlDbType.Int,0,an_id),
             new _DBcon.sComParameter("@note",System.Data.SqlDbType.Text,0,note),
+            new _DBcon.sComParameter("@guarantee_onsite_id",System.Data.SqlDbType.Int,0,guarantee_onsite_id),
             new _DBcon.sComParameter("@user_id",System.Data.SqlDbType.VarChar,15,user_id),
             new _DBcon.sComParameter("@ret",System.Data.SqlDbType.BigInt,0,System.Data.ParameterDirection.Output)
         });
@@ -5666,27 +5981,29 @@ public class activities : System.Web.Services.WebService
 
     }
     [WebMethod]
-    public void tec_onsite_edit1(long onsite_id, string note, string onsitests_id)
+    public void tec_onsite_edit1(long onsite_id, string note, string onsitests_id, int guarantee_onsite_id)
     {
         _DBcon d = new _DBcon();
         _DBcon.arrOutComPar hasil = d.executeProcNQ("tec_onsite_edit1", new _DBcon.sComParameter[]{
             new _DBcon.sComParameter("@onsite_id",System.Data.SqlDbType.BigInt,0,onsite_id),
             new _DBcon.sComParameter("@note",System.Data.SqlDbType.Text,0,note),
             new _DBcon.sComParameter("@onsitests_id",System.Data.SqlDbType.VarChar,1,onsitests_id),
+            new _DBcon.sComParameter("@guarantee_onsite_id",System.Data.SqlDbType.Int,0,guarantee_onsite_id),
             
         });
 
     }
     [WebMethod]
-    public void tec_onsite_edit2(long onsite_id, string note, string onsite_date, string technician_name, Boolean done_sts)
+    public void tec_onsite_edit2(long onsite_id, string note, string onsite_date, string onsite_date2, string technician_name, string onsitests_id)
     {
         _DBcon d = new _DBcon();
         _DBcon.arrOutComPar hasil = d.executeProcNQ("tec_onsite_edit2", new _DBcon.sComParameter[]{
             new _DBcon.sComParameter("@onsite_id",System.Data.SqlDbType.BigInt,0,onsite_id),
             new _DBcon.sComParameter("@note",System.Data.SqlDbType.Text,0,note),
             new _DBcon.sComParameter("@onsite_date",System.Data.SqlDbType.VarChar,10,onsite_date),
+            new _DBcon.sComParameter("@onsite_date2",System.Data.SqlDbType.VarChar,10,onsite_date2),
             new _DBcon.sComParameter("@technician_name",System.Data.SqlDbType.VarChar,50,technician_name),
-            new _DBcon.sComParameter("@done_sts",System.Data.SqlDbType.Bit,0,done_sts),
+            new _DBcon.sComParameter("@onsitests_id",System.Data.SqlDbType.VarChar,20,onsitests_id),
         });
 
     }
@@ -6248,20 +6565,22 @@ public class activities : System.Web.Services.WebService
         });
     }
     [WebMethod]
-    public void act_marketing_group_edit(int marketing_group_id, string marketing_group_name)
+    public void act_marketing_group_edit(int marketing_group_id, string marketing_group_name, double target_value)
     {
         _DBcon d = new _DBcon();
         _DBcon.arrOutComPar hasil = d.executeProcNQ("act_marketing_group_edit", new _DBcon.sComParameter[]{
             new _DBcon.sComParameter("@marketing_group_id",System.Data.SqlDbType.Int,0,marketing_group_id),
-            new _DBcon.sComParameter("@marketing_group_name",System.Data.SqlDbType.VarChar,50,marketing_group_name)
+            new _DBcon.sComParameter("@marketing_group_name",System.Data.SqlDbType.VarChar,50,marketing_group_name),
+            new _DBcon.sComParameter("@target_value",System.Data.SqlDbType.Money,0,target_value)
         });
     }
     [WebMethod]
-    public void act_marketing_group_add(string marketing_group_name)
+    public void act_marketing_group_add(string marketing_group_name, double target_value)
     {
         _DBcon d = new _DBcon();
         _DBcon.arrOutComPar hasil = d.executeProcNQ("act_marketing_group_add", new _DBcon.sComParameter[]{
-            new _DBcon.sComParameter("@marketing_group_name",System.Data.SqlDbType.VarChar,50,marketing_group_name)
+            new _DBcon.sComParameter("@marketing_group_name",System.Data.SqlDbType.VarChar,50,marketing_group_name),
+            new _DBcon.sComParameter("@target_value",System.Data.SqlDbType.Money,0,target_value)
         });
     }
     [WebMethod]
@@ -7172,7 +7491,7 @@ public class activities : System.Web.Services.WebService
         });
     }
     [WebMethod]
-    public void opr_sales_device_save(int sales_id, int device_id, double cost, double price, int qty, Boolean pph21_sts, string description, int vendor_id, double principal_price, string marketing_note = "", string user_id = "")
+    public void opr_sales_device_save(int sales_id, int device_id, double cost, double price, int qty, Boolean pph21_sts, string description, int vendor_id, double principal_price, string marketing_note = "", string user_id = "", Boolean draft_sts = false)
     {
         _DBcon d = new _DBcon();
         _DBcon.arrOutComPar hasil = d.executeProcNQ("opr_sales_device_save", new _DBcon.sComParameter[]{    
@@ -7186,7 +7505,8 @@ public class activities : System.Web.Services.WebService
             new _DBcon.sComParameter("@vendor_id",System.Data.SqlDbType.Int,0,vendor_id),
             new _DBcon.sComParameter("@principal_price",System.Data.SqlDbType.Money,0,principal_price),
             new _DBcon.sComParameter("@marketing_note",System.Data.SqlDbType.Text,0,marketing_note),
-            new _DBcon.sComParameter("@user_id",System.Data.SqlDbType.VarChar,25,user_id)
+            new _DBcon.sComParameter("@user_id",System.Data.SqlDbType.VarChar,25,user_id),
+            new _DBcon.sComParameter("@draft_sts",System.Data.SqlDbType.Bit,0,draft_sts)
             
         });
     }

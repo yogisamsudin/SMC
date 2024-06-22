@@ -168,6 +168,7 @@
                                 <th>HPP</th>
                                 <th>Harga Jual</th>
                                 <th>Qty</th>
+                                <th>Sts.Draft</th>
                             </tr>
                         </table>
                     </td>
@@ -304,8 +305,11 @@
                 </tr>
                 <tr>
                     <th>Total</th>
-                    <td>
-                        <input type="text" id="mdl_device_qty" size="3" style="text-align: right;" /></td>
+                    <td><input type="text" id="mdl_device_qty" size="3" style="text-align: right;" /></td>
+                </tr>
+                <tr>
+                    <th>Draft</th>
+                    <td><input type="checkbox" id="mdl_device_draft" /></td>
                 </tr>
             </table>
             <div style="padding-top: 5px;" class="button_panel">
@@ -420,7 +424,8 @@
                         apl.createTableWS.column("device"),
                         apl.createTableWS.column("principal_price", undefined, undefined, undefined, true),
                         apl.createTableWS.column("price", undefined, undefined, undefined, true),
-                        apl.createTableWS.column("qty", undefined, undefined, undefined, true)
+                        apl.createTableWS.column("qty", undefined, undefined, undefined, true),
+                        apl.createTableWS.column("draft_sts", undefined, [apl.createTableWS.attribute("type", "checkbox"), apl.createTableWS.attribute("disabled", "disabled")], undefined, undefined, "input", "checked"),
                         //,apl.createTableWS.column("pph21_sts", undefined, [apl.createTableWS.attribute("type", "checkbox"), apl.createTableWS.attribute("disabled", "disabled")], undefined, undefined, "input","checked")
                     ]
                 ),
@@ -615,6 +620,7 @@
                     pph: false,
                     vendor_id: 0,
                     device_id: 0,
+                    draft_sts: false,
                     lb_device: apl.func.get("mdl_device_name"),
                     tb_principal_price: apl.createNumeric("mdl_device_principal_price", true),
                     tb_price: apl.createNumeric("mdl_device_price", true),
@@ -623,6 +629,7 @@
                     tb_description: apl.func.get("mdl_device_description"),
                     tb_note: apl.func.get("mdl_device_note"),
                     cb_all: apl.func.get("mdl_device_all_customer"),
+                    cb_draft:apl.func.get("mdl_device_draft"),
 
                     //val_price1: apl.createValidator("device_save", "mdl_device_price", function () { return apl.func.emptyValueCheck(mdl_device.tb_price.value); }, "Salah input"),
                     val_price2: apl.createValidator("device_save", "mdl_device_price", function () { return (mdl_device.tb_price.getIntValue() < mdl_device.tb_principal_price.getIntValue()) }, "Nilai lebih kecil dari harga pokok"),
@@ -651,6 +658,7 @@
                         mdl_device.tb_description.value = "";
                         mdl_device.tbl.clearAllRow();
                         mdl_device.tb_note.value = "";
+                        mdl_device.cb_draft.checked = false;
                     },
                     edit: function (sales_id, device_id) {
                         mdl_device.sales_id = sales_id;
@@ -670,6 +678,8 @@
                                 mdl_device.lb_qty.value = data.qty;
                                 mdl_device.tb_description.value = data.description;
                                 mdl_device.tb_note.value = data.marketing_note;
+                                mdl_device.draft_sts = data.draft_sts;
+                                mdl_device.cb_draft.checked = data.draft_sts;
 
                                 mdl_device.showEdit("Device - Edit");
                                 apl.func.hideSinkMessage();
@@ -680,7 +690,7 @@
                 function () {
                     if (apl.func.validatorCheck("device_save")) {
                         apl.func.showSinkMessage("Save...");
-                        activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.device_id, mdl_device.cost, mdl_device.tb_price.getIntValue(), parseInt(mdl_device.lb_qty.getIntValue()), mdl_device.pph, mdl_device.tb_description.value, mdl_device.vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, "<%= user_id %>",
+                        activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.device_id, mdl_device.cost, mdl_device.tb_price.getIntValue(), parseInt(mdl_device.lb_qty.getIntValue()), mdl_device.pph, mdl_device.tb_description.value, mdl_device.vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, "<%= user_id %>",mdl_device.cb_draft.checked,
                         function () {
                             mdl.load_opr_data();
                             mdl.tbl_load(mdl_device.sales_id);

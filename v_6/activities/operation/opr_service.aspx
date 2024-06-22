@@ -177,6 +177,18 @@
                     </td>
                 </tr>
                 <tr>
+                    <th style="vertical-align:top;">Addi.Cost List</th>
+                    <td>
+                        <table id="mdl_tbladdicost" class="gridView" style="min-width:600px;">
+                            <tr>
+                                <%--<th style="width:25px;"><div class="tambah" onclick="mdladdicost.tambah();"></div></th>--%>
+                                <th>Keterangan</th>
+                                <th>Nilai</th>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
                     <th>PPN</th>
                     <td><label id="mdl_ppn"></label> %</td>
                 </tr>
@@ -198,6 +210,10 @@
                 <tr>
                     <th>Modal</th>
                     <td><input type="text" id="mdl_total_cost" size="15" style="text-align:right;" disabled/></td>
+                </tr>
+                <tr>
+                    <th>Addi.Cost -</th>
+                    <td><input type="text" id="mdl_total_addicost" size="15" style="text-align:right;" disabled/></td>
                 </tr>
                 <tr>
                     <th>Net</th>
@@ -434,6 +450,7 @@
                 lb_pph: apl.func.get("mdl_pph"),
                 tb_total_price: apl.createNumeric("mdl_total_price",true),
                 tb_total_cost: apl.createNumeric("mdl_total_cost", true),
+                tb_total_addicost: apl.createNumeric("mdl_total_addicost", true),
                 tb_total_pph: apl.createNumeric("mdl_total_pph", true),
                 tb_total_ppn: apl.createNumeric("mdl_total_ppn", true),
                 tb_total_discount: apl.createNumeric("mdl_total_discount", true),
@@ -490,6 +507,16 @@
                         }, apl.func.showError, ""
                     );
                 },
+                tbladdicost: apl.createTableWS.init("mdl_tbladdicost",
+                    [
+                        //apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "edit")], function (data) { mdladdicost.edit(data.addicost_id); }, undefined, undefined),
+                        apl.createTableWS.column("addicost_name"),
+                        apl.createTableWS.column("addicost_value", undefined, undefined, undefined, true)
+                    ]
+                ),
+                tbladdicost_load: function () {
+                    activities.opr_service_addicost_list(mdl.service_id, function (arr) { mdl.tbladdicost.load(arr); }, apl.func.showError, "");
+                },
                 set_tax:function(nilai)
                 {
                     if (nilai != '') {
@@ -539,6 +566,7 @@
                     mdl.lb_pph.innerHTML = "";
                     mdl.lb_ppn.innerHTML = "";
                     mdl.tb_total_cost.value = "";
+                    mdl.tb_total_addicost.value = "";
                     mdl.tb_total_price.value = "";
                     mdl.tb_total_pph.value = "";
                     mdl.tb_total_ppn.value = "";
@@ -567,6 +595,7 @@
                     apl.func.showSinkMessage("Memuat data");
                     mdl.service_id = id;
                     mdl.tbl_load(false);
+                    mdl.tbladdicost_load();
                     activities.opr_service_data(id,
                         function (data)
                         {
@@ -589,6 +618,7 @@
                             mdl.lb_pph.innerHTML = data.pph21;
                             mdl.lb_ppn.innerHTML = data.ppn;
                             mdl.tb_total_cost.setValue(data.total_cost);
+                            mdl.tb_total_addicost.setValue(data.total_addicost);
                             mdl.tb_total_price.setValue(data.total_price);
                             mdl.tb_total_pph.setValue(data.total_pph21);
                             mdl.tb_total_ppn.setValue(data.total_ppn);
