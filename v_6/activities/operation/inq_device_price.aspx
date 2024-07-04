@@ -1,5 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/page.master" Theme="Page" %>
 
+<%@ Register Src="~/activities/operation/wuc_inq_sales.ascx" TagPrefix="uc1" TagName="wuc_inq_sales" %>
+
+
+
+
 <script runat="server">
 
 </script>
@@ -30,6 +35,10 @@
     </table>
     
     <iframe class="frameList" id="cari_fr"></iframe>
+
+    <%--<uc1:wuc_sales_inq runat="server" ID="wuc_sales_inq" cover_id="cover_content" parent_id="frm_page" />--%>
+
+    <uc1:wuc_inq_sales runat="server" ID="inq" cover_id="cover_content" parent_id="frm_page" func_select="document.list_edit" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="script" Runat="Server">
     <script type="text/javascript">
@@ -46,6 +55,8 @@
                 cari.fl.contentWindow.document.refresh();
             }
         }
+
+        //document.list_edit = function (id) { alert(id) };
     </script>
 </asp:Content>
 

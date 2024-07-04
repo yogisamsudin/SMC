@@ -6,7 +6,7 @@
     void Page_Load(object o, EventArgs e)
     {
         if (Request.QueryString["add"]!=null) function_add_name = Request.QueryString["add"].ToString();
-        if (Request.QueryString["edit"] != null) function_edit_name = Request.QueryString["edit"].ToString();        
+        if (Request.QueryString["edit"] != null) function_edit_name = Request.QueryString["edit"].ToString();
         gvdata.DataBind();
     }
 </script>

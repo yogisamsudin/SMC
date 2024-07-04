@@ -3,6 +3,7 @@
 <script runat="server">
     public string parent_id { set; get; }
     public string cover_id { set; get; }
+    public string location_save_func_name { set; get; }
 
     void Page_Load(object o, EventArgs e)
     {
@@ -53,8 +54,12 @@
 </div>
 
 <script type="text/javascript">
+    var func_locsavename;
+
     window.addEventListener("load",
         function () {
+            func_locsavename = <%= location_save_func_name %>;
+
             var o = document["<%= ClientID %>"] = apl.createModal("<%= ClientID %>_",
                 {
                     tb_address: apl.func.get("<%= ClientID %>_address"),                    
@@ -62,8 +67,10 @@
                     bt_cari: apl.func.get("<%= ClientID %>_cari"),
                     fl_load:function()
                     {
-                        var name=escape(o.tb_address.value);
-                        o.fl.src = "../expedition/location_list.aspx?edit=location_edit&add=location_add&select=location_select&name="+name;
+                        var name = escape(o.tb_address.value);
+                        
+                        o.fl.src = "../expedition/location_list.aspx?edit=location_edit&add=location_add&select=location_select&address=" + name;
+                        //alert(o.fl.src);
                     },
                     open:function()
                     {
@@ -92,6 +99,8 @@
                 function ()
                 {
                     apl.func.validatorCheck("<%= ClientID %>_panel_save");
+                    func_locsavename(o2.tb_address.value, 0);
+                    o2.hide();
                 }, undefined, undefined, "<%= parent_id %>", "<%= ClientID %>_", ""
             );
 

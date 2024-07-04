@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/page.master" Theme="Page"%>
 
 <%@ Register Src="~/activities/expedition/wuc_location_select.ascx" TagPrefix="uc1" TagName="wuc_location_select" %>
+<%@ Register Src="~/activities/expedition/wuc_location.ascx" TagPrefix="uc1" TagName="wuc_location" %>
+
 
 
 <script runat="server">
@@ -20,7 +22,7 @@
     <table class="formview">
         <tr>
             <th>Vendor</th>
-            <td><input type="text" id="cari_vendor"/></td>
+            <td><input type="text" id="cari_vendor" value="%"/></td>
         </tr>
         <tr>
             <th>Kategori</th>
@@ -38,8 +40,8 @@
     
     <iframe class="frameList" id="cari_fr"></iframe> 
 
-    <uc1:wuc_location_select runat="server" ID="mdl_location" parent_id="frm_page" cover_id="mdl" select_function="list_select" />
-
+    <uc1:wuc_location_select runat="server" ID="mdl_location" parent_id="frm_page" cover_id="mdl" select_function="list_select" ViewStateMode="Inherit" />
+    <uc1:wuc_location runat="server" ID="mdl_lokasi" cover_id="mdl" parent_id="frm_page" location_save_func_name="mdl.location_save" />
     <div id="mdl">
         <fieldset>
             <legend></legend>
@@ -64,8 +66,8 @@
                     <th>Alamat #1</th>
                     <td>
                         <textarea id="mdl_address1" maxlength="300" style="float:left;"></textarea>
-                        <div class="select" style="float:left;" onclick="mdl.select_location();"></div>
-                        <div class="tambah" style="float:left;" onclick="mdl.tambah_location();"></div>
+                        <%--<div class="select" style="float:left;" onclick="mdl.select_location();"></div>--%>
+                        <div class="select" style="float:left;" onclick="mdl.tambah_location();"></div>
                     </td>
                 </tr>
                 <tr>
@@ -219,6 +221,12 @@
                     apl.createTableWS.column("bill_no"),
                     apl.createTableWS.column("bill_bank_name")
                 ]),
+
+                val01: apl.createValidator("save", "mdl_vendor", function () { return apl.func.emptyValueCheck(mdl.tb_vendor.value); }, "Invalid Input"),
+                val02: apl.createValidator("save", "mdl_contact", function () { return apl.func.emptyValueCheck(mdl.tb_contact.value); }, "Invalid Input"),
+                val03: apl.createValidator("save", "mdl_phone1", function () { return apl.func.emptyValueCheck(mdl.tb_phone1.value); }, "Invalid Input"),
+                val04: apl.createValidator("save", "mdl_address1", function () { return apl.func.emptyValueCheck(mdl.tb_address1.value); }, "Invalid Input"),
+
                 tbl_load:function()
                 {
                     activities.opr_vendor_bill_list(mdl.vendor_id, function (arr_data) { mdl.tbl.load(arr_data);}, apl.func.showError, "");
@@ -232,23 +240,13 @@
                 },
                 
 
-                val_vendor: apl.createValidator("save", "mdl_vendor", function () { return apl.func.emptyValueCheck(mdl.tb_vendor.value); }, "Salah input"),
-                val_address1: apl.createValidator("save", "mdl_address1", function () { return apl.func.emptyValueCheck(mdl.tb_address1.value); }, "Salah input"),
-
                 select_location:function()
                 {
                     document.mdl_location.open();
                 },
                 tambah_location: function ()
                 {
-                    mdl.location_id = 0;
-                    mdl.tb_address1.disabled = false;
-                    mdl.tb_address1.value = "";
-                    mdl.tb_contact.value = "";
-                    mdl.tb_phone1.value = "";
-                    mdl.tb_phone2.value = "";
-                    mdl.tbl.clearAllRow();
-                    mdl.tbl_category.clearAllRow();
+                    document.mdl_lokasi.open();
                 },
                 select:function(id)
                 {
@@ -257,6 +255,8 @@
                             mdl.location_id = id;
                             mdl.tb_address1.value = data.location_address;
                             mdl.tb_address1.disabled = true;
+
+                            document.mdl_lokasi.hide();
                             document.mdl_location.close();
                         }, apl.func.showError, ""
                     );                    
@@ -306,6 +306,16 @@
                     cari.fl_refresh();
                     mdl.hide();
                     apl.func.hideSinkMessage();
+                },
+                location_save:function(str_address, int_distance)
+                {
+                    activities.exp_location_add(str_address, int_distance, function (locid) {
+                        mdl.location_id = locid;
+                        mdl.tb_address1.value = str_address;
+                        mdl.tb_address1.disabled = true;
+                        document.mdl_lokasi.hide();
+
+                    }, apl.func.showError, "");
                 }
             },
             function () {
@@ -531,6 +541,8 @@
                 }
             }, "frm_page", "mdl_category"
         );
+
+        
         
 
         window.addEventListener("load", function () {
@@ -538,7 +550,9 @@
             document.list_add = mdl.tambah;
             document.list_edit = mdl.edit;
             document.list_select = mdl.select;
+            document.location_edit = mdl.select;
         });
+
     </script>
 </asp:Content>
 

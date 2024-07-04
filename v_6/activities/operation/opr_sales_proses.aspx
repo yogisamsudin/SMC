@@ -323,6 +323,21 @@
                     <td><input id="mdl_device_vendor"/></td>
                 </tr>
                 <tr>
+                    <th>Sts.Garansi</th>
+                    <td><select id="mdl_device_guarantee"></select></td>
+                </tr>
+                <tr>
+                    <th>Ketersediaan Brg.</th>
+                    <td  style="padding:0;margin:0;border:none;">
+                        <table border="0" style="border:none;padding:0;margin:0;">
+                            <tr>
+                                <td style="padding:0;margin:0;border:none;"><select id="mdl_device_availability"></select></td>
+                                <td style="padding:0;margin:0;border:none;"><input type="text" id="mdl_device_inden" size="3" style="text-align:right;"/></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
                     <th>Draft</th>
                     <td><input type="checkbox" id="mdl_device_draft" /></td>
                 </tr>
@@ -339,6 +354,8 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="script" Runat="Server">
     <script type="text/javascript">
+        var appuser = '<%= user_id %>';
+
         var cari = {
             tb_no: apl.func.get("cari_no"),
             tb_customer: apl.func.get("cari_customer"),
@@ -655,14 +672,22 @@
                     cb_all: apl.func.get("mdl_device_all_customer"),
                     //lb_info_pcg : apl.func.get("mdl_device_info_pcg"),
                     tb_principal_price: apl.createNumeric("mdl_device_principal_price"),
+
+                    dl_guarantee: apl.createDropdownWS("mdl_device_guarantee", activities.dl_guaranteedevsts),
+                    dl_availability: apl.createDropdownWS("mdl_device_availability", activities.dl_availalibity),
+                    tb_inden: apl.createNumeric("mdl_device_inden"),
+
                     cb_draft:apl.func.get("mdl_device_draft"),
 
                     val_device: apl.createValidator("device_save", "mdl_device_name", function () { return apl.func.emptyValueCheck(mdl_device.ac_device.id); }, "Salah input"),
                     //val_device: apl.createValidator("device_save", "mdl_device_name", function () { return true; }, "Salah input"),
-                    val_cost: apl.createValidator("device_save", "mdl_device_cost", function () { return apl.func.emptyValueCheck(mdl_device.tb_cost.value); }, "Salah input"),
-                    val_pp: apl.createValidator("device_save", "mdl_device_principal_price", function () { return apl.func.emptyValueCheck(mdl_device.tb_principal_price.value); }, "Salah input"),
-                    val_price: apl.createValidator("device_save", "mdl_device_price", function () { return apl.func.emptyValueCheck(mdl_device.tb_price.value); }, "Salah input"),
-                    val_qty: apl.createValidator("device_save", "mdl_device_qty", function () { return apl.func.emptyValueCheck(mdl_device.tb_qty.value); }, "Salah input"),
+                    val01: apl.createValidator("device_save", "mdl_device_cost", function () { return apl.func.emptyValueCheck(mdl_device.tb_cost.value); }, "Salah input"),
+                    val02: apl.createValidator("device_save", "mdl_device_principal_price", function () { return apl.func.emptyValueCheck(mdl_device.tb_principal_price.value); }, "Salah input"),
+                    val03: apl.createValidator("device_save", "mdl_device_price", function () { return apl.func.emptyValueCheck(mdl_device.tb_price.value); }, "Salah input"),
+                    val04: apl.createValidator("device_save", "mdl_device_qty", function () { return apl.func.emptyValueCheck(mdl_device.tb_qty.value); }, "Salah input"),
+                    val06: apl.createValidator("device_save", "mdl_device_guarantee", function () { return apl.func.emptyValueCheck(mdl_device.dl_guarantee.value); }, "Salah input"),
+                    val07: apl.createValidator("device_save", "mdl_device_availability", function () { return apl.func.emptyValueCheck(mdl_device.dl_availability.value); }, "Salah input"),
+                    val08: apl.createValidator("device_save", "mdl_device_inden", function () { return apl.func.emptyValueCheck(mdl_device.tb_inden.value); }, "Salah input"),
 
                     tbl: apl.createTableWS.init("mdl_device_tbl_price", [
                         apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "select")], function (data) { mdl_device.tb_price.setValue(data.price); }, undefined, undefined),
@@ -704,6 +729,10 @@
                             }, apl.func.showError, ""
                         );
                     },
+                    o_availchange: function () {
+                        if (mdl_device.dl_availability.value == "2") mdl_device.tb_inden.Show(); else mdl_device.tb_inden.Hide();
+                        mdl_device.tb_inden.value = "0";
+                    },
                     kosongkan: function () {
                         apl.func.validatorClear("device_save");
                         mdl_device.ac_device.set_value("", "");
@@ -720,13 +749,17 @@
                         mdl_device.tbl.clearAllRow();
                         //mdl_device.lb_info_pcg.innerHTML = "Pokok jual "+ mdl.pcg_principal_price+"% dari modal: ";
                         mdl_device.tbl_cost.clearAllRow();
+
+                        mdl_device.dl_guarantee.value = "";
+                        mdl_device.dl_availability.value = "";
+                        mdl_device.o_availchange();
                     },
                     tambah: function (id) {
                         mdl_device.kosongkan();
                         mdl_device.sales_id = id;
                         mdl_device.showAdd("Device - Tambah");
 
-                        if ('<%= user_id %>' != 'sa' && mdl.lb_invoice_no.innerHTML != "") mdl_device.btnAdd.hide();
+                        if (appuser != 'sa' && mdl.lb_invoice_no.innerHTML != "") mdl_device.btnAdd.hide();
                     },
                     /*
                     f_tambakan_pajak:function()
@@ -754,10 +787,15 @@
                                 mdl_device.ac_vendor.set_value(data.vendor_id, data.vendor_name);
                                 mdl_device.cb_draft.checked = data.draft_sts;
 
+                                mdl_device.dl_guarantee.value = data.guarantee_id;
+                                mdl_device.dl_availability.value = data.availability_id;
+                                mdl_device.o_availchange();
+                                mdl_device.tb_inden.setValue(data.inden);
+
                                 mdl_device.showEdit("Device - Edit");
                                 apl.func.hideSinkMessage();
 
-                                if ('<%= user_id %>' != 'sa' && mdl.lb_invoice_no.innerHTML != "") //yogi
+                                if (appuser != 'sa' && mdl.lb_invoice_no.innerHTML != "") //yogi
                                 {
                                     mdl_device.btnAdd.hide();
                                     mdl_device.btnSave.hide();
@@ -770,11 +808,13 @@
                     simpan: function () {
                         if (apl.func.validatorCheck("device_save")) {
                             var vendor_id = (mdl_device.ac_vendor.id == "") ? 0 : mdl_device.ac_vendor.id;
-                            activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.ac_device.id, mdl_device.tb_cost.getIntValue(), mdl_device.tb_price.getIntValue(), mdl_device.tb_qty.getIntValue(), mdl_device.cb_pph.checked, mdl_device.tb_description.value, vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, '<%= user_id %>',mdl_device.cb_draft.checked,
-                                    function () {
+                            activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.ac_device.id, mdl_device.tb_cost.getIntValue(), mdl_device.tb_price.getIntValue(), mdl_device.tb_qty.getIntValue(), mdl_device.cb_pph.checked, mdl_device.tb_description.value, vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, appuser, mdl_device.cb_draft.checked, mdl_device.dl_guarantee.value, mdl_device.dl_availability.value, mdl_device.tb_inden.getIntValue(),
+                                    function (message) {
                                         //mdl.tbl_load();
-                                        mdl.edit(mdl.sales_id);
-                                        mdl_device.hide();
+                                        if (message == "") {
+                                            mdl.edit(mdl.sales_id);
+                                            mdl_device.hide();
+                                        } else alert(message);
                                     }, apl.func.showError, ""
                                 );
                         }
@@ -805,6 +845,8 @@
 
                     mdl.dl_broker.addEventListener("change", function () { mdl.set_fax(this.value); });
                     cari.dl_branch.setValue("<%= branch_id %>");
+
+                    mdl_device.dl_availability.addEventListener("change", mdl_device.o_availchange);
                 });
     </script>
 </asp:Content>

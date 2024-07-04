@@ -1316,6 +1316,8 @@ public class activities : System.Web.Services.WebService
         public double sales_id, device_id, cost, price, qty, vendor_id, principal_price, price_customer;
         public string device, description, vendor_name, marketing_note, creator_id, create_date, update_id, update_date;
         public Boolean pph21_sts, draft_sts;
+        public string guarantee_id, availability_id;
+        public int inden;
 
         public s_sales_device(double _sales_id, double _device_id, double _cost, double _price, string _device, Boolean _pph21_sts, int _qty,
             string _description = "",
@@ -1324,7 +1326,9 @@ public class activities : System.Web.Services.WebService
             double _price_customer = 0,
             string _marketing_note = "",
             string _creator_id = "", string _create_date = "", string _update_id = "", string _update_date = "",
-            Boolean _draft_sts = false)
+            Boolean _draft_sts = false,
+            string _guarantee_id = "", string _availability_id = "", int _inden = 0
+            )
         {
             sales_id = _sales_id;
             device_id = _device_id;
@@ -1344,6 +1348,9 @@ public class activities : System.Web.Services.WebService
             update_id = _update_id;
             update_date = _update_date;
             draft_sts = _draft_sts;
+            guarantee_id = _guarantee_id;
+            availability_id = _availability_id;
+            inden = _inden;
         }
     }
     public struct s_trimming
@@ -2243,6 +2250,21 @@ public class activities : System.Web.Services.WebService
         return data.ToArray();
     }
     //#dropdown
+    [WebMethod]
+    public s_drop_down[] dl_guaranteedevsts(string where)
+    {
+        List<s_drop_down> data = new List<s_drop_down>();
+
+        string strSQL = "select code,keterangan from appCommonParameter where type='guaranteedevsts' " + where;
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
+        {
+            data.Add(new s_drop_down(row["code"].ToString(), row["keterangan"].ToString()));
+        }
+
+        return data.ToArray();
+    }
     [WebMethod]
     public s_drop_down[] dl_availalibity(string where)
     {
@@ -4970,21 +4992,37 @@ public class activities : System.Web.Services.WebService
         }
         return data.ToArray();
     }
+    private string sql_opr_sales_device(string filter = "")
+    {
+        filter = (filter != "") ? " where " + filter : "";
+
+        return "select isnull(vendor_id,0) vendor_id, vendor_name, sales_id, device_id, cost, price, device, pph21_sts,qty, description, draft_sts, guarantee_id, availability_id, inden from v_opr_sales_device" + filter;
+    }
+    private s_sales_device row_opr_sales_device(System.Data.DataRow row)
+    {
+        return new s_sales_device(Convert.ToInt32(row["sales_id"]), Convert.ToInt32(row["device_id"]), Convert.ToInt32(row["cost"]), Convert.ToInt32(row["price"]),
+                row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), row["description"].ToString(),
+                Convert.ToInt32(row["vendor_id"]), row["vendor_name"].ToString(), 0, 0, "", "", "", "", "", Convert.ToBoolean(row["draft_sts"]),
+                row["guarantee_id"].ToString(), row["availability_id"].ToString(), Convert.ToInt32(row["inden"]));
+    }
     [WebMethod]
     public s_sales_device[] fin_sales_device_list(string invoice_sales_id)
     {
         List<s_sales_device> data = new List<s_sales_device>();
+        string strSQL = sql_opr_sales_device("sales_id in (select sales_id from fin_sales_opr where invoice_sales_id=" + invoice_sales_id + ")");
 
-        string strSQL = "select isnull(vendor_id,0) vendor_id, vendor_name, sales_id, device_id, cost, price, device, pph21_sts,qty, description, draft_sts from v_opr_sales_device where sales_id in (select sales_id from fin_sales_opr where invoice_sales_id=" + invoice_sales_id + ")";
+        //string strSQL = "select isnull(vendor_id,0) vendor_id, vendor_name, sales_id, device_id, cost, price, device, pph21_sts,qty, description, draft_sts, guarantee_id, availability_id, inden from v_opr_sales_device where sales_id in (select sales_id from fin_sales_opr where invoice_sales_id=" + invoice_sales_id + ")";
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
         {
             data.Add(
-                new s_sales_device(Convert.ToInt32(row["sales_id"]), Convert.ToInt32(row["device_id"]), Convert.ToInt32(row["cost"]), Convert.ToInt32(row["price"]),
-                row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), row["description"].ToString(),
-                Convert.ToInt32(row["vendor_id"]), row["vendor_name"].ToString(),0,0,"","","","","",Convert.ToBoolean(row["draft_sts"])
-                )
+                row_opr_sales_device(row)
+                //new s_sales_device(Convert.ToInt32(row["sales_id"]), Convert.ToInt32(row["device_id"]), Convert.ToInt32(row["cost"]), Convert.ToInt32(row["price"]),
+                //row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), row["description"].ToString(),
+                //Convert.ToInt32(row["vendor_id"]), row["vendor_name"].ToString(), 0, 0, "", "", "", "", "", Convert.ToBoolean(row["draft_sts"]),
+                //row["guarantee_id"].ToString(), row["availability_id"].ToString(), Convert.ToInt32(row["inden"])
+                //)
             );
         }
         return data.ToArray();
@@ -5220,18 +5258,21 @@ public class activities : System.Web.Services.WebService
     {
         s_sales_device data = new s_sales_device();
 
-        string strSQL = "select isnull(vendor_id,0) vendor_id, vendor_name, sales_id, device_id, cost, price, device, pph21_sts,qty, description,principal_price, marketing_note, creator_id, cast(create_date as varchar(25))create_date, update_id, cast(update_date as varchar(25))update_date, draft_sts from v_opr_sales_device where sales_id=" + sales_id + " and device_id=" + device_id;
+        //string strSQL = "select isnull(vendor_id,0) vendor_id, vendor_name, sales_id, device_id, cost, price, device, pph21_sts,qty, description,principal_price, marketing_note, creator_id, cast(create_date as varchar(25))create_date, update_id, cast(update_date as varchar(25))update_date, draft_sts, guarantee_id, availability_id, inden from v_opr_sales_device where sales_id=" + sales_id + " and device_id=" + device_id;
+        string strSQL = sql_opr_sales_device("sales_id=" + sales_id + " and device_id=" + device_id);
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
         {
-            data = new s_sales_device(Convert.ToInt32(row["sales_id"]), Convert.ToInt32(row["device_id"]), Convert.ToInt32(row["cost"]), Convert.ToInt32(row["price"]),
-                row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), row["description"].ToString(),
-                Convert.ToInt32(row["vendor_id"]), row["vendor_name"].ToString(), Convert.ToInt32(row["principal_price"]), 0,
-                row["marketing_note"].ToString(),
-                row["creator_id"].ToString(), row["create_date"].ToString(), row["update_id"].ToString(), row["update_date"].ToString(),
-                Convert.ToBoolean(row["draft_sts"])
-                );
+            data = row_opr_sales_device(row);
+                //new s_sales_device(
+                //Convert.ToInt32(row["sales_id"]), Convert.ToInt32(row["device_id"]), Convert.ToInt32(row["cost"]), Convert.ToInt32(row["price"]),
+                //row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), row["description"].ToString(),
+                //Convert.ToInt32(row["vendor_id"]), row["vendor_name"].ToString(), Convert.ToInt32(row["principal_price"]), 0,
+                //row["marketing_note"].ToString(),
+                //row["creator_id"].ToString(), row["create_date"].ToString(), row["update_id"].ToString(), row["update_date"].ToString(),
+                //Convert.ToBoolean(row["draft_sts"])
+                //);
 
         }
         return data;
@@ -5241,18 +5282,20 @@ public class activities : System.Web.Services.WebService
     {
         List<s_sales_device> data = new List<s_sales_device>();
 
-        string strSQL = "select sales_id, device_id, cost, price, device, pph21_sts,qty, principal_price, price_customer, creator_id, cast(create_date as varchar(25))create_date, update_id, cast(update_date as varchar(25))update_date, draft_sts from v_opr_sales_device where sales_id=" + sales_id;
+        //string strSQL = "select sales_id, device_id, cost, price, device, pph21_sts,qty, principal_price, price_customer, creator_id, cast(create_date as varchar(25))create_date, update_id, cast(update_date as varchar(25))update_date, draft_sts from v_opr_sales_device where sales_id=" + sales_id;
+        string strSQL = sql_opr_sales_device("sales_id=" + sales_id);
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
         {
             data.Add(
-                new s_sales_device(Convert.ToInt32(row["sales_id"]), Convert.ToInt32(row["device_id"]), Convert.ToInt32(row["cost"]), Convert.ToInt32(row["price"]),
-                row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), "", 0, "", Convert.ToInt32(row["principal_price"]),
-                Convert.ToInt32(row["price_customer"]), "",
-                row["creator_id"].ToString(), row["create_date"].ToString(), row["update_id"].ToString(), row["update_date"].ToString(),
-                Convert.ToBoolean(row["draft_sts"])
-            ));
+                row_opr_sales_device(row)
+                //new s_sales_device(Convert.ToInt32(row["sales_id"]), Convert.ToInt32(row["device_id"]), Convert.ToInt32(row["cost"]), Convert.ToInt32(row["price"]),
+                //row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), "", 0, "", Convert.ToInt32(row["principal_price"]),
+                //Convert.ToInt32(row["price_customer"]), "",
+                //row["creator_id"].ToString(), row["create_date"].ToString(), row["update_id"].ToString(), row["update_date"].ToString(),
+                //Convert.ToBoolean(row["draft_sts"]))
+            );
 
         }
         return data.ToArray();
@@ -5262,18 +5305,20 @@ public class activities : System.Web.Services.WebService
     {
         List<s_sales_device> data = new List<s_sales_device>();
 
-        string strSQL = "select sales_id, device_id, cost, price, device, pph21_sts,qty, principal_price, price_customer, creator_id, cast(create_date as varchar(25))create_date, update_id, cast(update_date as varchar(25))update_date, draft_sts from v_opr_sales_device where draft_sts=0 and sales_id=" + sales_id;
+        //string strSQL = "select sales_id, device_id, cost, price, device, pph21_sts,qty, principal_price, price_customer, creator_id, cast(create_date as varchar(25))create_date, update_id, cast(update_date as varchar(25))update_date, draft_sts from v_opr_sales_device where draft_sts=0 and sales_id=" + sales_id;
+        string strSQL = sql_opr_sales_device("draft_sts=0 and sales_id=" + sales_id);
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
         {
             data.Add(
-                new s_sales_device(Convert.ToInt32(row["sales_id"]), Convert.ToInt32(row["device_id"]), Convert.ToInt32(row["cost"]), Convert.ToInt32(row["price"]),
-                row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), "", 0, "", Convert.ToInt32(row["principal_price"]),
-                Convert.ToInt32(row["price_customer"]), "",
-                row["creator_id"].ToString(), row["create_date"].ToString(), row["update_id"].ToString(), row["update_date"].ToString(),
-                Convert.ToBoolean(row["draft_sts"])
-            ));
+                row_opr_sales_device(row)
+                //new s_sales_device(Convert.ToInt32(row["sales_id"]), Convert.ToInt32(row["device_id"]), Convert.ToInt32(row["cost"]), Convert.ToInt32(row["price"]),
+                //row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), "", 0, "", Convert.ToInt32(row["principal_price"]),
+                //Convert.ToInt32(row["price_customer"]), "",
+                //row["creator_id"].ToString(), row["create_date"].ToString(), row["update_id"].ToString(), row["update_date"].ToString(),
+                //Convert.ToBoolean(row["draft_sts"]))
+            );
 
         }
         return data.ToArray();
@@ -7491,7 +7536,8 @@ public class activities : System.Web.Services.WebService
         });
     }
     [WebMethod]
-    public void opr_sales_device_save(int sales_id, int device_id, double cost, double price, int qty, Boolean pph21_sts, string description, int vendor_id, double principal_price, string marketing_note = "", string user_id = "", Boolean draft_sts = false)
+    public string opr_sales_device_save(int sales_id, int device_id, double cost, double price, int qty, Boolean pph21_sts, string description, int vendor_id, double principal_price, string marketing_note = "", string user_id = "", Boolean draft_sts = false,
+        string guarantee_id = "", string availability_id = "", int inden = 0)
     {
         _DBcon d = new _DBcon();
         _DBcon.arrOutComPar hasil = d.executeProcNQ("opr_sales_device_save", new _DBcon.sComParameter[]{    
@@ -7506,9 +7552,14 @@ public class activities : System.Web.Services.WebService
             new _DBcon.sComParameter("@principal_price",System.Data.SqlDbType.Money,0,principal_price),
             new _DBcon.sComParameter("@marketing_note",System.Data.SqlDbType.Text,0,marketing_note),
             new _DBcon.sComParameter("@user_id",System.Data.SqlDbType.VarChar,25,user_id),
-            new _DBcon.sComParameter("@draft_sts",System.Data.SqlDbType.Bit,0,draft_sts)
+            new _DBcon.sComParameter("@draft_sts",System.Data.SqlDbType.Bit,0,draft_sts),
+            new _DBcon.sComParameter("@guarantee_id",System.Data.SqlDbType.VarChar,1,guarantee_id),
+            new _DBcon.sComParameter("@availability_id",System.Data.SqlDbType.VarChar,1,availability_id),
+            new _DBcon.sComParameter("@inden",System.Data.SqlDbType.Int,0,inden),
+            new _DBcon.sComParameter("@retval",System.Data.SqlDbType.VarChar,200,System.Data.ParameterDirection.Output),
             
         });
+        return hasil["@retval"].ToString();
     }
     [WebMethod]
     public void tec_trimming_delete(int trimming_id)

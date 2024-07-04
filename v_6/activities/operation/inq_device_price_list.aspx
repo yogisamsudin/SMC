@@ -27,7 +27,16 @@
         <Columns>
             <asp:BoundField DataField="str_offer_date" HeaderText="Tanggal" ReadOnly="True" SortExpression="offer_date" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField DataField="device" HeaderText="Device" ReadOnly="True" SortExpression="device" HeaderStyle-HorizontalAlign="Left" />
-            <asp:BoundField DataField="offer_no" HeaderText="No.Penawaran" ReadOnly="True" SortExpression="offer_no" HeaderStyle-HorizontalAlign="Left" />
+            
+            <asp:TemplateField HeaderStyle-Width="25px">
+                <ItemTemplate>
+                    <span style="cursor:pointer;" onclick="edit('<%# Eval("sales_id") %>')"><%# Eval("offer_no") %></span>
+                </ItemTemplate>
+                <HeaderTemplate>
+                    No.Penawaran
+                </HeaderTemplate>
+            </asp:TemplateField>
+
             <asp:BoundField DataField="customer_name" HeaderText="Customer" ReadOnly="True" SortExpression="customer_name" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField DataField="principal_price" HeaderText="HPP" ReadOnly="True" SortExpression="principal_price" HeaderStyle-HorizontalAlign="right" DataFormatString="{0:N0}" ItemStyle-HorizontalAlign="Right"/>
             <asp:BoundField DataField="price" HeaderText="HP" ReadOnly="True" SortExpression="price" HeaderStyle-HorizontalAlign="right" DataFormatString="{0:N0}" ItemStyle-HorizontalAlign="Right"/>

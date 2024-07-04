@@ -314,15 +314,20 @@
                 </tr>
                 <tr>
                     <th>Sts.Garansi</th>
-                    <td><input type="checkbox" id="mdl_device_guaranteests"/></td>
+                    <td><select id="mdl_device_guarantee"></select></td>
                 </tr>
                 <tr>
                     <th>Ketersediaan Brg.</th>
-                    <td><select id="mdl_device_availability"></select></td>
-                </tr>
-                <tr>
-                    <th>Lama Inden</th>
-                    <td><input type="text" id="mdl_device_inden" size="3" />/></td>
+                    <td  style="padding:0;margin:0;border:none;">
+                        <table border="0" style="border:none;padding:0;margin:0;">
+                            <tr>
+                                <td style="padding:0;margin:0;border:none;"><select id="mdl_device_availability"></select></td>
+                                <td style="padding:0;margin:0;border:none;"><input type="text" id="mdl_device_inden" size="3" style="text-align:right;"/></td>
+                            </tr>
+                        </table>
+                        
+
+                    </td>
                 </tr>
                 <tr>
                     <th>Draft</th>
@@ -341,6 +346,8 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="script" Runat="Server">
     <script type="text/javascript">
+        var appuser = '<%= user_id %>';
+        
         var cari = {
             tb_no: apl.func.get("cari_no"),
             tb_customer: apl.func.get("cari_customer"),
@@ -501,7 +508,7 @@
                     mdl.showAdd("Penjualan - Tambah");
                 },
                 select: function (id) {
-                    activities.opr_sales_add(id, mdl.tb_date.value, mdl.dl_broker.value, mdl.dl_discount_type.value, mdl.tb_discount_value.getIntValue(), mdl.cb_tax.checked, mdl.tb_fee.getIntValue(), mdl.tb_note.value, mdl.dl_status.value, mdl.tb_addfee.getIntValue(), mdl.tb_addfeenote.value, '<%= user_id %>',mdl.dl_ctgsales.value,
+                    activities.opr_sales_add(id, mdl.tb_date.value, mdl.dl_broker.value, mdl.dl_discount_type.value, mdl.tb_discount_value.getIntValue(), mdl.cb_tax.checked, mdl.tb_fee.getIntValue(), mdl.tb_note.value, mdl.dl_status.value, mdl.tb_addfee.getIntValue(), mdl.tb_addfeenote.value, appuser,mdl.dl_ctgsales.value,
                         function () {
                             mdl.edit(id);
                         }, apl.func.showError, ""
@@ -584,7 +591,7 @@
             function () {
                 if (apl.func.validatorCheck("save")) {
                     apl.func.showSinkMessage("Menyimpan Data");
-                    activities.opr_sales_edit(mdl.sales_id, mdl.tb_date.value, mdl.dl_broker.value, mdl.dl_discount_type.value, mdl.tb_discount_value.getIntValue(), mdl.cb_tax.checked, mdl.tb_fee.getIntValue(), mdl.tb_note.value, mdl.dl_status.value, mdl.tb_addfee.getIntValue(), mdl.tb_addfeenote.value, '<%= user_id %>',mdl.dl_ctgsales.value,
+                    activities.opr_sales_edit(mdl.sales_id, mdl.tb_date.value, mdl.dl_broker.value, mdl.dl_discount_type.value, mdl.tb_discount_value.getIntValue(), mdl.cb_tax.checked, mdl.tb_fee.getIntValue(), mdl.tb_note.value, mdl.dl_status.value, mdl.tb_addfee.getIntValue(), mdl.tb_addfeenote.value, appuser,mdl.dl_ctgsales.value,
                         function () {
                             //mdl.edit(mdl.sales_id, false);
                             if(mdl.dl_status.value=='2') mdl.hide();
@@ -600,152 +607,175 @@
             }, "frm_page", "cover_content"
         );
         
-                var mdl_device = apl.createModal("mdl_device",
-                    {
-                        sales_id: 0,
-                        ac_device: apl.create_auto_complete_text("mdl_device_name", activities.ac_device_all),
-                        //tb_cost: apl.createNumeric("mdl_device_cost", true),
-                        tb_cost: (function () {
-                            var _o = apl.createNumeric("mdl_device_cost", true);
-                            _o.addEventListener("focusout", function () {
-                                //mdl_device.lb_costtax.innerHTML = apl.func.formatNumeric(mdl_device.f_tambakan_pajak());
-                                mdl_device.set_principal_price();
-                            });
-                            return _o;
-                        })(),
-                        //lb_costtax: apl.func.get("mdl_device_costtax"),                
-                        tb_price: apl.createNumeric("mdl_device_price", true),
-                        tb_qty: apl.createNumeric("mdl_device_qty", true),
-                        cb_pph: apl.func.get("mdl_device_pph"),
-                        tb_description: apl.func.get("mdl_device_description"),
-                        tb_note: apl.func.get("mdl_device_note"),
-                        ac_vendor: apl.create_auto_complete_text("mdl_device_vendor", activities.ac_vendor),
-                        cb_all: apl.func.get("mdl_device_all_customer"),
-                        //lb_info_pcg : apl.func.get("mdl_device_info_pcg"),
-                        tb_principal_price: apl.createNumeric("mdl_device_principal_price"),
-                        cb_guaranteests: apl.func.get("mdl_device_guaranteests"),
-                        dl_availability: apl.createDropdownWS("mdl_device_availability", activities.dl_availalibity),
-                        tb_inden: apl.createNumeric("mdl_device_inden"),
-                        cb_draft: apl.func.get("mdl_device_draft"),
+        var mdl_device = apl.createModal("mdl_device",
+            {
+                sales_id: 0,
+                ac_device: apl.create_auto_complete_text("mdl_device_name", activities.ac_device_all),
+                //tb_cost: apl.createNumeric("mdl_device_cost", true),
+                tb_cost: (function () {
+                    var _o = apl.createNumeric("mdl_device_cost", true);
+                    _o.addEventListener("focusout", function () {
+                        //mdl_device.lb_costtax.innerHTML = apl.func.formatNumeric(mdl_device.f_tambakan_pajak());
+                        mdl_device.set_principal_price();
+                    });
+                    return _o;
+                })(),
+                //lb_costtax: apl.func.get("mdl_device_costtax"),                
+                tb_price: apl.createNumeric("mdl_device_price", true),
+                tb_qty: apl.createNumeric("mdl_device_qty", true),
+                cb_pph: apl.func.get("mdl_device_pph"),
+                tb_description: apl.func.get("mdl_device_description"),
+                tb_note: apl.func.get("mdl_device_note"),
+                ac_vendor: apl.create_auto_complete_text("mdl_device_vendor", activities.ac_vendor),
+                cb_all: apl.func.get("mdl_device_all_customer"),
+                //lb_info_pcg : apl.func.get("mdl_device_info_pcg"),
+                tb_principal_price: apl.createNumeric("mdl_device_principal_price"),
 
-                        val_device: apl.createValidator("device_save", "mdl_device_name", function () { return apl.func.emptyValueCheck(mdl_device.ac_device.id); }, "Salah input"),
-                        //val_device: apl.createValidator("device_save", "mdl_device_name", function () { return true; }, "Salah input"),
-                        val_cost: apl.createValidator("device_save", "mdl_device_cost", function () { return apl.func.emptyValueCheck(mdl_device.tb_cost.value); }, "Salah input"),
-                        val_pp: apl.createValidator("device_save", "mdl_device_principal_price", function () { return apl.func.emptyValueCheck(mdl_device.tb_principal_price.value); }, "Salah input"),
-                        val_price: apl.createValidator("device_save", "mdl_device_price", function () { return apl.func.emptyValueCheck(mdl_device.tb_price.value); }, "Salah input"),
-                        val_qty: apl.createValidator("device_save", "mdl_device_qty", function () { return apl.func.emptyValueCheck(mdl_device.tb_qty.value); }, "Salah input"),
+                dl_guarantee: apl.createDropdownWS("mdl_device_guarantee", activities.dl_guaranteedevsts),
+                dl_availability: apl.createDropdownWS("mdl_device_availability", activities.dl_availalibity),
+                tb_inden: apl.createNumeric("mdl_device_inden"),
 
-                        tbl: apl.createTableWS.init("mdl_device_tbl_price", [
-                            apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "select")], function (data) { mdl_device.tb_price.setValue(data.price); }, undefined, undefined),
-                            apl.createTableWS.column("customer_name"),
-                            apl.createTableWS.column("offer_date"),
-                            apl.createTableWS.column("price", undefined, undefined, undefined, true)
-                        ]),
-                        tbl_load: function () {
-                            apl.func.showSinkMessage("Memuat data");
-                            //alert(mdl_device.ac_device.getValue() + ":" + mdl.customer_id + ":" + mdl_device.cb_all.checked)
-                            activities.xml_opr_sales_device_price_history(mdl_device.ac_device.id, mdl.group_customer_id, mdl_device.cb_all.checked, mdl.sales_id,
-                                function (arrData) {
-                                    mdl_device.tbl.load(arrData);
-                                    apl.func.hideSinkMessage();
-                                }, apl.func.showError, ""
-                            );
-                        },
-                        tbl_cost: apl.createTableWS.init("mdl_device_tbl_cost", [
-                            apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "select")], function (data) { mdl_device.tb_cost.setValue(data.price); }, undefined, undefined),
-                            apl.createTableWS.column("customer_name"),
-                            apl.createTableWS.column("offer_date"),
-                            apl.createTableWS.column("price", undefined, undefined, undefined, true)
-                        ]),
-                        tbl_cost_load: function () {
-                            if (mdl_device.ac_device.id != "") {
-                                apl.func.showSinkMessage("Memuat data");
-                                activities.opr_sales_cost_history(mdl_device.ac_device.id,
-                                    function (arrData) {
-                                        mdl_device.tbl_cost.load(arrData);
-                                        apl.func.hideSinkMessage();
-                                    }, apl.func.showError, ""
-                                );
-                            }
-                        },
-                        set_principal_price: function () {
-                            activities.get_principal_price_value(mdl_device.tb_cost.getIntValue(),
-                                function (value) {
-                                    mdl_device.tb_principal_price.setValue(value);
-                                }, apl.func.showError, ""
-                            );
-                        },
-                        kosongkan: function () {
-                            apl.func.validatorClear("device_save");
-                            mdl_device.ac_device.set_value("", "");
-                            mdl_device.tb_cost.value = "";
-                            mdl_device.tb_principal_price.value = "";
-                            //mdl_device.lb_costtax.innerHTML = "";
-                            mdl_device.tb_price.value = "";
-                            mdl_device.tb_qty.value = "";
-                            mdl_device.tb_description.value = "";
-                            mdl_device.tb_note.value = "";
-                            mdl_device.cb_pph.checked = false;
-                            mdl_device.ac_vendor.set_value("", "");
-                            mdl_device.cb_draft.checked = false;
-                            mdl_device.tbl.clearAllRow();
-                            //mdl_device.lb_info_pcg.innerHTML = "Pokok jual "+ mdl.pcg_principal_price+"% dari modal: ";
-                            mdl_device.tbl_cost.clearAllRow();
-                        },
-                        tambah: function (id) {
+                cb_draft: apl.func.get("mdl_device_draft"),
+
+                val01: apl.createValidator("device_save", "mdl_device_name", function () { return apl.func.emptyValueCheck(mdl_device.ac_device.id); }, "Salah input"),
+                //val_device: apl.createValidator("device_save", "mdl_device_name", function () { return true; }, "Salah input"),
+                val02: apl.createValidator("device_save", "mdl_device_cost", function () { return apl.func.emptyValueCheck(mdl_device.tb_cost.value); }, "Salah input"),
+                val03: apl.createValidator("device_save", "mdl_device_principal_price", function () { return apl.func.emptyValueCheck(mdl_device.tb_principal_price.value); }, "Salah input"),
+                val04: apl.createValidator("device_save", "mdl_device_price", function () { return apl.func.emptyValueCheck(mdl_device.tb_price.value); }, "Salah input"),
+                val05: apl.createValidator("device_save", "mdl_device_qty", function () { return apl.func.emptyValueCheck(mdl_device.tb_qty.value); }, "Salah input"),
+                val06: apl.createValidator("device_save", "mdl_device_guarantee", function () { return apl.func.emptyValueCheck(mdl_device.dl_guarantee.value); }, "Salah input"),
+                val07: apl.createValidator("device_save", "mdl_device_availability", function () { return apl.func.emptyValueCheck(mdl_device.dl_availability.value); }, "Salah input"),
+                val08: apl.createValidator("device_save", "mdl_device_inden", function () { return apl.func.emptyValueCheck(mdl_device.tb_inden.value); }, "Salah input"),
+
+                tbl: apl.createTableWS.init("mdl_device_tbl_price", [
+                    apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "select")], function (data) { mdl_device.tb_price.setValue(data.price); }, undefined, undefined),
+                    apl.createTableWS.column("customer_name"),
+                    apl.createTableWS.column("offer_date"),
+                    apl.createTableWS.column("price", undefined, undefined, undefined, true)
+                ]),
+                tbl_load: function () {
+                    apl.func.showSinkMessage("Memuat data");
+                    //alert(mdl_device.ac_device.getValue() + ":" + mdl.customer_id + ":" + mdl_device.cb_all.checked)
+                    activities.xml_opr_sales_device_price_history(mdl_device.ac_device.id, mdl.group_customer_id, mdl_device.cb_all.checked, mdl.sales_id,
+                        function (arrData) {
+                            mdl_device.tbl.load(arrData);
+                            apl.func.hideSinkMessage();
+                        }, apl.func.showError, ""
+                    );
+                },
+                tbl_cost: apl.createTableWS.init("mdl_device_tbl_cost", [
+                    apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "select")], function (data) { mdl_device.tb_cost.setValue(data.price); }, undefined, undefined),
+                    apl.createTableWS.column("customer_name"),
+                    apl.createTableWS.column("offer_date"),
+                    apl.createTableWS.column("price", undefined, undefined, undefined, true)
+                ]),
+                tbl_cost_load: function () {
+                    if (mdl_device.ac_device.id != "") {
+                        apl.func.showSinkMessage("Memuat data");
+                        activities.opr_sales_cost_history(mdl_device.ac_device.id,
+                            function (arrData) {
+                                mdl_device.tbl_cost.load(arrData);
+                                apl.func.hideSinkMessage();
+                            }, apl.func.showError, ""
+                        );
+                    }
+                },
+                set_principal_price: function () {
+                    activities.get_principal_price_value(mdl_device.tb_cost.getIntValue(),
+                        function (value) {
+                            mdl_device.tb_principal_price.setValue(value);
+                        }, apl.func.showError, ""
+                    );
+                },
+                o_availchange:function()
+                {
+                    if (mdl_device.dl_availability.value == "2") mdl_device.tb_inden.Show();else mdl_device.tb_inden.Hide();
+                    mdl_device.tb_inden.value = "0";
+                },
+                kosongkan: function () {
+                    apl.func.validatorClear("device_save");
+                    mdl_device.ac_device.set_value("", "");
+                    mdl_device.tb_cost.value = "";
+                    mdl_device.tb_principal_price.value = "";
+                    //mdl_device.lb_costtax.innerHTML = "";
+                    mdl_device.tb_price.value = "";
+                    mdl_device.tb_qty.value = "";
+                    mdl_device.tb_description.value = "";
+                    mdl_device.tb_note.value = "";
+                    mdl_device.cb_pph.checked = false;
+                    mdl_device.ac_vendor.set_value("", "");
+                    mdl_device.cb_draft.checked = false;
+                    mdl_device.tbl.clearAllRow();
+                    //mdl_device.lb_info_pcg.innerHTML = "Pokok jual "+ mdl.pcg_principal_price+"% dari modal: ";
+                    mdl_device.tbl_cost.clearAllRow();
+
+                    mdl_device.dl_guarantee.value = "";
+                    mdl_device.dl_availability.value = "";
+                    mdl_device.o_availchange();
+                },
+                tambah: function (id) {
+                    mdl_device.kosongkan();
+                    mdl_device.sales_id = id;
+                    mdl_device.showAdd("Device - Tambah");
+
+                    if (appuser != 'sa' && mdl.lb_invoice_no.innerHTML != "") mdl_device.btnAdd.hide();
+                },
+                /*
+                f_tambakan_pajak:function()
+                {
+                    return parseFloat(mdl_device.tb_cost.getIntValue()) * parseFloat(0.01 + 1);
+                },
+                */
+                edit: function (sales_id, device_id) {
+                    apl.func.showSinkMessage("Memuat Data");
+                    activities.opr_sales_device_data(sales_id, device_id,
+                        function (data) {
                             mdl_device.kosongkan();
-                            mdl_device.sales_id = id;
-                            mdl_device.showAdd("Device - Tambah");
+                            mdl_device.sales_id = sales_id;
+                            mdl_device.ac_device.set_value(data.device_id, data.device);
+                            mdl_device.tb_cost.setValue(data.cost);
 
-                            if ('<%= user_id %>' != 'sa' && mdl.lb_invoice_no.innerHTML != "") mdl_device.btnAdd.hide();
-                        },
-                        /*
-                        f_tambakan_pajak:function()
-                        {
-                            return parseFloat(mdl_device.tb_cost.getIntValue()) * parseFloat(0.01 + 1);
-                        },
-                        */
-                        edit: function (sales_id, device_id) {
-                            apl.func.showSinkMessage("Memuat Data");
-                            activities.opr_sales_device_data(sales_id, device_id,
-                                function (data) {
-                                    mdl_device.kosongkan();
-                                    mdl_device.sales_id = sales_id;
-                                    mdl_device.ac_device.set_value(data.device_id, data.device);
-                                    mdl_device.tb_cost.setValue(data.cost);
+                            mdl_device.tb_principal_price.setValue(data.principal_price);
+                            //mdl_device.lb_costtax.innerHTML = apl.func.formatNumeric(mdl_device.f_tambakan_pajak());
 
-                                    mdl_device.tb_principal_price.setValue(data.principal_price);
-                                    //mdl_device.lb_costtax.innerHTML = apl.func.formatNumeric(mdl_device.f_tambakan_pajak());
+                            mdl_device.tb_price.setValue(data.price);
+                            mdl_device.tb_qty.setValue(data.qty);
+                            mdl_device.cb_pph.checked = data.pph21_sts;
+                            mdl_device.tb_description.value = data.description;
+                            mdl_device.tb_note.value = data.marketing_note;
+                            mdl_device.ac_vendor.set_value(data.vendor_id, data.vendor_name);
+                            mdl_device.cb_draft.checked = data.draft_sts;
 
-                                    mdl_device.tb_price.setValue(data.price);
-                                    mdl_device.tb_qty.setValue(data.qty);
-                                    mdl_device.cb_pph.checked = data.pph21_sts;
-                                    mdl_device.tb_description.value = data.description;
-                                    mdl_device.tb_note.value = data.marketing_note;
-                                    mdl_device.ac_vendor.set_value(data.vendor_id, data.vendor_name);
-                                    mdl_device.cb_draft.checked = data.draft_sts;
+                            mdl_device.dl_guarantee.value = data.guarantee_id;
+                            mdl_device.dl_availability.value = data.availability_id;
+                            mdl_device.o_availchange();
+                            mdl_device.tb_inden.setValue(data.inden);
+                                    
 
-                                    mdl_device.showEdit("Device - Edit");
-                                    apl.func.hideSinkMessage();
+                            mdl_device.showEdit("Device - Edit");
+                            apl.func.hideSinkMessage();
 
-                                    if ('<%= user_id %>' != 'sa' && mdl.lb_invoice_no.innerHTML != "") //yogi
-                                    {
-                                        mdl_device.btnAdd.hide();
-                                        mdl_device.btnSave.hide();
-                                        mdl_device.btnDelete.hide();
-                                    }
+                            if (appuser != 'sa' && mdl.lb_invoice_no.innerHTML != "") //yogi
+                            {
+                                mdl_device.btnAdd.hide();
+                                mdl_device.btnSave.hide();
+                                mdl_device.btnDelete.hide();
+                            }
 
-                                }, apl.func.showError, ""
+                        }, apl.func.showError, ""
                 );
                         },
                         simpan: function () {
                             if (apl.func.validatorCheck("device_save")) {
                                 var vendor_id = (mdl_device.ac_vendor.id == "") ? 0 : mdl_device.ac_vendor.id;
-                                activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.ac_device.id, mdl_device.tb_cost.getIntValue(), mdl_device.tb_price.getIntValue(), mdl_device.tb_qty.getIntValue(), mdl_device.cb_pph.checked, mdl_device.tb_description.value, vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, '<%= user_id %>', mdl_device.cb_draft.checked,
-                                    function () {
+                                activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.ac_device.id, mdl_device.tb_cost.getIntValue(), mdl_device.tb_price.getIntValue(), mdl_device.tb_qty.getIntValue(), mdl_device.cb_pph.checked, mdl_device.tb_description.value, vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, appuser, mdl_device.cb_draft.checked, mdl_device.dl_guarantee.value, mdl_device.dl_availability.value, mdl_device.tb_inden.getIntValue(),
+                                    function (message) {
                                         //mdl.tbl_load();
-                                        mdl.edit(mdl.sales_id);
-                                        mdl_device.hide();
+                                        if (message == "") {
+                                            mdl.edit(mdl.sales_id);
+                                            mdl_device.hide();
+                                        } else alert(message);
+                                        
                                     }, apl.func.showError, ""
                                 );
                             }
@@ -776,6 +806,8 @@
 
             mdl.dl_broker.addEventListener("change", function () { mdl.set_fax(this.value); });
             cari.dl_branch.setValue("<%= branch_id %>");
+
+            mdl_device.dl_availability.addEventListener("change", mdl_device.o_availchange);
         });
     </script>
 </asp:Content>
