@@ -367,6 +367,22 @@
                     <td><input id="mdl_device_vendor" disabled="disabled"/></td>
                 </tr>
                 <tr>
+                    <th>Sts.Garansi</th>
+                    <td>
+                        <select id="mdl_device_guarantee" style="float:left;" disabled="disabled"></select>
+                        <select id="mdl_device_guarantee_timetype" style="float:left;" disabled="disabled"></select>
+                        <input type="text" id="mdl_device_guaranteeperiod" size="3" style="text-align:right;float:left;" disabled="disabled"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Ketersediaan Brg.</th>
+                    <td>
+                        <select id="mdl_device_availability" style="float:left;" disabled="disabled"></select>
+                        <select id="mdl_device_availability_timetype" style="float:left;" disabled="disabled"></select>
+                        <input type="text" id="mdl_device_inden" size="3" style="text-align:right;float:left;" disabled="disabled"/>
+                    </td>
+                </tr>
+                <tr>
                     <th>Draft</th>
                     <td><input type="checkbox" id="mdl_device_draft" disabled="disabled" /></td>
                 </tr>
@@ -695,6 +711,15 @@
                     cb_all: apl.func.get("mdl_device_all_customer"),
                     //lb_info_pcg : apl.func.get("mdl_device_info_pcg"),
                     tb_principal_price: apl.createNumeric("mdl_device_principal_price"),
+
+                    dl_guarantee: apl.createDropdownWS("mdl_device_guarantee", activities.dl_guaranteedevsts),
+                    dl_availability: apl.createDropdownWS("mdl_device_availability", activities.dl_availalibity),
+                    tb_inden: apl.createNumeric("mdl_device_inden"),
+                    tb_guaranteeperiod: apl.createNumeric("mdl_device_guaranteeperiod"),
+                    //new
+                    dl_guarantee_timetype: apl.createDropdownWS("mdl_device_guarantee_timetype", activities.dl_timetype),
+                    dl_availability_timetype: apl.createDropdownWS("mdl_device_availability_timetype", activities.dl_timetype),
+
                     cb_draft: apl.func.get("mdl_device_draft"),
 
                     val_device: apl.createValidator("device_save", "mdl_device_name", function () { return apl.func.emptyValueCheck(mdl_device.ac_device.id); }, "Salah input"),
@@ -740,6 +765,31 @@
                                 mdl_device.tb_principal_price.setValue(value);
                             }, apl.func.showError, ""
                         );
+                    },
+                    o_availchange: function () {
+                        if (mdl_device.dl_availability.value == "2") {
+                            mdl_device.tb_inden.Show();
+                            mdl_device.dl_availability_timetype.Show();
+                        } else {
+                            mdl_device.tb_inden.Hide();
+                            mdl_device.dl_availability_timetype.Hide();
+                        }
+                        mdl_device.tb_inden.value = "0";
+                        mdl_device.dl_availability_timetype.value = "1";
+
+                    },
+                    o_gperiodchange: function () {
+                        if (mdl_device.dl_guarantee.value == "2") {
+                            mdl_device.tb_guaranteeperiod.Show();
+                            mdl_device.dl_guarantee_timetype.Show();
+                        } else {
+                            mdl_device.tb_guaranteeperiod.Hide();
+                            mdl_device.dl_guarantee_timetype.Hide()
+
+                        }
+                        mdl_device.tb_guaranteeperiod.value = "0";
+                        mdl_device.dl_guarantee_timetype.value = "1";
+
                     },
                     kosongkan: function () {
                         apl.func.validatorClear("device_save");
@@ -790,6 +840,17 @@
                                 mdl_device.tb_note.value = data.marketing_note;
                                 mdl_device.ac_vendor.set_value(data.vendor_id, data.vendor_name);
                                 mdl_device.cb_draft.checked = data.draft_sts;
+
+                                mdl_device.dl_guarantee.value = data.guarantee_id;
+                                mdl_device.dl_availability.value = data.availability_id;
+                                mdl_device.o_availchange();
+                                mdl_device.tb_inden.setValue(data.inden);
+                                mdl_device.o_gperiodchange();
+                                mdl_device.tb_guaranteeperiod.setValue(data.guarantee_period);
+                                //new
+                                mdl_device.dl_guarantee_timetype.value = data.guarantee_timetype_id;
+                                mdl_device.dl_availability_timetype.value = data.availability_timetype_id;
+
                                 mdl_device.showEdit("Device - Edit");
                                 apl.func.hideSinkMessage();
 
@@ -801,37 +862,12 @@
                                 }
 
                             }, apl.func.showError, ""
-                    );
+                        );
                     },
-                    simpan: function () {
-                        if (apl.func.validatorCheck("device_save")) {
-                            var vendor_id = (mdl_device.ac_vendor.id == "") ? 0 : mdl_device.ac_vendor.id;
-                            activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.ac_device.id, mdl_device.tb_cost.getIntValue(), mdl_device.tb_price.getIntValue(), mdl_device.tb_qty.getIntValue(), mdl_device.cb_pph.checked, mdl_device.tb_description.value, vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, '<%= user_id %>',
-                                function () {
-                                    mdl.tbl_load();
-                                    mdl_device.hide();
-                                }, apl.func.showError, ""
-                            );
-                        }
-                    }
                 },
-            function () {
-                mdl_device.simpan();
-            },
-            function () {
-                mdl_device.simpan();
-            },
-
-            function () {
-                if (confirm("Yakin akan dihapus")) {
-                    activities.opr_sales_device_delete(mdl_device.sales_id, mdl_device.ac_device.id,
-                        function () {
-                            mdl.tbl_load();
-                            mdl_device.hide();
-                        }, apl.func.showError, ""
-                    );
-                }
-            }, "frm_page", "mdl"
+            undefined,
+            undefined,
+            undefined, "frm_page", "mdl"
         );
 
                 window.addEventListener("load", function () {
@@ -840,6 +876,9 @@
 
                     mdl.dl_broker.addEventListener("change", function () { mdl.set_fax(this.value); });
                     cari.dl_branch.setValue("<%= branch_id %>");
+
+                    mdl_device.dl_availability.addEventListener("change", mdl_device.o_availchange);
+                    mdl_device.dl_guarantee.addEventListener("change", mdl_device.o_gperiodchange);
                 });
     </script>
 </asp:Content>

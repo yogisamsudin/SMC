@@ -324,17 +324,18 @@
                 </tr>
                 <tr>
                     <th>Sts.Garansi</th>
-                    <td><select id="mdl_device_guarantee"></select></td>
+                    <td>
+                        <select id="mdl_device_guarantee" style="float:left;"></select>
+                        <select id="mdl_device_guarantee_timetype" style="float:left;"></select>
+                        <input type="text" id="mdl_device_guaranteeperiod" size="3" style="text-align:right;float:left;"/>
+                    </td>
                 </tr>
                 <tr>
                     <th>Ketersediaan Brg.</th>
-                    <td  style="padding:0;margin:0;border:none;">
-                        <table border="0" style="border:none;padding:0;margin:0;">
-                            <tr>
-                                <td style="padding:0;margin:0;border:none;"><select id="mdl_device_availability"></select></td>
-                                <td style="padding:0;margin:0;border:none;"><input type="text" id="mdl_device_inden" size="3" style="text-align:right;"/></td>
-                            </tr>
-                        </table>
+                    <td>
+                        <select id="mdl_device_availability" style="float:left;"></select>
+                        <select id="mdl_device_availability_timetype" style="float:left;"></select>
+                        <input type="text" id="mdl_device_inden" size="3" style="text-align:right;float:left;"/>
                     </td>
                 </tr>
                 <tr>
@@ -676,6 +677,10 @@
                     dl_guarantee: apl.createDropdownWS("mdl_device_guarantee", activities.dl_guaranteedevsts),
                     dl_availability: apl.createDropdownWS("mdl_device_availability", activities.dl_availalibity),
                     tb_inden: apl.createNumeric("mdl_device_inden"),
+                    tb_guaranteeperiod: apl.createNumeric("mdl_device_guaranteeperiod"),
+
+                    dl_guarantee_timetype: apl.createDropdownWS("mdl_device_guarantee_timetype", activities.dl_timetype),
+                    dl_availability_timetype: apl.createDropdownWS("mdl_device_availability_timetype", activities.dl_timetype),
 
                     cb_draft:apl.func.get("mdl_device_draft"),
 
@@ -688,6 +693,9 @@
                     val06: apl.createValidator("device_save", "mdl_device_guarantee", function () { return apl.func.emptyValueCheck(mdl_device.dl_guarantee.value); }, "Salah input"),
                     val07: apl.createValidator("device_save", "mdl_device_availability", function () { return apl.func.emptyValueCheck(mdl_device.dl_availability.value); }, "Salah input"),
                     val08: apl.createValidator("device_save", "mdl_device_inden", function () { return apl.func.emptyValueCheck(mdl_device.tb_inden.value); }, "Salah input"),
+
+                    val10: apl.createValidator("device_save", "mdl_device_guarantee_timetype", function () { return apl.func.emptyValueCheck(mdl_device.dl_guarantee_timetype.value); }, "Salah input"),
+                    val11: apl.createValidator("device_save", "mdl_device_availability_timetype", function () { return apl.func.emptyValueCheck(mdl_device.dl_availability_timetype.value); }, "Salah input"),
 
                     tbl: apl.createTableWS.init("mdl_device_tbl_price", [
                         apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "select")], function (data) { mdl_device.tb_price.setValue(data.price); }, undefined, undefined),
@@ -730,8 +738,29 @@
                         );
                     },
                     o_availchange: function () {
-                        if (mdl_device.dl_availability.value == "2") mdl_device.tb_inden.Show(); else mdl_device.tb_inden.Hide();
+                        if (mdl_device.dl_availability.value == "2") {
+                            mdl_device.tb_inden.Show();
+                            mdl_device.dl_availability_timetype.Show();
+                        } else {
+                            mdl_device.tb_inden.Hide();
+                            mdl_device.dl_availability_timetype.Hide();
+                        }
                         mdl_device.tb_inden.value = "0";
+                        mdl_device.dl_availability_timetype.value = "1";
+
+                    },
+                    o_gperiodchange: function () {
+                        if (mdl_device.dl_guarantee.value == "2") {
+                            mdl_device.tb_guaranteeperiod.Show();
+                            mdl_device.dl_guarantee_timetype.Show();
+                        } else {
+                            mdl_device.tb_guaranteeperiod.Hide();
+                            mdl_device.dl_guarantee_timetype.Hide()
+
+                        }
+                        mdl_device.tb_guaranteeperiod.value = "0";
+                        mdl_device.dl_guarantee_timetype.value = "1";
+
                     },
                     kosongkan: function () {
                         apl.func.validatorClear("device_save");
@@ -753,6 +782,7 @@
                         mdl_device.dl_guarantee.value = "";
                         mdl_device.dl_availability.value = "";
                         mdl_device.o_availchange();
+                        mdl_device.o_gperiodchange()
                     },
                     tambah: function (id) {
                         mdl_device.kosongkan();
@@ -791,6 +821,11 @@
                                 mdl_device.dl_availability.value = data.availability_id;
                                 mdl_device.o_availchange();
                                 mdl_device.tb_inden.setValue(data.inden);
+                                mdl_device.o_gperiodchange();
+                                mdl_device.tb_guaranteeperiod.setValue(data.guarantee_period);
+
+                                mdl_device.dl_guarantee_timetype.value = data.guarantee_timetype_id;
+                                mdl_device.dl_availability_timetype.value = data.availability_timetype_id;
 
                                 mdl_device.showEdit("Device - Edit");
                                 apl.func.hideSinkMessage();
@@ -808,7 +843,7 @@
                     simpan: function () {
                         if (apl.func.validatorCheck("device_save")) {
                             var vendor_id = (mdl_device.ac_vendor.id == "") ? 0 : mdl_device.ac_vendor.id;
-                            activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.ac_device.id, mdl_device.tb_cost.getIntValue(), mdl_device.tb_price.getIntValue(), mdl_device.tb_qty.getIntValue(), mdl_device.cb_pph.checked, mdl_device.tb_description.value, vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, appuser, mdl_device.cb_draft.checked, mdl_device.dl_guarantee.value, mdl_device.dl_availability.value, mdl_device.tb_inden.getIntValue(),
+                            activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.ac_device.id, mdl_device.tb_cost.getIntValue(), mdl_device.tb_price.getIntValue(), mdl_device.tb_qty.getIntValue(), mdl_device.cb_pph.checked, mdl_device.tb_description.value, vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, appuser, mdl_device.cb_draft.checked, mdl_device.dl_guarantee.value, mdl_device.dl_availability.value, mdl_device.tb_inden.getIntValue(), mdl_device.tb_guaranteeperiod.getIntValue(), mdl_device.dl_guarantee_timetype.value, mdl_device.dl_availability_timetype.value,
                                     function (message) {
                                         //mdl.tbl_load();
                                         if (message == "") {
@@ -847,6 +882,7 @@
                     cari.dl_branch.setValue("<%= branch_id %>");
 
                     mdl_device.dl_availability.addEventListener("change", mdl_device.o_availchange);
+                    mdl_device.dl_guarantee.addEventListener("change", mdl_device.o_gperiodchange);
                 });
     </script>
 </asp:Content>

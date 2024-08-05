@@ -12,6 +12,70 @@ using _test;
 public class activities : System.Web.Services.WebService
 {
     //#struct
+    public struct s_fin_proforma_service_opr
+    {
+        public double proforma_service_id, grand_price, fee;
+        public int service_id;
+        public string offer_no, offer_date;
+
+        public s_fin_proforma_service_opr(double _proforma_service_id, double _grand_price, double _fee, int _service_id, string _offer_no, string _offer_date)
+        {
+            proforma_service_id = _proforma_service_id;
+            grand_price = _grand_price;
+            fee = _fee;
+            service_id = _service_id;
+            offer_no = _offer_no;
+            offer_date = _offer_date;
+        }
+    }
+    public struct s_fin_proforma_service
+    {
+        public long proforma_service_id;
+        public string proforma_date, proforma_no, term_of_payment_id;
+        public string po_no, afpo_no, create_date;
+        public int term_of_payment_value, bill_id;
+        public Boolean proforma_sts;
+        public string proforma_note, bill_name, bill_no, bill_bank_name, term_of_payment_name, str_top_value;
+        public int customer_id, an_id;
+        public string customer_name;
+        public Boolean pph_sts;
+        public double grand_price;
+
+        public s_fin_proforma_service(
+            long _proforma_service_id,
+            string _proforma_date, string _proforma_no, string _term_of_payment_id,
+            string _po_no, string _afpo_no, string _create_date,
+            int _term_of_payment_value, int _bill_id,
+            Boolean _proforma_sts,
+            string _proforma_note, string _bill_name, string _bill_no, string _bill_bank_name, string _term_of_payment_name, string _str_top_value,
+            int _customer_id, int _an_id, string _customer_name,
+            Boolean _pph_sts,
+            double _grand_price
+        )
+        {
+            proforma_service_id = _proforma_service_id;
+            proforma_date = _proforma_date;
+            proforma_no = _proforma_no;
+            term_of_payment_id = _term_of_payment_id;
+            po_no = _po_no;
+            afpo_no = _afpo_no;
+            create_date = _create_date;
+            term_of_payment_value = _term_of_payment_value;
+            bill_id = _bill_id;
+            proforma_sts = _proforma_sts;
+            proforma_note = _proforma_note;
+            bill_name = _bill_name;
+            bill_no = _bill_no;
+            bill_bank_name = _bill_bank_name;
+            term_of_payment_name = _term_of_payment_name;
+            str_top_value = _str_top_value;
+            customer_id = _customer_id;
+            an_id = _an_id;
+            customer_name = _customer_name;
+            pph_sts = _pph_sts;
+            grand_price = _grand_price;
+        }
+    }
     public struct s_tec_onsite_guarantee
     {
         public int guarantee_onsite_id;
@@ -1316,8 +1380,8 @@ public class activities : System.Web.Services.WebService
         public double sales_id, device_id, cost, price, qty, vendor_id, principal_price, price_customer;
         public string device, description, vendor_name, marketing_note, creator_id, create_date, update_id, update_date;
         public Boolean pph21_sts, draft_sts;
-        public string guarantee_id, availability_id;
-        public int inden;
+        public string guarantee_id, guarantee_timetype_id, guarantee_timetype_name, availability_id, availability_timetype_id, availability_timetype_name;
+        public int inden, guarantee_period;
 
         public s_sales_device(double _sales_id, double _device_id, double _cost, double _price, string _device, Boolean _pph21_sts, int _qty,
             string _description = "",
@@ -1327,7 +1391,8 @@ public class activities : System.Web.Services.WebService
             string _marketing_note = "",
             string _creator_id = "", string _create_date = "", string _update_id = "", string _update_date = "",
             Boolean _draft_sts = false,
-            string _guarantee_id = "", string _availability_id = "", int _inden = 0
+            string _guarantee_id = "", string _availability_id = "", int _inden = 0, int _guarantee_period = 0,
+            string _guarantee_timetype_id = "", string _guarantee_timetype_name = "", string _availability_timetype_id = "", string _availability_timetype_name = ""
             )
         {
             sales_id = _sales_id;
@@ -1351,6 +1416,11 @@ public class activities : System.Web.Services.WebService
             guarantee_id = _guarantee_id;
             availability_id = _availability_id;
             inden = _inden;
+            guarantee_period = _guarantee_period;
+            guarantee_timetype_id = _guarantee_timetype_id;
+            guarantee_timetype_name = _guarantee_timetype_name;
+            availability_timetype_id = _availability_timetype_id;
+            availability_timetype_name = _availability_timetype_name;
         }
     }
     public struct s_trimming
@@ -2250,6 +2320,21 @@ public class activities : System.Web.Services.WebService
         return data.ToArray();
     }
     //#dropdown
+    [WebMethod]
+    public s_drop_down[] dl_timetype(string where)
+    {
+        List<s_drop_down> data = new List<s_drop_down>();
+
+        string strSQL = "select code,keterangan from appCommonParameter where type='timetype' " + where;
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
+        {
+            data.Add(new s_drop_down(row["code"].ToString(), row["keterangan"].ToString()));
+        }
+
+        return data.ToArray();
+    }
     [WebMethod]
     public s_drop_down[] dl_guaranteedevsts(string where)
     {
@@ -3274,6 +3359,32 @@ public class activities : System.Web.Services.WebService
         return data.ToArray();
     }
     //#sp query
+    [WebMethod]
+    public s_fin_proforma_service fin_proforma_service_data(string proforma_service_id)
+    {
+        s_fin_proforma_service data = new s_fin_proforma_service();
+
+        string strSQL = "select proforma_service_id, dbo.f_convertDateToChar(proforma_date) proforma_date,proforma_no," +
+        "term_of_payment_id,po_no,afpo_no," +
+        "term_of_payment_value,bill_id, proforma_sts,proforma_note," +
+        "bill_name,bill_no,bill_bank_name,term_of_payment_name,str_top_value," +
+        "customer_id, an_id,customer_name, pph_sts, grand_price from v_fin_proforma_service where proforma_service_id=" + proforma_service_id;
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
+        {
+            data = new s_fin_proforma_service(Convert.ToInt32(row["proforma_service_id"]), row["proforma_date"].ToString(), row["proforma_no"].ToString(),
+                row["term_of_payment_id"].ToString(), row["po_no"].ToString(), row["po_no"].ToString(), row["afpo_no"].ToString(),
+                Convert.ToInt32(row["term_of_payment_value"]), Convert.ToInt32(row["bill_id"]), Convert.ToBoolean(row["proforma_sts"]), row["proforma_note"].ToString(),
+                row["bill_bank_name"].ToString(), row["bill_no"].ToString(), row["bill_bank_name"].ToString(), row["term_of_payment_name"].ToString(), row["str_top_value"].ToString(),
+                Convert.ToInt32(row["customer_id"]), Convert.ToInt32(row["an_id"]), row["customer_name"].ToString(),
+                Convert.ToBoolean(row["pph_sts"]), Convert.ToInt64(row["grand_price"])
+            );
+
+
+        }
+        return data;
+    }
     [WebMethod]
     public s_fin_proforma_sales fin_proforma_sales_data(string proforma_sales_id)
     {
@@ -4996,14 +5107,17 @@ public class activities : System.Web.Services.WebService
     {
         filter = (filter != "") ? " where " + filter : "";
 
-        return "select isnull(vendor_id,0) vendor_id, vendor_name, sales_id, device_id, cost, price, device, pph21_sts,qty, description, draft_sts, guarantee_id, availability_id, inden from v_opr_sales_device" + filter;
+        //return "select isnull(vendor_id,0) vendor_id, vendor_name, sales_id, device_id, cost, price, device, pph21_sts,qty, description, draft_sts, guarantee_id, availability_id, inden, guarantee_period from v_opr_sales_device" + filter;
+        return "select * from v_opr_sales_device_all" + filter;
     }
     private s_sales_device row_opr_sales_device(System.Data.DataRow row)
     {
         return new s_sales_device(Convert.ToInt32(row["sales_id"]), Convert.ToInt32(row["device_id"]), Convert.ToInt32(row["cost"]), Convert.ToInt32(row["price"]),
                 row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), row["description"].ToString(),
-                Convert.ToInt32(row["vendor_id"]), row["vendor_name"].ToString(), 0, 0, "", "", "", "", "", Convert.ToBoolean(row["draft_sts"]),
-                row["guarantee_id"].ToString(), row["availability_id"].ToString(), Convert.ToInt32(row["inden"]));
+                Convert.ToInt32(row["vendor_id"]), row["vendor_name"].ToString(), Convert.ToInt32(row["principal_price"]), Convert.ToInt32(row["price_customer"]), row["marketing_note"].ToString(), row["creator_id"].ToString(), row["create_date"].ToString(), row["update_id"].ToString(), row["update_date"].ToString(), Convert.ToBoolean(row["draft_sts"]),
+                row["guarantee_id"].ToString(), row["availability_id"].ToString(), Convert.ToInt32(row["inden"]), Convert.ToInt32(row["guarantee_period"]),
+                row["guarantee_timetype_id"].ToString(), row["guarantee_timetype_name"].ToString(),row["availability_timetype_id"].ToString(), row["availability_timetype_name"].ToString()
+            );
     }
     [WebMethod]
     public s_sales_device[] fin_sales_device_list(string invoice_sales_id)
@@ -7537,7 +7651,9 @@ public class activities : System.Web.Services.WebService
     }
     [WebMethod]
     public string opr_sales_device_save(int sales_id, int device_id, double cost, double price, int qty, Boolean pph21_sts, string description, int vendor_id, double principal_price, string marketing_note = "", string user_id = "", Boolean draft_sts = false,
-        string guarantee_id = "", string availability_id = "", int inden = 0)
+        string guarantee_id = "", string availability_id = "", int inden = 0, int guarantee_period = 0,
+        string guarantee_timetype_id = "1", string availability_timetype_id = "1"
+        )
     {
         _DBcon d = new _DBcon();
         _DBcon.arrOutComPar hasil = d.executeProcNQ("opr_sales_device_save", new _DBcon.sComParameter[]{    
@@ -7554,8 +7670,21 @@ public class activities : System.Web.Services.WebService
             new _DBcon.sComParameter("@user_id",System.Data.SqlDbType.VarChar,25,user_id),
             new _DBcon.sComParameter("@draft_sts",System.Data.SqlDbType.Bit,0,draft_sts),
             new _DBcon.sComParameter("@guarantee_id",System.Data.SqlDbType.VarChar,1,guarantee_id),
+            new _DBcon.sComParameter("@guarantee_period",System.Data.SqlDbType.Int,0,guarantee_period),
             new _DBcon.sComParameter("@availability_id",System.Data.SqlDbType.VarChar,1,availability_id),
             new _DBcon.sComParameter("@inden",System.Data.SqlDbType.Int,0,inden),
+            new _DBcon.sComParameter("@guarantee_timetype_id",System.Data.SqlDbType.VarChar,1,guarantee_timetype_id),
+            new _DBcon.sComParameter("@availability_timetype_id",System.Data.SqlDbType.VarChar,1,availability_timetype_id),
+            new _DBcon.sComParameter("@retval",System.Data.SqlDbType.VarChar,200,System.Data.ParameterDirection.Output),
+            
+        });
+        return hasil["@retval"].ToString();
+    }
+    [WebMethod]
+    public string opr_sales_check_pending()
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("opr_sales_check_pending", new _DBcon.sComParameter[]{    
             new _DBcon.sComParameter("@retval",System.Data.SqlDbType.VarChar,200,System.Data.ParameterDirection.Output),
             
         });
@@ -8673,4 +8802,66 @@ public class activities : System.Web.Services.WebService
             });
         return;
     }
+    [WebMethod]
+    public long fin_proforma_service_add(long proforma_service_id, string performa_date, int top_id, string po_no, string afpo_no, string top_value, int bill_id, long service_id)
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("fin_proforma_service_add", new _DBcon.sComParameter[]{
+                new _DBcon.sComParameter("@proforma_service_id",System.Data.SqlDbType.BigInt,0,proforma_service_id),      
+                new _DBcon.sComParameter("@proforma_date",System.Data.SqlDbType.VarChar,10,performa_date), 
+                new _DBcon.sComParameter("@term_of_payment_id",System.Data.SqlDbType.Int,0,top_id),
+                new _DBcon.sComParameter("@po_no",System.Data.SqlDbType.VarChar,50,po_no),
+                new _DBcon.sComParameter("@afpo_no",System.Data.SqlDbType.VarChar,50,afpo_no),
+                new _DBcon.sComParameter("@term_of_payment_value",System.Data.SqlDbType.VarChar,10,top_value),
+                new _DBcon.sComParameter("@bill_id",System.Data.SqlDbType.Int,0,bill_id),
+                new _DBcon.sComParameter("@service_id",System.Data.SqlDbType.BigInt,0,service_id),
+                new _DBcon.sComParameter("@ret_id",System.Data.SqlDbType.BigInt,0,System.Data.ParameterDirection.Output)
+            });
+        return Convert.ToInt64(hasil["@ret_id"]);
+    }
+    [WebMethod]
+    public void fin_proforma_service_opr_delete(long proforma_service_id, int service_id)
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("fin_proforma_service_opr_delete", new _DBcon.sComParameter[]{    
+            new _DBcon.sComParameter("@proforma_service_id",System.Data.SqlDbType.BigInt,0,proforma_service_id),
+            new _DBcon.sComParameter("@service_id",System.Data.SqlDbType.BigInt,0,service_id)
+        });
+    }
+    [WebMethod]
+    public void fin_proforma_service_edit(long proforma_service_id, string performa_date, int top_id, string po_no, string afpo_no, string top_value, int bill_id, Boolean pph_sts)
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("fin_proforma_service_edit", new _DBcon.sComParameter[]{
+                new _DBcon.sComParameter("@proforma_service_id",System.Data.SqlDbType.BigInt,0,proforma_service_id),      
+                new _DBcon.sComParameter("@proforma_date",System.Data.SqlDbType.VarChar,10,performa_date), 
+                new _DBcon.sComParameter("@term_of_payment_id",System.Data.SqlDbType.Int,0,top_id),
+                new _DBcon.sComParameter("@po_no",System.Data.SqlDbType.VarChar,50,po_no),
+                new _DBcon.sComParameter("@afpo_no",System.Data.SqlDbType.VarChar,50,afpo_no),
+                new _DBcon.sComParameter("@term_of_payment_value",System.Data.SqlDbType.VarChar,10,top_value),
+                new _DBcon.sComParameter("@bill_id",System.Data.SqlDbType.Int,0,bill_id),
+                new _DBcon.sComParameter("@pph_sts",System.Data.SqlDbType.Bit,0,pph_sts)
+            });
+        return;
+    }
+    [WebMethod]
+    public s_fin_proforma_service_opr[] fin_proforma_service_opr_list(string proforma_service_id)
+    {
+        List<s_fin_proforma_service_opr> data = new List<s_fin_proforma_service_opr>();
+
+        string strSQL = "select proforma_service_id,service_id,offer_no,dbo.f_convertDateToChar(offer_date)str_offer_date,grand_price,fee from v_fin_proforma_service_opr  where proforma_service_id=" + proforma_service_id;
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
+        {
+            data.Add(
+                new s_fin_proforma_service_opr(Convert.ToInt64(row["proforma_service_id"]), Convert.ToInt64(row["grand_price"]), Convert.ToInt32(row["fee"]),
+                    Convert.ToInt32(row["service_id"]),
+                row["offer_no"].ToString(), row["str_offer_date"].ToString()
+            ));
+
+        }
+        return data.ToArray();
+    }
+
 }

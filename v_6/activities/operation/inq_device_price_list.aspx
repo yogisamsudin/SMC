@@ -30,7 +30,7 @@
             
             <asp:TemplateField HeaderStyle-Width="25px">
                 <ItemTemplate>
-                    <span style="cursor:pointer;" onclick="edit('<%# Eval("sales_id") %>')"><%# Eval("offer_no") %></span>
+                    <a style="cursor:pointer;font-weight:bold;text-decoration:underline;color:blue;" onclick="edit('<%# Eval("sales_id") %>')"><%# Eval("offer_no") %></a>
                 </ItemTemplate>
                 <HeaderTemplate>
                     No.Penawaran

@@ -629,7 +629,10 @@
                     tb_description: apl.func.get("mdl_device_description"),
                     tb_note: apl.func.get("mdl_device_note"),
                     cb_all: apl.func.get("mdl_device_all_customer"),
-                    cb_draft:apl.func.get("mdl_device_draft"),
+                    cb_draft: apl.func.get("mdl_device_draft"),
+
+                    guarantee_id: 0, availability_id: 0, inden: 0, guarantee_period: 0,
+                    guarantee_timetype_id:"1",availability_timetype_id:"1",
 
                     //val_price1: apl.createValidator("device_save", "mdl_device_price", function () { return apl.func.emptyValueCheck(mdl_device.tb_price.value); }, "Salah input"),
                     val_price2: apl.createValidator("device_save", "mdl_device_price", function () { return (mdl_device.tb_price.getIntValue() < mdl_device.tb_principal_price.getIntValue()) }, "Nilai lebih kecil dari harga pokok"),
@@ -681,6 +684,14 @@
                                 mdl_device.draft_sts = data.draft_sts;
                                 mdl_device.cb_draft.checked = data.draft_sts;
 
+                                mdl_device.guarantee_id = data.guarantee_id;
+                                mdl_device.availability_id = data.availability_id;
+                                mdl_device.inden = data.inden;
+                                mdl_device.guarantee_period = data.guarantee_period;
+
+                                mdl_device.guarantee_timetype_id = data.guarantee_timetype_id;
+                                mdl_device.availability_timetype_id = data.availability_timetype_id;
+
                                 mdl_device.showEdit("Device - Edit");
                                 apl.func.hideSinkMessage();
                             }, apl.func.showError, ""
@@ -690,8 +701,9 @@
                 function () {
                     if (apl.func.validatorCheck("device_save")) {
                         apl.func.showSinkMessage("Save...");
-                        activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.device_id, mdl_device.cost, mdl_device.tb_price.getIntValue(), parseInt(mdl_device.lb_qty.getIntValue()), mdl_device.pph, mdl_device.tb_description.value, mdl_device.vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, "<%= user_id %>",mdl_device.cb_draft.checked,
+                        activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.device_id, mdl_device.cost, mdl_device.tb_price.getIntValue(), parseInt(mdl_device.lb_qty.getIntValue()), mdl_device.pph, mdl_device.tb_description.value, mdl_device.vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, "<%= user_id %>",mdl_device.cb_draft.checked,mdl_device.guarantee_id,mdl_device.availability_id,mdl_device.inden, mdl_device.guarantee_period,mdl_device.guarantee_timetype_id,mdl_device.availability_timetype_id,
                         function () {
+                            
                             mdl.load_opr_data();
                             mdl.tbl_load(mdl_device.sales_id);
                             mdl_device.hide();

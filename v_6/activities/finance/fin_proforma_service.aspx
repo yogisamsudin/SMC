@@ -1,5 +1,4 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/page.master" Theme="Page" %>
-
 <%@ Register Src="~/activities/marketing/wuc_info_customer.ascx" TagPrefix="uc1" TagName="wuc_info_customer" %>
 
 <script runat="server">
@@ -15,10 +14,10 @@
     }
 </script>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <script type="text/javascript" src="../../js/Komponen.js"></script>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
     <asp:ScriptManager runat="server" ID="sm">
         <Services>
             <asp:ServiceReference Path="../activities.asmx" />
@@ -136,32 +135,31 @@
         </fieldset>
     </div>
 
-    <div id="mdl_sales">
+    <div id="mdl_service">
         <fieldset>
             <table class="formview">
                 <tr>
                     <th>No.Penawaran</th>
                     <td>
-                        <input type="text" id="mdl_sales_no" size="50" maxlength="50" /></td>
+                        <input type="text" id="mdl_service_no" size="50" maxlength="50" /></td>
                 </tr>
                 <tr>
                     <th></th>
                     <td>
-                        <div class="buttonCari" onclick="mdl_sales.load();">Cari</div>
+                        <div class="buttonCari" onclick="mdl_service.load();">Cari</div>
                     </td>
                 </tr>
             </table>
 
-            <iframe class="frameList" id="mdl_sales_fr"></iframe>
+            <iframe class="frameList" id="mdl_service_fr"></iframe>
 
             <div style="padding-top: 5px;" class="button_panel">
                 <input type="button" value="Cancel" />
             </div>
         </fieldset>
     </div>
-
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="script" runat="Server">
+<asp:Content ID="Content3" ContentPlaceHolderID="script" Runat="Server">
     <script type="text/javascript">
         var cari = {
             tb_no: apl.func.get("cari_no"),
@@ -172,7 +170,7 @@
                 var no = escape(cari.tb_no.value);
                 var nooffer = escape(cari.tb_nooffer.value);
                 var cust = escape(cari.tb_customer.value);
-                cari.fl.src = "fin_proforma_sales_list.aspx?no=" + no + "&cust=" + cust + "&offer=" + nooffer;
+                cari.fl.src = "fin_proforma_service_list.aspx?no=" + no + "&cust=" + cust + "&offer=" + nooffer;
             },
             fl_refresh: function () {
                 cari.fl.contentWindow.document.refresh();
@@ -181,7 +179,7 @@
 
         var mdl = apl.createModal("mdl",
             {
-                proforma_sales_id: 0,
+                proforma_service_id: 0,
                 customer_id: 0,
                 an_id: 0,
                 v1: apl.func.get("mdl_view1"),
@@ -206,7 +204,7 @@
                 tbl: apl.createTableWS.init("mdl_tbl", [
                     apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "hapus")],
                         function (data) {
-                            if (confirm("Yakin akan dihapus?")) activities.fin_proforma_sales_opr_delete(mdl.proforma_sales_id, data.sales_id, function () { mdl.edit(mdl.proforma_sales_id); }, apl.func.showError, "");
+                            if (confirm("Yakin akan dihapus?")) activities.fin_proforma_service_opr_delete(mdl.proforma_service_id, data.service_id, function () { mdl.edit(mdl.proforma_service_id); }, apl.func.showError, "");
                         }, undefined, undefined
                     ),
                     apl.createTableWS.column("offer_no"),
@@ -214,12 +212,12 @@
                     apl.createTableWS.column("fee", undefined, undefined, undefined, true)
                 ]),
                 tbl_load: function () {
-                    activities.fin_proforma_sales_opr_list(mdl.proforma_sales_id, function (arr) { mdl.tbl.load(arr); }, apl.func.showError, "");
+                    activities.fin_proforma_service_opr_list(mdl.proforma_service_id, function (arr) { mdl.tbl.load(arr); }, apl.func.showError, "");
                 },
                 kosongkan: function () {
                     mdl.v1.Hide();
 
-                    mdl.proforma_sales_id = 0;
+                    mdl.proforma_service_id = 0;
                     mdl.customer_id = 0;
                     mdl.an_id = 0;
 
@@ -262,14 +260,13 @@
                     apl.func.showSinkMessage("Memuat data");
                     mdl.v1.Show();
 
-                    mdl.proforma_sales_id = id;
+                    mdl.proforma_service_id = id;
                     mdl.tbl_load();
 
                     
-                    
-                    activities.fin_proforma_sales_data(id,
-                        function (data) {
 
+                    activities.fin_proforma_service_data(id,
+                        function (data) {
                             mdl.tb_date.value = data.proforma_date;
                             mdl.lb_no.innerHTML = data.proforma_no;
                             mdl.dl_top.value = data.term_of_payment_id;
@@ -290,13 +287,12 @@
 
                             //alert("data: "+JSON.stringify(data));
                             mdl.showEdit("Service - Edit")
-
                             apl.func.hideSinkMessage();
                         }, apl.func.showError, ""
                     )
                     /*
                     mdl.tbl_load();
-                    activities.fin_sales_data(id,
+                    activities.fin_service_data(id,
                         function (data) {
                      
                      mdl.v1.Show();
@@ -356,8 +352,8 @@
                     }
                     return nilai;
                 },
-                select: function (sales_id) {
-                    mdl_sales.hide();
+                select: function (service_id) {
+                    mdl_service.hide();
                     //var data = {
                     //    tanggal: mdl.tb_date.value,
                     //    top: mdl.dl_top.value,
@@ -367,13 +363,13 @@
                     //    bill:mdl.dl_bill.value
                     //}
                     //alert(JSON.stringify(data));
-                    activities.fin_proforma_sales_add(mdl.proforma_sales_id, mdl.tb_date.value, mdl.dl_top.value, mdl.tb_po.value, mdl.tb_afpo.value, mdl.get_term_of_payment_value(), mdl.dl_bill.value, sales_id,
+                    activities.fin_proforma_service_add(mdl.proforma_service_id, mdl.tb_date.value, mdl.dl_top.value, mdl.tb_po.value, mdl.tb_afpo.value, mdl.get_term_of_payment_value(), mdl.dl_bill.value, service_id,
                         function (id) {
                             mdl.edit(id);
                         },
                         apl.func.showError, ""
                     );
-                    //activities.fin_sales_add(mdl.proforma_sales_id, id, mdl.tb_date.value, mdl.dl_top.value, mdl.tb_po.value, mdl.tb_afpo.value, mdl.get_term_of_payment_value(), mdl.dl_bill.value,
+                    //activities.fin_service_add(mdl.proforma_service_id, id, mdl.tb_date.value, mdl.dl_top.value, mdl.tb_po.value, mdl.tb_afpo.value, mdl.get_term_of_payment_value(), mdl.dl_bill.value,
                     //    function (id) {
                     //        mdl.edit(id);
                     //    }, apl.func.showError, ""
@@ -399,18 +395,18 @@
                     }
                 },
                 tambah_service: function () {
-                    if (apl.func.validatorCheck("save")) mdl_sales.open(mdl.customer_id, mdl.an_id);
+                    if (apl.func.validatorCheck("save")) mdl_service.open(mdl.customer_id, mdl.an_id);
                 },
                 print: function () {
                     var fname = apl.func.formatFileName(mdl.lb_customer.innerHTML + "_" + mdl.lb_no.innerHTML);
-                    window.location = "../../report/report_generator.ashx?ListID=34&proforma_sales_id=" + mdl.proforma_sales_id + "&pdfName=" + fname;
+                    window.location = "../../report/report_generator.ashx?ListID=36&proforma_service_id=" + mdl.proforma_service_id + "&pdfName=" + fname;
                 },
                 cetak_surat_jalan: function () {
-                    activities.fin_sales_generate_schedule_print(mdl.proforma_sales_id,
+                    activities.fin_service_generate_schedule_print(mdl.proforma_service_id,
                         function () {
-                            fName = "surat_tanda_terima_sales_" + mdl.lb_customer.innerHTML;
+                            fName = "surat_tanda_terima_service_" + mdl.lb_customer.innerHTML;
                             fName = window.escape(fName.replace(/ /gi, "_"));
-                            window.location = "../../report/report_generator.ashx?ListID=7&proforma_sales_id=" + mdl.proforma_sales_id + "&pdfName=" + fName;
+                            window.location = "../../report/report_generator.ashx?ListID=7&proforma_service_id=" + mdl.proforma_service_id + "&pdfName=" + fName;
                         }, apl.func.showError, ""
                     );
                 }
@@ -422,9 +418,9 @@
                 if (apl.func.validatorCheck("save")) {
                     //alert(mdl.get_term_of_payment_value());
                     //alert(mdl.cb_pph.checked);
-                    activities.fin_proforma_sales_edit(mdl.proforma_sales_id, mdl.tb_date.value, mdl.dl_top.value, mdl.tb_po.value, mdl.tb_afpo.value, mdl.get_term_of_payment_value(), mdl.dl_bill.value, mdl.cb_pph.checked,
+                    activities.fin_proforma_service_edit(mdl.proforma_service_id, mdl.tb_date.value, mdl.dl_top.value, mdl.tb_po.value, mdl.tb_afpo.value, mdl.get_term_of_payment_value(), mdl.dl_bill.value, mdl.cb_pph.checked,
                         function () {
-                            mdl.edit(mdl.proforma_sales_id);
+                            mdl.edit(mdl.proforma_service_id);
                             cari.fl_refresh();
                         }, apl.func.showError, ""
                     );
@@ -432,28 +428,28 @@
             },
             function () {
                 if (confirm("Yakin akan dihapus?")) {
-                    //activities.fin_sales_delete(mdl.proforma_sales_id, function () { mdl.hide(); cari.fl_refresh(); }, apl.func.showError, "");
+                    //activities.fin_service_delete(mdl.proforma_service_id, function () { mdl.hide(); cari.fl_refresh(); }, apl.func.showError, "");
                 }
             }, "frm_page", "cover_content"
         );
 
-            var mdl_sales = apl.createModal("mdl_sales",
+            var mdl_service = apl.createModal("mdl_service",
                 {
                     type: 1,
                     customer_id: 0,
                     an_id: 0,
-                    tb_no: apl.func.get("mdl_sales_no"),
-                    fr: apl.func.get("mdl_sales_fr"),
+                    tb_no: apl.func.get("mdl_service_no"),
+                    fr: apl.func.get("mdl_service_fr"),
                     open: function (customer_id, an_id) {
-                        mdl_sales.customer_id = customer_id;
-                        mdl_sales.an_id = an_id;
-                        mdl_sales.tb_no.value = "";
-                        mdl_sales.fr.src = "";
-                        mdl_sales.showAdd("Pilih Penawaran");
+                        mdl_service.customer_id = customer_id;
+                        mdl_service.an_id = an_id;
+                        mdl_service.tb_no.value = "";
+                        mdl_service.fr.src = "";
+                        mdl_service.showAdd("Pilih Penawaran");
                     },
                     load: function () {
-                        var no = window.escape(mdl_sales.tb_no.value);
-                        mdl_sales.fr.src = "fin_proforma_sales_opr_apporved_list.aspx?no=" + no + "&custid=" + mdl_sales.customer_id + "&anid=" + mdl_sales.an_id + "&branch=<%= branch_id %>";
+                        var no = window.escape(mdl_service.tb_no.value);
+                        mdl_service.fr.src = "fin_proforma_service_opr_apporved_list.aspx?no=" + no + "&custid=" + mdl_service.customer_id + "&anid=" + mdl_service.an_id + "&branch=<%= branch_id %>";
                     }
                 }, undefined, undefined, undefined, "frm_page", "mdl"
         );

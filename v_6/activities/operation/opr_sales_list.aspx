@@ -31,6 +31,7 @@
             <asp:QueryStringParameter Name="branch_id" QueryStringField="branch" DefaultValue=" " />
             <asp:QueryStringParameter Name="ssm" QueryStringField="ssm" DefaultValue=" " />
             <asp:QueryStringParameter Name="nopo" QueryStringField="nopo" DefaultValue="" />
+            <asp:QueryStringParameter Name="followup" QueryStringField="followup" DefaultValue="%" />
         </SelectParameters>
     </asp:SqlDataSource>
 
@@ -55,6 +56,7 @@
             <asp:BoundField DataField="sales_status_marketing" HeaderText="Mkt.Status" ReadOnly="True" SortExpression="sales_status_marketing" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField DataField="reason_marketing" HeaderText="Alasan" ReadOnly="True" SortExpression="reason_marketing" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField DataField="str_update_status_date" HeaderText="Tgl.Update Sts" ReadOnly="True" SortExpression="update_status_date" HeaderStyle-HorizontalAlign="Left" />
+            <%--<asp:BoundField DataField="followupsts" HeaderText="followupsts" ReadOnly="True" SortExpression="followupsts" HeaderStyle-HorizontalAlign="Left" />--%>
         </Columns>
     </asp:GridView>
     <script type="text/javascript">

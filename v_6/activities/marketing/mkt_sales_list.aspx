@@ -24,6 +24,7 @@
             <asp:QueryStringParameter Name="branch_id" QueryStringField="branch" DefaultValue=" " />
             <asp:QueryStringParameter Name="ssm" QueryStringField="ssm" DefaultValue=" " />
             <asp:QueryStringParameter Name="marketing_id" QueryStringField="marketing_id" DefaultValue="%" />
+            <asp:QueryStringParameter Name="followup" QueryStringField="@followup" DefaultValue="%" />
         </SelectParameters>
     </asp:SqlDataSource>
 
