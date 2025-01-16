@@ -14,7 +14,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="Body_Content" Runat="Server">
     <asp:SqlDataSource runat="server" ID="sdsdata" 
         ConnectionString="<%$ ConnectionStrings:csApp %>" 
-        SelectCommand="select opr_sales.offer_no,price, dbo.f_convertDateToChar(opr_sales.offer_date)str_offer_date,opr_sales.offer_date,opr_sales_device.sales_id ,tec_device.device_id, device, cost, principal_price,customer_name from tec_device inner join opr_sales_device on opr_sales_device.device_id=tec_device.device_id inner join v_opr_sales opr_sales on opr_sales.sales_id=opr_sales_device.sales_id  where device like @device and customer_name like @customer order by offer_date desc">
+        SelectCommand="select top 100 opr_sales.offer_no,price, dbo.f_convertDateToChar(opr_sales.offer_date)str_offer_date,opr_sales.offer_date,opr_sales_device.sales_id ,tec_device.device_id, device, cost, principal_price,customer_name from tec_device inner join opr_sales_device on opr_sales_device.device_id=tec_device.device_id inner join v_opr_sales opr_sales on opr_sales.sales_id=opr_sales_device.sales_id  where device like @device and customer_name like @customer order by offer_date desc">
         <SelectParameters>
             <asp:QueryStringParameter Name="device" QueryStringField="device" DefaultValue=" "/>
             <asp:QueryStringParameter Name="customer" QueryStringField="customer" DefaultValue="%"/>

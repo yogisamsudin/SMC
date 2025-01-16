@@ -3,8 +3,8 @@
 <script runat="server">
     void Page_Load()
     {
-        string nama = "b@andung";
-        Response.Write(nama.Replace("@","a"));
+        //string nama = "b@andung";
+        //Response.Write(nama.Replace("@","a"));
     }
 </script>
 

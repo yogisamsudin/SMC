@@ -258,13 +258,24 @@
                     <th colspan="2" style="text-align:center"><label style="font-weight:bold;"">WORKFLOW</label></th>
                 </tr>
                 <tr>
-                    <th>Log</th>
+                    <th>Log.Penawaran</th>
                     <td>
                         <table class="gridView" id="mdl_tbllog" style="width:100%">
                             <tr>
                                 <th style="width:150px;">Tanggal</th>
                                 <th>Status</th>
                                 <th>User</th>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Log.Invoice</th>
+                    <td>
+                        <table class="gridView" id="mdl_tblloginv" style="width:100%">
+                            <tr>
+                                <th style="width:150px;">Tanggal</th>
+                                <th>Status</th>
                             </tr>
                         </table>
                     </td>
@@ -505,6 +516,17 @@
                 tbllog_load: function () {
                     activities.opr_sales_log_list(mdl.sales_id, function (arr) { mdl.tbllog.load(arr); }, apl.func.showError, "");
                 },
+
+                tblloginv: apl.createTableWS.init("mdl_tblloginv",
+                    [
+                        apl.createTableWS.column("log_date"),
+                        apl.createTableWS.column("status_desc")
+                    ]
+                ),
+                tblloginv_load: function () {
+                    activities.fin_sales_log_list(mdl.sales_id, function (arr) { mdl.tblloginv.load(arr); }, apl.func.showError, "");
+                },
+
                 tbladdicost: apl.createTableWS.init("mdl_tbladdicost",
                     [
                         apl.createTableWS.column("addicost_name"),
@@ -646,6 +668,7 @@
 
                             mdl.tbllog_load();
                             mdl.tbladdicost_load();
+                            mdl.tblloginv_load();
 
                             mdl.dl_ctgsales.value = data.ctgsales_id;
 

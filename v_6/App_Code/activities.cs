@@ -12,6 +12,16 @@ using _test;
 public class activities : System.Web.Services.WebService
 {
     //#struct
+    public struct s_fin_sales_log
+    {
+        public string log_date, status_desc;
+
+        public s_fin_sales_log(string _log_date, string _status_desc)
+        {
+            log_date = _log_date;
+            status_desc = _status_desc;
+        }
+    }
     public struct s_fin_proforma_service_opr
     {
         public double proforma_service_id, grand_price, fee;
@@ -3592,6 +3602,25 @@ public class activities : System.Web.Services.WebService
     }
 
     //#query
+    private s_fin_sales_log fin_sales_log_row(System.Data.DataRow row)
+    {
+        return new s_fin_sales_log(row["log_date"].ToString(), row["status_desc"].ToString());
+    }
+    [WebMethod]
+    public s_fin_sales_log[] fin_sales_log_list(long sales_id)
+    {
+        List<s_fin_sales_log> data = new List<s_fin_sales_log>();
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeProcQ("fin_sales_log", new _DBcon.sComParameter[]{             
+            new _DBcon.sComParameter("@sales_id",System.Data.SqlDbType.BigInt,0,sales_id)
+        }))
+        {
+            data.Add(fin_sales_log_row(row));
+        }
+
+        return data.ToArray();
+    }
     private string tec_onsite_guarantee_select(string filter)
     {
         return "select guarantee_onsite_id,guarantee_onsite_name,guarantee_sts from v_tec_onsite_guarantee " + filter;

@@ -536,9 +536,9 @@
                     }
                 },
                 refresh_modal: function () {
-                    //mdl.hide();
+                    mdl.hide();
                     cari.fl_refresh();
-                    //apl.func.hideSinkMessage();
+                    apl.func.hideSinkMessage();
                 },
                 add_pickup_address: function () {
                     document.mdl_location.open(2);
@@ -569,7 +569,7 @@
                             apl.func.hideSinkMessage();
                             if (pesan == '') {
                                 activities.act_sales_edit(mdl.sales_id, mdl.ac_customer.id, mdl.dl_an.value, mdl.dl_contact.value, mdl.tb_pickup_address2.value, mdl.tb_note.value, mdl.tb_pickup_address.id, mdl.tb_fee.getIntValue(), mdl.tb_pickup_date.value, mdl.latitude, mdl.longitude, mdl.tb_branch.value, mdl.refresh_modal, apl.func.showError, "");
-                                if (mdl.dl_marketing_status.value == "2") mdl.hide(); else mdl.edit(mdl.sales_id);
+                                //if (mdl.dl_marketing_status.value == "2") mdl.hide(); else mdl.edit(mdl.sales_id);
                             } else alert(pesan);
 
                         }, apl.func.showError, ""
