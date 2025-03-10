@@ -42,8 +42,9 @@
             </asp:TemplateField>
             <asp:BoundField DataField="offer_no" HeaderText="No.Penawaran" ReadOnly="True" SortExpression="offer_no" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField DataField="po_no" HeaderText="No.PO" ReadOnly="True" SortExpression="po_no" HeaderStyle-HorizontalAlign="Left" />
-            <asp:BoundField DataField="str_proses_date" HeaderText="Tanggal" ReadOnly="True" SortExpression="offer_date" HeaderStyle-HorizontalAlign="Left" />
+            <asp:BoundField DataField="str_proses_datetime" HeaderText="Tanggal" ReadOnly="True" SortExpression="proses_date" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField DataField="customer_name" HeaderText="Pelanggan" ReadOnly="True" SortExpression="customer_name" HeaderStyle-HorizontalAlign="Left" />
+            <asp:BoundField DataField="marketing_id_real" HeaderText="Marketing" ReadOnly="True" SortExpression="marketing_id_real" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField DataField="sales_status" HeaderText="Status" ReadOnly="True" SortExpression="sales_status" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField DataField="sales_status_marketing" HeaderText="Mkt.Status" ReadOnly="True" SortExpression="sales_status_marketing" HeaderStyle-HorizontalAlign="Left" />
             <asp:BoundField DataField="reason_marketing" HeaderText="Alasan" ReadOnly="True" SortExpression="reason_marketing" HeaderStyle-HorizontalAlign="Left" />

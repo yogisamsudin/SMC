@@ -2119,12 +2119,14 @@ public class activities : System.Web.Services.WebService
         public int customer_id, distance, customer_address_location_id, group_customer_id, branch_id;
         public string customer_name, customer_address, customer_phone, customer_fax, customer_email, marketing_id, customer_address_location, group_customer, npwp, latitude, longitude, branch_name;
         public Boolean user_device_mandatory;
+        public string tkuid, jenisidpembeli_id, jenisidpembeli_name;
 
         public s_customer(int _customer_id, int _distance, string _customer_name, string _customer_address, string _customer_phone, string _customer_fax, string _customer_email, string _marketing_id,
             int _customer_address_location_id, string _customer_address_location,
             int _group_customer_id, string _group_customer, string _npwp = "", string _latitude = "", string _longitude = "",
             int _branch_id = 0, string _branch_name = "",
-            Boolean _user_device_mandatory = false)
+            Boolean _user_device_mandatory = false,
+            string _tkuid = "", string _jenisidpembeli_id = "", string _jenisidpembeli_name = "")
         {
             customer_id = _customer_id;
             customer_name = _customer_name;
@@ -2144,6 +2146,9 @@ public class activities : System.Web.Services.WebService
             branch_id = _branch_id;
             branch_name = _branch_name;
             user_device_mandatory = _user_device_mandatory;
+            tkuid=_tkuid;
+            jenisidpembeli_id=_jenisidpembeli_id;
+            jenisidpembeli_name=_jenisidpembeli_name;
         }
     }
     public struct s_marketing
@@ -2330,6 +2335,21 @@ public class activities : System.Web.Services.WebService
         return data.ToArray();
     }
     //#dropdown
+    [WebMethod]
+    public s_drop_down[] dl_jenisidpembeli(string where)
+    {
+        List<s_drop_down> data = new List<s_drop_down>();
+
+        string strSQL = "select jenisidpembeli_id code, jenisidpembeli_name keterangan from act_jenisidpembeli  " + where + " order by jenisidpembeli_name";
+
+        _DBcon c = new _DBcon();
+        foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
+        {
+            data.Add(new s_drop_down(row["code"].ToString(), row["keterangan"].ToString()));
+        }
+
+        return data.ToArray();
+    }
     [WebMethod]
     public s_drop_down[] dl_timetype(string where)
     {
@@ -6030,7 +6050,7 @@ public class activities : System.Web.Services.WebService
     {
         s_customer data = new s_customer();
 
-        string strSQL = "select user_device_mandatory,npwp,customer_id, customer_name, customer_address, customer_phone,customer_fax,distance,marketing_id,customer_email,customer_address_location_id, customer_address_location,group_customer_id, group_customer, latitude, longitude, branch_id, branch_name from v_act_customer where customer_id='" + customer_id + "'";
+        string strSQL = "select user_device_mandatory,npwp,customer_id, customer_name, customer_address, customer_phone,customer_fax,distance,marketing_id,customer_email,customer_address_location_id, customer_address_location,group_customer_id, group_customer, latitude, longitude, branch_id, branch_name, tkuid, jenisidpembeli_id, jenisidpembeli_name from v_act_customer where customer_id='" + customer_id + "'";
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
@@ -6041,7 +6061,8 @@ public class activities : System.Web.Services.WebService
                         Convert.ToInt32(row["group_customer_id"]), row["group_customer"].ToString(), row["npwp"].ToString(),
                         row["latitude"].ToString(), row["longitude"].ToString(),
                         Convert.ToInt32(row["branch_id"]), row["branch_name"].ToString(),
-                        Convert.ToBoolean(row["user_device_mandatory"])
+                        Convert.ToBoolean(row["user_device_mandatory"]),
+                        row["tkuid"].ToString(),row["jenisidpembeli_id"].ToString(),row["jenisidpembeli_name"].ToString()
             );
         }
 
@@ -6067,6 +6088,27 @@ public class activities : System.Web.Services.WebService
         return data;
     }
     //#exec
+    [WebMethod]
+    public void act_customer_finance_update(string customer_id, string npwp, string tkuid, string jenisidpembeli_id)
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("act_customer_finance_update", new _DBcon.sComParameter[]{
+            new _DBcon.sComParameter("@customer_id",System.Data.SqlDbType.BigInt,0,customer_id),
+            new _DBcon.sComParameter("@npwp",System.Data.SqlDbType.VarChar,50,npwp),
+            new _DBcon.sComParameter("@tkuid",System.Data.SqlDbType.VarChar,50,tkuid),
+            new _DBcon.sComParameter("@jenisidpembeli_id",System.Data.SqlDbType.VarChar,15,jenisidpembeli_id)
+        });
+
+    }
+    [WebMethod]
+    public void tmp_generate_cortex(string tanggal)
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("tmp_generate_cortex", new _DBcon.sComParameter[]{
+            new _DBcon.sComParameter("@tanggal",System.Data.SqlDbType.VarChar,10,tanggal),
+        });
+
+    }
     [WebMethod]
     public void tec_onsite_workorders_parts_add(long workorder_id, int part_id, int total)
     {

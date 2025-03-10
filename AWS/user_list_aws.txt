@@ -1,0 +1,22 @@
+AWS ACCOUNT SMC
+
+smc
+gunakan google authenticator untuk code otorize
+
+url root AWS
+https://signin.aws.amazon.com/signin?client_id=arn%3Aaws%3Asignin%3A%3A%3Aconsole%2Fcanvas&redirect_uri=https%3A%2F%2Fconsole.aws.amazon.com%2Fconsole%2Fhome%3FhashArgs%3D%2523%26isauthcode%3Dtrue%26state%3DhashArgsFromTB_ap-southeast-2_a559c8baf0ed90b0&page=resolve&code_challenge=bVHD8B3suJELjmU8-cmbfceaXwuPXFszbsVZ96crd44&code_challenge_method=SHA-256&backwards_compatible=true
+
+user       : yogisamsudin@suryamandiricomputer.co.id
+password   : Master2025!
+
+console AWS
+url        : https://aws.amazon.com/console/
+account ID : 277707120130
+IAM user   : yogi
+password   : !Smc190275!
+
+remote
+user       : administator
+password   : &?%Lq%VO2w3bg0G=Awn5sRUdP(2MXXv!
+
+url SMC-AWS: 43.218.80.31
