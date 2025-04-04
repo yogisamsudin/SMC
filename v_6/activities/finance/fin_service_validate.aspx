@@ -1,9 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/page.master" theme="Page"%>
-
 <%@ Register Src="~/activities/operation/wuc_opr_service_assign.ascx" TagPrefix="uc1" TagName="wuc_opr_service_assign" %>
 <%@ Register Src="~/activities/marketing/wuc_service_inq_full.ascx" TagPrefix="uc1" TagName="wuc_service_inq_full" %>
-
-
 
 <script runat="server">
     public string branch_id, disabled_sts, style_print;
@@ -61,36 +58,6 @@
             <td><input type="text" id="cari_customer" size="50" value="%"/></td>
         </tr>
         <tr>
-            <th>SN</th>
-            <td><input type="text" id="cari_sn" size="50" value="%"/></td>
-        </tr>
-        <tr>
-            <th>Status</th>
-            <td><select id="cari_status"></select></td>
-        </tr>
-        <tr>
-            <th>Marketing Sts</th>
-            <td><select id="cari_marketing_sts"></select></td>
-        </tr>
-        <tr>
-            <th>Finance Sts</th>
-            <td>
-                <select id="cari_finance_sts">
-                    <option value="%">-All-</option>
-                    <option value="1">Ada</option>
-                    <option value="0">Belum</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <th>Technician Sts</th>
-            <td><select id="cari_technician_sts"></select></td>
-        </tr>
-        <tr>
-            <th>Cabang</th>
-            <td><select id="cari_branch" <%= disabled_sts %>></select></td>
-        </tr>
-        <tr>
             <th></th>
             <td><div class="buttonCari" onclick="cari.load();">Cari</div></td>
         </tr>
@@ -110,21 +77,21 @@
                 </tr>
                 <tr>
                     <th>Tanggal</th>
-                    <td><input type="text" id="mdl_date" size="10"/></td>
+                    <td><input type="text" id="mdl_date" size="10" disabled="disabled"/></td>
                 </tr>
                 <tr>
                     <th>Broker</th>
-                    <td><select id="mdl_broker"></select></td>
+                    <td><select id="mdl_broker" disabled="disabled"></select></td>
                 </tr>
                 <tr>
                     <th>Pajak</th>
-                    <td><input type="checkbox" id="mdl_tax"/></td>
+                    <td><input type="checkbox" id="mdl_tax" disabled="disabled"/></td>
                 </tr>
                 <tr>
                     <th>Discount</th>
                     <td>
-                        <select id="mdl_discount_type" style="float:left"></select>
-                        <input type="text" id="mdl_discount_value" style="float:left;text-align:right;" size="20"/>
+                        <select id="mdl_discount_type" style="float:left" disabled="disabled"></select>
+                        <input type="text" id="mdl_discount_value" style="float:left;text-align:right;" size="20" disabled="disabled"/>
                     </td>
                 </tr>
                 <tr>
@@ -133,15 +100,15 @@
                 </tr>
                 <tr>
                     <th>Note</th>
-                    <td><textarea id="mdl_addfeenote"></textarea></td>
+                    <td><textarea id="mdl_addfeenote" disabled="disabled"></textarea></td>
                 </tr>
                 <tr>
                     <th>Additonal Fee</th>
-                    <td><input type="text" id="mdl_addfee" size="20" style="text-align:right;" /></td>
+                    <td><input type="text" id="mdl_addfee" size="20" style="text-align:right;" disabled="disabled"/></td>
                 </tr>
                 <tr>
                     <th>Status</th>
-                    <td><select id="mdl_status"></select><label title="Tanggal update status" id="mdl_updatestatusdt" style="margin-left:10px;font-size:small;font-weight:bold;"></label></td>
+                    <td><select id="mdl_status" disabled="disabled"></select><label title="Tanggal update status" id="mdl_updatestatusdt" style="margin-left:10px;font-size:small;font-weight:bold;"></label></td>
                 </tr>
                 <tr>
                     <th>Pelanggan</th>
@@ -157,14 +124,14 @@
                 </tr>                
                 <tr>
                     <th>Note</th>
-                    <td><textarea id="mdl_note"></textarea></td>
+                    <td><textarea id="mdl_note" disabled="disabled"></textarea></td>
                 </tr>
                 <tr>
                     <th style="vertical-align:top;">Device</th>
                     <td>
                         <table id="mdl_tbl" class="gridView">
                             <tr>
-                                <th style="width:25px"><div class="tambah" onclick="mdl.service_device_tambah();"></div></th>
+                                <th style="width:25px"></th>
                                 <th>SN</th>
                                 <th>Device</th>
                                 <th>Modal</th>
@@ -209,35 +176,35 @@
                 </tr>
                 <tr>
                     <th>Modal</th>
-                    <td><input type="text" id="mdl_total_cost" size="15" style="text-align:right;" disabled/></td>
+                    <td><input type="text" id="mdl_total_cost" size="15" style="text-align:right;" disabled="disabled"/></td>
                 </tr>
                 <tr>
                     <th>Addi.Cost -</th>
-                    <td><input type="text" id="mdl_total_addicost" size="15" style="text-align:right;" disabled/></td>
+                    <td><input type="text" id="mdl_total_addicost" size="15" style="text-align:right;" disabled="disabled"/></td>
                 </tr>
                 <tr>
                     <th>Net</th>
-                    <td><input type="text" id="mdl_total_net" size="15" style="text-align:right;" disabled title="harga - modal - discount"/></td>
+                    <td><input type="text" id="mdl_total_net" size="15" style="text-align:right;" disabled="disabled" title="harga - modal - discount"/></td>
                 </tr>
                 <tr>
                     <th>Harga +</th>
-                    <td><input type="text" id="mdl_total_price" size="15" style="text-align:right;" disabled/></td>
+                    <td><input type="text" id="mdl_total_price" size="15" style="text-align:right;" disabled="disabled"/></td>
                 </tr>                
                 <tr style="display:none;">
                     <th>PPH 21 -</th>
-                    <td><input type="text" id="mdl_total_pph" size="15" style="text-align:right;" disabled/></td>
+                    <td><input type="text" id="mdl_total_pph" size="15" style="text-align:right;" disabled="disabled"/></td>
                 </tr>
                 <tr>
                     <th>PPN +</th>
-                    <td><input type="text" id="mdl_total_ppn" size="15" style="text-align:right;" disabled/></td>
+                    <td><input type="text" id="mdl_total_ppn" size="15" style="text-align:right;" disabled="disabled"/></td>
                 </tr>
                 <tr>
                     <th>Discount -</th>
-                    <td><input type="text" id="mdl_total_discount" size="15" style="text-align:right;" disabled/></td>
+                    <td><input type="text" id="mdl_total_discount" size="15" style="text-align:right;" disabled="disabled"/></td>
                 </tr>                
                 <tr>
                     <th>Total =</th>
-                    <td><input type="text" id="mdl_total_grand" size="15" style="text-align:right;" disabled title="harga - pph 21 - discount + ppn"/></td>
+                    <td><input type="text" id="mdl_total_grand" size="15" style="text-align:right;" disabled="disabled" title="harga - pph 21 - discount + ppn"/></td>
                 </tr>
                 <tr style="background-color:gray;">
                     <th></th>
@@ -247,18 +214,20 @@
                     <th>Invoice No</th>
                     <td><label id="mdl_invoice"></label></td>
                 </tr>
+                <tr>
+                    <th>Validasi</th>
+                    <td><input type="checkbox" id="mdl_validate"/></td>
+                </tr>
             </table>
             <div style="padding-top:5px;" class="button_panel">
-                <input type="button" value="Add"/>
                 <input type="button" value="Save"/>
-                <input type="button" value="Delete"/>
                 <input type="button" value="Close"/>
-                <select id="mdl_cetak_type" style="float:right;">
+                <select id="mdl_cetak_type" style="float:right;display:none;">
                     <option value="">PDF</option>
                     <option value="3">Word</option>
                     <option value="2">Excel</option>
                 </select>
-                <input type="button" value="Print" onclick="mdl.print_offer(document.getElementById('mdl_cetak_type').value);" style="float:right;<%= style_print %>"/>
+                <input type="button" value="Print" onclick="mdl.print_offer(document.getElementById('mdl_cetak_type').value);" style="display:none;float:right;<%= style_print %>"/>
             </div>
             <label style="font-size:smaller;font-weight:bold;">NB: simpan sebelum mencetak</label>
         </fieldset>
@@ -305,7 +274,7 @@
                     <td>
                         <table id="mdl_device_tbl" class="gridView">
                             <tr>
-                                <th style="width:25px;"><div class="tambah" onclick="mdl_component.tambah(mdl_device.service_id, mdl_device.service_device_id);"></div></th>
+                                <th style="width:25px;"></th>
                                 <th>Komponent</th>
                                 <th>Modal</th>
                                 <th>Total #1</th>
@@ -318,9 +287,7 @@
                 </tr>
             </table>
             <div style="padding-top:5px;" class="button_panel">
-                <input type="button" value="Save"/>
-                <input type="button" value="Delete"/>
-                <input type="button" value="Cancel"/>
+                <input type="button" value="Close"/>
             </div>
         </fieldset>
     </div>
@@ -331,21 +298,21 @@
             <table class="formview">
                 <tr>
                     <th>Device</th>
-                    <td><input id="mdl_component_device" /></td>
+                    <td><input id="mdl_component_device" disabled="disabled"/></td>
                 </tr>
                 <tr>
                     <th>Cost</th>
-                    <td><input type="text" id="mdl_component_cost" size="15" maxlength="15" style="text-align:right;"/></td>
+                    <td><input type="text" id="mdl_component_cost" size="15" maxlength="15" style="text-align:right;" disabled="disabled"/></td>
                 </tr>
                 <tr>
                     <th>Total#1</th>
-                    <td><input type="text" id="mdl_component_total1" size="3" maxlength="3" style="text-align:right;"/></td>
+                    <td><input type="text" id="mdl_component_total1" size="3" maxlength="3" style="text-align:right;" disabled="disabled"/></td>
                 </tr>
                 <tr>
                     <th>Harga</th>
                     <td>
-                        <input type="text" id="mdl_component_price" size="15" maxlength="15" style="text-align:right;float:left;"/>
-                        <div class="select" style="float:left;" onclick="mdl_component.tbl_load()">
+                        <input type="text" id="mdl_component_price" size="15" maxlength="15" style="text-align:right;float:left;" disabled="disabled"/>
+                        <div class="select" style="float:left;display:none;" onclick="mdl_component.tbl_load()">
                             <br />
                             <div style="height:200px; overflow: scroll; width: 700px;" class="gridView">                                
                                 <table  id="mdl_component_tbl_price" >
@@ -362,18 +329,15 @@
                 </tr>
                 <tr>
                     <th>Total#2</th>
-                    <td><input type="text" id="mdl_component_total2" size="3" maxlength="3" style="text-align:right;"/></td>
+                    <td><input type="text" id="mdl_component_total2" size="3" maxlength="3" style="text-align:right;" disabled="disabled"/></td>
                 </tr>
                 <tr style="display:none;">
                     <th>PPH 21</th>
-                    <td><input type="checkbox" id="mdl_component_pph21"/></td>
+                    <td><input type="checkbox" id="mdl_component_pph21" disabled="disabled"/></td>
                 </tr>
             </table>
             <div style="padding-top:5px;" class="button_panel">
-                <input type="button" value="Add"/>
-                <input type="button" value="Save"/>
-                <input type="button" value="Delete"/>
-                <input type="button" value="Cancel"/>
+                <input type="button" value="Close"/>
             </div>
         </fieldset>
     </div>
@@ -383,23 +347,18 @@
         var cari = {
             tb_no: apl.func.get("cari_no"),
             tb_customer: apl.func.get("cari_customer"),
-            tb_sn: apl.func.get("cari_sn"),
-            dl_status: apl.createDropdownWS("cari_status", activities.dl_opr_status_service_list),
-            dl_marketing_sts: apl.createDropdownWS("cari_marketing_sts", activities.dl_act_marketing_service_status_all_list),
-            dl_finance_sts: apl.func.get("cari_finance_sts"),
-            dl_technician_sts: apl.createDropdownWS("cari_technician_sts", activities.dl_service_device_sts_all),
             fl: apl.func.get("cari_fr"),
-            dl_branch:apl.createDropdownWS("cari_branch",activities.dl_par_branch_list),
             load: function () {
                 var no = window.escape(cari.tb_no.value);
                 var cust = window.escape(cari.tb_customer.value);
-                var status = window.escape(cari.dl_status.value);
-                var finance_sts = window.escape(cari.dl_finance_sts.value);
-                var sn = window.escape(cari.tb_sn.value);
-                var ts = window.escape(cari.dl_technician_sts.value);
-                var branch = window.escape(cari.dl_branch.value);
-                var ssm = escape(cari.dl_marketing_sts.value);
-                cari.fl.src = "opr_service_list.aspx?no=" + no + "&cust=" + cust + "&status=" + status + "&finance_sts=" + finance_sts + "&sn=" + sn + "&ts=" + ts + "&branch=" + branch+"&ssm="+ssm;
+                var status = window.escape("2");
+                var finance_sts = window.escape("%");
+                var sn = window.escape("%");
+                var ts = window.escape("%");
+                var branch = window.escape("%");
+                var ssm = window.escape("2");
+                cari.fl.src = "../operation/opr_service_list.aspx?no=" + no + "&cust=" + cust + "&status=" + status + "&finance_sts=" + finance_sts + "&sn=" + sn + "&ts=" + ts + "&branch=" + branch + "&ssm=" + ssm + "&validate=0&displayadd=0";
+                //alert("../operation/opr_service_list.aspx?no=" + no + "&cust=" + cust + "&status=" + status + "&finance_sts=" + finance_sts + "&sn=" + sn + "&ts=" + ts + "&branch=" + branch + "&ssm=" + ssm);
             },
             fl_refresh: function () {
                 cari.fl.contentWindow.document.refresh();
@@ -413,8 +372,8 @@
 
                 customer_id: 0,
 
-                total_price : 0, 
-                total_cost : 0, 
+                total_price: 0,
+                total_cost: 0,
                 total_price_pph21: 0,
 
                 lb_no: apl.func.get("mdl_no"),
@@ -448,7 +407,7 @@
 
                 lb_ppn: apl.func.get("mdl_ppn"),
                 lb_pph: apl.func.get("mdl_pph"),
-                tb_total_price: apl.createNumeric("mdl_total_price",true),
+                tb_total_price: apl.createNumeric("mdl_total_price", true),
                 tb_total_cost: apl.createNumeric("mdl_total_cost", true),
                 tb_total_addicost: apl.createNumeric("mdl_total_addicost", true),
                 tb_total_pph: apl.createNumeric("mdl_total_pph", true),
@@ -456,12 +415,12 @@
                 tb_total_discount: apl.createNumeric("mdl_total_discount", true),
                 tb_net: apl.createNumeric("mdl_total_net", true),
                 tb_grand: apl.createNumeric("mdl_total_grand", true),
-                lb_updatestatusdt : apl.func.get("mdl_updatestatusdt"),
+                lb_updatestatusdt: apl.func.get("mdl_updatestatusdt"),
+                cb_validate:apl.func.get("mdl_validate"),
 
-                menghitung:function()
-                {
+                menghitung: function () {
                     var ppn = mdl.total_price * parseFloat(mdl.lb_ppn.innerHTML) / 100;
-                    var pph21 = mdl.total_price_pph21 * parseFloat(mdl.lb_pph.innerHTML) / 100;                    
+                    var pph21 = mdl.total_price_pph21 * parseFloat(mdl.lb_pph.innerHTML) / 100;
                     var discount = (mdl.dl_discount_type.value == '1') ? mdl.total_price * mdl.tb_discount_value.getIntValue() / 100 : mdl.tb_discount_value.getIntValue();
                     var total = mdl.total_price - discount - pph21 + ppn;
                     var net = mdl.total_price - mdl.total_cost - discount;
@@ -476,34 +435,32 @@
                 },
                 tbl: apl.createTableWS.init("mdl_tbl",
                     [
-                        apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "edit")], function (data) { mdl_device.edit(data.service_id, data.service_device_id);}, undefined, undefined),
+                        apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "edit")], function (data) { mdl_device.edit(data.service_id, data.service_device_id); }, undefined, undefined),
                         apl.createTableWS.column("sn"),
                         apl.createTableWS.column("device"),
-                        apl.createTableWS.column("total_cost",undefined,undefined,undefined,true),
+                        apl.createTableWS.column("total_cost", undefined, undefined, undefined, true),
                         apl.createTableWS.column("total_price", undefined, undefined, undefined, true),
                         apl.createTableWS.column("total_price_customer", undefined, undefined, undefined, true),
                         apl.createTableWS.column("total_price_pph21", undefined, undefined, undefined, true),
                         apl.createTableWS.column("service_device_sts"),
                     ]
                 ),
-                tbl_load:function(refresh_total_sts)
-                {
+                tbl_load: function (refresh_total_sts) {
                     activities.opr_service_device_list(mdl.service_id,
                         function (arrData) {
                             mdl.total_price = 0;
                             mdl.total_cost = 0;
                             mdl.total_price_pph21 = 0;
 
-                            for (var dt in arrData)
-                            {
+                            for (var dt in arrData) {
                                 mdl.total_price += arrData[dt].total_price;
                                 mdl.total_cost += arrData[dt].total_cost;
-                                mdl.total_price_pph21 += arrData[dt].total_price_pph21;                                
+                                mdl.total_price_pph21 += arrData[dt].total_price_pph21;
                             }
 
                             //if (refresh_total_sts) mdl.menghitung();
 
-                            mdl.tbl.load(arrData);                            
+                            mdl.tbl.load(arrData);
                         }, apl.func.showError, ""
                     );
                 },
@@ -517,8 +474,7 @@
                 tbladdicost_load: function () {
                     activities.opr_service_addicost_list(mdl.service_id, function (arr) { mdl.tbladdicost.load(arr); }, apl.func.showError, "");
                 },
-                set_tax:function(nilai)
-                {
+                set_tax: function (nilai) {
                     if (nilai != '') {
                         activities.opr_broker_data(nilai,
                             function (data) {
@@ -546,8 +502,7 @@
                         );
                     }
                 },
-                kosongkan:function()
-                {
+                kosongkan: function () {
                     mdl.service_id = 0;
                     mdl.customer_id = 0;
                     mdl.lb_no.innerHTML = "";
@@ -582,14 +537,14 @@
                     apl.func.validatorClear("save");
                     mdl.ddl_cetak_type.value = "";
                     mdl.lb_updatestatusdt.innerHTML = "";
+
+                    mdl.cb_validate.checked = false;
                 },
-                tambah:function()
-                {
+                tambah: function () {
                     mdl.kosongkan();
-                    mdl.showAdd("Service - Add");                                        
+                    mdl.showAdd("Service - Add");
                 },
-                edit:function(id,show_sts)
-                {
+                edit: function (id, show_sts) {
                     mdl.kosongkan();
                     mdl.tbl.Show();
                     apl.func.showSinkMessage("Memuat data");
@@ -597,9 +552,8 @@
                     mdl.tbl_load(false);
                     mdl.tbladdicost_load();
                     activities.opr_service_data(id,
-                        function (data)
-                        {
-                            
+                        function (data) {
+
                             mdl.customer_id = data.customer_id;
                             mdl.lb_no.innerHTML = data.offer_no;
                             mdl.tb_date.value = data.offer_date;
@@ -607,7 +561,7 @@
                             mdl.cb_tax.checked = data.tax_sts;
                             mdl.dl_discount_type.value = data.discount_type_id;
                             mdl.tb_discount_value.setValue(data.discount_value);
-                            mdl.tb_fee.setValue(data.fee);                            
+                            mdl.tb_fee.setValue(data.fee);
                             mdl.tb_addfee.setValue(data.additional_fee);
                             mdl.tb_addfeenote.value = data.additional_fee_note;
                             mdl.lb_customer.innerHTML = data.customer_name;
@@ -636,75 +590,54 @@
                         }, apl.func.showError, ""
                     );
                 },
-                select_service_device:function(service_device_id)
-                {
+                select_service_device: function (service_device_id) {
                     apl.func.showSinkMessage("Menambahkan data");
-                    activities.opr_service_add(mdl.tb_date.value, mdl.dl_broker.value, mdl.dl_discount_type.value, mdl.tb_discount_value.getIntValue(), mdl.cb_tax.checked, mdl.tb_fee.getIntValue(), service_device_id, mdl.tb_addfee.getIntValue(),mdl.tb_addfeenote.value,
+                    activities.opr_service_add(mdl.tb_date.value, mdl.dl_broker.value, mdl.dl_discount_type.value, mdl.tb_discount_value.getIntValue(), mdl.cb_tax.checked, mdl.tb_fee.getIntValue(), service_device_id, mdl.tb_addfee.getIntValue(), mdl.tb_addfeenote.value,
                         function (id) {
                             mdl.edit(id);
                             cari.fl_refresh();
                         }, apl.func.showError, ""
                     );
                 },
-                customer_info:function()
-                {
+                customer_info: function () {
                     mdl_service_inq.edit(mdl.service_id);
                 },
-                refresh:function()
-                {
+                refresh: function () {
                     mdl.hide();
                     cari.fl_refresh();
                     apl.func.hideSinkMessage();
                 },
-                service_device_tambah:function()
-                {
-                    mdl_device.tambah(mdl.service_id,mdl.customer_id);
+                service_device_tambah: function () {
+                    mdl_device.tambah(mdl.service_id, mdl.customer_id);
                 },
-                print_offer:function(file_type)
-                {
-                    if (mdl.service_id != 0)
-                    {
+                print_offer: function (file_type) {
+                    if (mdl.service_id != 0) {
                         var fName = mdl.lb_customer.innerHTML + "_" + mdl.lb_no.innerHTML;
                         fName = window.escape(fName.replace(/ /g, "_"));
                         window.location = "../../report/report_generator.ashx?ListID=2&service_id=" + mdl.service_id + "&pdfName=" + fName + "&fileType=" + file_type;
-                    }                    
+                    }
                 }
             },
-            function () {
-                if (apl.func.validatorCheck("save")) {
-                    document.select_service_device = mdl.select_service_device;
-                    mdl_opr_service_assign.open();
-                }
-            },
+            undefined,
             function () {
                 if (apl.func.validatorCheck("save")) {
                     apl.func.showSinkMessage("Menyimpan data");
-                    activities.opr_service_edit(mdl.service_id, mdl.tb_date.value, mdl.dl_broker.value, mdl.dl_discount_type.value, mdl.tb_discount_value.getIntValue(), mdl.cb_tax.checked, mdl.tb_fee.getIntValue(), mdl.dl_status.value, mdl.tb_note.value, mdl.tb_addfee.getIntValue(),mdl.tb_addfeenote.value,
-                        function(ret)
-                        {
+                    activities.fin_service_validate_update(mdl.service_id, mdl.cb_validate.checked,
+                        function () {
                             apl.func.hideSinkMessage();
-                            if (ret == "0") {
-                                cari.fl_refresh();
-                                mdl.edit(mdl.service_id, false);
-                            } else {
-                                alert("Transaksi belum divalidasi");
-                            }                            
+                            cari.fl_refresh();
+                            mdl.hide();
                         }, apl.func.showError, ""
                     );
                 }
             },
-            function () {
-                if (confirm("Yakin akan dihapus?")) {
-                    apl.func.showSinkMessage("Manghapus data");
-                    activities.opr_service_delete(mdl.service_id, mdl.refresh, apl.func.showError, "");
-                }
-            }, "frm_page", "cover_content"
+            undefined, "frm_page", "cover_content"
         );
 
         var mdl_device = apl.createModal("mdl_device",
             {
                 service_id: 0,
-                service_device_id: 0,                
+                service_device_id: 0,
                 lb_sn: apl.func.get("mdl_device_sn"),
                 lb_device: apl.func.get("mdl_device_device"),
                 tb_customer_note: apl.func.get("mdl_device_customer_note"),
@@ -715,13 +648,12 @@
                 cb_guarantee: apl.func.get("mdl_device_guarantee"),
                 val_cost: apl.createValidator("mdl_device_save", "mdl_device_cost", function () { return apl.func.emptyValueCheck(mdl_device.tb_cost.value); }, "Salah input"),
                 val_cancel: apl.createValidator("mdl_device_save", "mdl_device_cancel", function () { return apl.func.emptyValueCheck(mdl_device.tb_cancel.value); }, "Salah input"),
-                tambah:function(id,customer_id)
-                {
-                    mdl_device.service_id = id;                    
+                tambah: function (id, customer_id) {
+                    mdl_device.service_id = id;
                     document.select_service_device = mdl_device.add;
                     mdl_opr_service_assign.open(customer_id);
                 },
-                tbl:apl.createTableWS.init("mdl_device_tbl",
+                tbl: apl.createTableWS.init("mdl_device_tbl",
                     [
                         apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "edit")], function (data) { mdl_component.edit(mdl_device.service_id, data.service_device_id, data.device_id); }, undefined, undefined),
                         apl.createTableWS.column("device"),
@@ -732,31 +664,25 @@
                         apl.createTableWS.column("total", undefined, undefined, undefined, true)
                     ]
                 ),
-                tbl_load:function()
-                {
+                tbl_load: function () {
                     activities.xml_opr_service_device_component_list(mdl_device.service_id, mdl_device.service_device_id,
-                        function (arrData)
-                        {
+                        function (arrData) {
                             mdl_device.tbl.load(arrData);
                         }, apl.func.showError, ""
                     );
                 },
-                add:function(service_device_id)
-                {
-                    activities.opr_service_device_add(mdl_device.service_id, service_device_id,function ()
-                    {
+                add: function (service_device_id) {
+                    activities.opr_service_device_add(mdl_device.service_id, service_device_id, function () {
                         mdl_device.edit(mdl_device.service_id, service_device_id);
                     }, apl.func.showError, "");
                 },
-                edit: function(service_id, service_device_id)
-                {
+                edit: function (service_id, service_device_id) {
                     apl.func.showSinkMessage("Memuat Data");
                     mdl_device.service_id = service_id;
                     mdl_device.service_device_id = service_device_id;
                     mdl_device.tbl_load();
                     activities.opr_service_device_data(service_id, service_device_id,
-                        function (data)
-                        {
+                        function (data) {
                             mdl_device.lb_device.innerHTML = data.device;
                             mdl_device.lb_sn.innerHTML = data.sn;
                             mdl_device.tb_cost.setValue(data.service_cost);
@@ -774,25 +700,20 @@
                         }, apl.func.showError, ""
                     );
                 },
-                refresh: function ()
-                {
+                refresh: function () {
                     mdl.tbl_load(true);
                     mdl_device.hide();
                     apl.func.hideSinkMessage();
                 }
-            }, undefined, 
-            function ()
-            {
-                if (apl.func.validatorCheck("mdl_device_save"))
-                {
+            }, undefined,
+            function () {
+                if (apl.func.validatorCheck("mdl_device_save")) {
                     apl.func.showSinkMessage("Menyimpan data");
                     activities.opr_service_device_edit(mdl_device.service_id, mdl_device.service_device_id, mdl_device.tb_cost.getIntValue(), mdl_device.tb_cancel.getIntValue(), mdl_device.refresh, apl.func.showError, "");
-                }                
-            }, 
-            function ()
-            {
-                if(confirm("Yakin akan dihapus?"))
-                {
+                }
+            },
+            function () {
+                if (confirm("Yakin akan dihapus?")) {
                     apl.func.showSinkMessage("Manghapus data");
                     activities.opr_service_device_delete(mdl_device.service_id, mdl_device.service_device_id, mdl_device.refresh, apl.func.showError, "");
                 }
@@ -802,7 +723,7 @@
         var mdl_component = apl.createModal("mdl_component",
             {
                 service_id: 0,
-                service_device_id: 0,                
+                service_device_id: 0,
                 //ac_device: apl.createAutoComplete("mdl_component_device", activities.ac_part, 500),
                 ac_device: apl.create_auto_complete_text("mdl_component_device", activities.ac_part),
                 //yogi
@@ -816,23 +737,21 @@
                 val_price: apl.createValidator("mdl_component_save", "mdl_component_price", function () { return apl.func.emptyValueCheck(mdl_component.tb_price.value); }, "Salah input"),
                 val_total: apl.createValidator("mdl_component_save", "mdl_component_total2", function () { return apl.func.emptyValueCheck(mdl_component.tb_total2.value); }, "Salah input"),
                 tbl: apl.createTableWS.init("mdl_component_tbl_price", [
-                    apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "select")], function (data) {mdl_component.tb_price.setValue(data.price); }, undefined, undefined),
+                    apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "select")], function (data) { mdl_component.tb_price.setValue(data.price); }, undefined, undefined),
                     apl.createTableWS.column("customer_name"),
                     apl.createTableWS.column("offer_date"),
-                    apl.createTableWS.column("price", undefined, undefined, undefined, true)                    
-                ]),                
-                tbl_load:function()
-                {
+                    apl.createTableWS.column("price", undefined, undefined, undefined, true)
+                ]),
+                tbl_load: function () {
                     apl.func.showSinkMessage("Memuat data");
-                    activities.xml_opr_service_device_component_price_history(mdl_component.service_device_id,mdl_component.ac_device.id, mdl.customer_id,mdl_component.cb_all.checked,
+                    activities.xml_opr_service_device_component_price_history(mdl_component.service_device_id, mdl_component.ac_device.id, mdl.customer_id, mdl_component.cb_all.checked,
                         function (arrData) {
                             mdl_component.tbl.load(arrData);
                             apl.func.hideSinkMessage();
                         }, apl.func.showError, ""
                     );
-                },                
-                kosongkan:function()
-                {
+                },
+                kosongkan: function () {
                     mdl_component.ac_device.set_value("", "");
                     //mdl_component.ac_device.input.disabled = false;
                     //alert(mdl_component.ac_device.input);
@@ -846,22 +765,19 @@
                     mdl_component.cb_all.checked = false;
                     mdl_component.tbl.clearAllRow();
                 },
-                tambah: function (service_id, service_device_id)
-                {
+                tambah: function (service_id, service_device_id) {
                     mdl_component.service_id = service_id;
                     mdl_component.service_device_id = service_device_id;
                     mdl_component.kosongkan();
                     mdl_component.showAdd("Kompenen - Add")
                 },
-                edit: function (service_id, service_device_id, device_id)
-                {
+                edit: function (service_id, service_device_id, device_id) {
                     apl.func.showSinkMessage("Memuat data");
                     mdl_component.kosongkan();
                     mdl_component.service_id = service_id;
-                    mdl_component.service_device_id = service_device_id;                    
+                    mdl_component.service_device_id = service_device_id;
                     activities.xml_opr_service_device_component_data(service_id, service_device_id, device_id,
-                        function (data)
-                        {
+                        function (data) {
                             //mdl_component.ac_device.input.disabled = data.real_data_sts;                            
                             mdl_component.ac_device.set_value(device_id, data.device);
                             mdl_component.tb_cost.setValue(data.cost);
@@ -874,14 +790,12 @@
                         }, apl.func.showError, ""
                     );
                 },
-                refresh:function()
-                {
+                refresh: function () {
                     mdl_device.tbl_load();
                     mdl_component.hide();
                     apl.func.hideSinkMessage();
                 },
-                save: function ()
-                {
+                save: function () {
                     if (apl.func.validatorCheck("mdl_component_save")) {
                         apl.func.showSinkMessage("Menyimpan data");
                         activities.opr_service_device_component_save(mdl_component.service_id, mdl_component.service_device_id, mdl_component.ac_device.id, mdl_component.tb_price.getIntValue(), mdl_component.tb_total2.getIntValue(), mdl_component.cb_pph21.checked, mdl_component.refresh, apl.func.showError, "");
@@ -893,17 +807,15 @@
             },
             function () {
                 mdl_component.save();
-            }, 
+            },
             function () {
-                if(confirm("Yakin akan dihapus?"))
-                {
+                if (confirm("Yakin akan dihapus?")) {
                     activities.opr_service_device_component_delete(mdl_component.service_id, mdl_component.service_device_id, mdl_component.ac_device.id, mdl_component.refresh, apl.func.showError, "");
                 }
             }, "frm_page", "mdl_device"
         );
 
-        window.addEventListener("load", function ()
-        {
+        window.addEventListener("load", function () {
             document.list_add = mdl.tambah;
             document.list_edit = mdl.edit;
 

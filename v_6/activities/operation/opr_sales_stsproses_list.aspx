@@ -24,7 +24,8 @@
             <asp:QueryStringParameter Name="branch_id" QueryStringField="branch" DefaultValue=" " />
             <asp:QueryStringParameter Name="ssm" QueryStringField="ssm" DefaultValue=" " />
             <asp:QueryStringParameter Name="nopo" QueryStringField="nopo" DefaultValue="" />
-            <asp:QueryStringParameter Name="followup" QueryStringField="@followup" DefaultValue="%" />
+            <asp:QueryStringParameter Name="followup" QueryStringField="followup" DefaultValue="%" />
+            <asp:QueryStringParameter Name="validate_sts" QueryStringField="validate_sts" DefaultValue="%" />
         </SelectParameters>
     </asp:SqlDataSource>
 

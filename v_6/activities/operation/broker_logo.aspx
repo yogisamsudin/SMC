@@ -19,16 +19,19 @@ void Page_Load(object o , EventArgs e)
         System.IO.BinaryReader br = new System.IO.BinaryReader(fs);
         Byte[] bytes = br.ReadBytes((Int32)fs.Length);
 
-        _test._DBcon d = new _test._DBcon();
-        //_test._DBcon.arrOutComPar hasil = d.executeProcNQ("opr_broker_save_logo", new _test._DBcon.sComParameter[]{
-        //                new _test._DBcon.sComParameter("@broker_id",System.Data.SqlDbType.Int,0,broker_id),
-        //                new _test._DBcon.sComParameter("@logo",System.Data.SqlDbType.Image,0,bytes)                        
-        //});        
-        _test._DBcon.arrOutComPar hasil = d.executeProcNQ("opr_broker_save_image", new _test._DBcon.sComParameter[]{
+        using(_test._DBcon d = new _test._DBcon())
+        {
+            //_test._DBcon.arrOutComPar hasil = d.executeProcNQ("opr_broker_save_logo", new _test._DBcon.sComParameter[]{
+            //                new _test._DBcon.sComParameter("@broker_id",System.Data.SqlDbType.Int,0,broker_id),
+            //                new _test._DBcon.sComParameter("@logo",System.Data.SqlDbType.Image,0,bytes)                        
+            //});        
+            _test._DBcon.arrOutComPar hasil = d.executeProcNQ("opr_broker_save_image", new _test._DBcon.sComParameter[]{
                         new _test._DBcon.sComParameter("@broker_id",System.Data.SqlDbType.Int,0,broker_id),
                         new _test._DBcon.sComParameter("@field_image",System.Data.SqlDbType.VarChar,25,field_image),
                         new _test._DBcon.sComParameter("@image",System.Data.SqlDbType.Image,0,bytes)                        
-        });        
+            });            
+        }
+        
     }        
 }
 
@@ -57,6 +60,7 @@ void load_data()
     }
     
     _com.Dispose();
+    _con.Close();
 }
 </script>
 

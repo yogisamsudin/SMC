@@ -32,6 +32,7 @@
             <asp:QueryStringParameter Name="ssm" QueryStringField="ssm" DefaultValue=" " />
             <asp:QueryStringParameter Name="nopo" QueryStringField="nopo" DefaultValue="" />
             <asp:QueryStringParameter Name="followup" QueryStringField="followup" DefaultValue="%" />
+            <asp:QueryStringParameter Name="complete_sts" QueryStringField="complete" DefaultValue="%" />
         </SelectParameters>
     </asp:SqlDataSource>
 

@@ -6,7 +6,7 @@
 
 
 <script runat="server">
-    public string apl_date, disabled_sts, branch_id, style_print;
+    public string apl_date, disabled_sts, branch_id, style_print, ListID;
     
     void Page_Load(object o, EventArgs e)
     {
@@ -14,7 +14,12 @@
         apl_date = a.cookieApplicationDateValue;
 
         branch_id = (a.BranchID == "") ? "%" : a.BranchID;
-        disabled_sts = (a.BranchID == "") ? "" : "disabled";        
+        disabled_sts = (a.BranchID == "") ? "" : "disabled";
+        ListID = "6";
+        if(Request.QueryString["ListID"]!=null)
+        {
+            ListID = Request.QueryString["ListID"].ToString();
+        }
     }
 </script>
 
@@ -34,7 +39,7 @@
             <td><input type="text" id="cari_kode"/></td>
             <td style="width:20px;"></td>
             <th>No.Invoice</th>
-            <td><input type="text" id="cari_no" value="%"/></td>
+            <td><input type="text" id="cari_no" value="SL8/SMC/I/25"/></td>
         </tr>
         <tr>
             <th>Lunas</th>
@@ -172,6 +177,18 @@
                     <th>Tgl.Bayar Fee</th>
                     <td><input type="text" id="mdl_fee_date" size="10"/></td>
                 </tr>
+                <tr>
+                    <th>Pot.Admin</th>
+                    <td><input type="text" id="mdl_potadmin" size="20" style="text-align:right"/></td>
+                </tr>
+                <tr>
+                    <th>Pot.PPH 23</th>
+                    <td><input type="text" id="mdl_potpph23" size="20" style="text-align:right"/></td>
+                </tr>
+                <tr>
+                    <th>DP</th>
+                    <td><input type="text" id="mdl_dp" size="20" style="text-align:right"/></td>
+                </tr>
             </table>
 
             <div style="padding-top:5px;" class="button_panel">
@@ -285,16 +302,24 @@
                 lb_document_return_date_exp: apl.func.get("mdl_document_return_data_exp"),
                 tb_amount_cut: apl.createNumeric("mdl_amount_cut"),
 
-                val_bill: apl.createValidator("save", "mdl_bill", function () { return apl.func.emptyValueCheck(mdl.dl_bill.value); }, "Salah input"),
-                val_no: apl.createValidator("save", "mdl_date", function () { return apl.func.emptyValueCheck(mdl.tb_date.value); }, "Salah input"),
-                val_date: apl.createValidator("save", "mdl_top", function () { return apl.func.emptyValueCheck(mdl.dl_top.value); }, "Salah input"),
-                val_top_date: apl.createValidator("save", "mdl_top_date", function () { return mdl.dl_top.value=="1" && apl.func.emptyValueCheck(mdl.tb_top_date.value); }, "Salah input"),
-                val_top_day: apl.createValidator("save", "mdl_top_day", function () { return mdl.dl_top.value == "2" && apl.func.emptyValueCheck(mdl.tb_top_day.value); }, "Salah input"),
-                val_paiddate: apl.createValidator("save", "mdl_paid_date", function () { return mdl.cb_paid.checked && apl.func.emptyValueCheck(mdl.tb_paiddate.value); }, "Salah input"),
-                val_docretdate: apl.createValidator("save", "mdl_document_return_date", function () { return mdl.cb_document_return.checked && apl.func.emptyValueCheck(mdl.tb_document_return_date.value); }, "Salah input"),
-                val_feepayment: apl.createValidator("save", "mdl_fee_payment", function () { return apl.func.emptyValueCheck(mdl.tb_fee_payment.value); }, "Salah input"),
-                val_fee_date: apl.createValidator("save", "mdl_fee_date", function () { return apl.func.emptyValueCheck(mdl.tb_fee_date.value) && mdl.tb_fee_payment.getIntValue() > 0; }, "Salah input"),
-                val_amount_cut: apl.createValidator("save", "mdl_amount_cut", function () { return apl.func.emptyValueCheck(mdl.tb_amount_cut.value); }, "Salah input"),
+                tb_potadmin: apl.createNumeric("mdl_potadmin"),
+                tb_potpph23: apl.createNumeric("mdl_potpph23"),
+                tb_dp: apl.createNumeric("mdl_dp"),
+
+                val01: apl.createValidator("save", "mdl_bill", function () { return apl.func.emptyValueCheck(mdl.dl_bill.value); }, "Salah input"),
+                val02: apl.createValidator("save", "mdl_date", function () { return apl.func.emptyValueCheck(mdl.tb_date.value); }, "Salah input"),
+                val03: apl.createValidator("save", "mdl_top", function () { return apl.func.emptyValueCheck(mdl.dl_top.value); }, "Salah input"),
+                val04: apl.createValidator("save", "mdl_top_date", function () { return mdl.dl_top.value=="1" && apl.func.emptyValueCheck(mdl.tb_top_date.value); }, "Salah input"),
+                val05: apl.createValidator("save", "mdl_top_day", function () { return mdl.dl_top.value == "2" && apl.func.emptyValueCheck(mdl.tb_top_day.value); }, "Salah input"),
+                val06: apl.createValidator("save", "mdl_paid_date", function () { return mdl.cb_paid.checked && apl.func.emptyValueCheck(mdl.tb_paiddate.value); }, "Salah input"),
+                val07: apl.createValidator("save", "mdl_document_return_date", function () { return mdl.cb_document_return.checked && apl.func.emptyValueCheck(mdl.tb_document_return_date.value); }, "Salah input"),
+                val08: apl.createValidator("save", "mdl_fee_payment", function () { return apl.func.emptyValueCheck(mdl.tb_fee_payment.value); }, "Salah input"),
+                val09: apl.createValidator("save", "mdl_fee_date", function () { return apl.func.emptyValueCheck(mdl.tb_fee_date.value) && mdl.tb_fee_payment.getIntValue() > 0; }, "Salah input"),
+                val10: apl.createValidator("save", "mdl_amount_cut", function () { return apl.func.emptyValueCheck(mdl.tb_amount_cut.value); }, "Salah input"),
+
+                val10: apl.createValidator("save", "mdl_potadmin", function () { return apl.func.emptyValueCheck(mdl.tb_potadmin.value); }, "Salah input"),
+                val11: apl.createValidator("save", "mdl_potpph23", function () { return apl.func.emptyValueCheck(mdl.tb_potpph23.value); }, "Salah input"),
+                val12: apl.createValidator("save", "mdl_dp", function () { return apl.func.emptyValueCheck(mdl.tb_dp.value); }, "Salah input"),
 
                 tbl: apl.createTableWS.init("mdl_tbl", [
                     apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "hapus")],
@@ -353,6 +378,10 @@
                     mdl.tb_fee_date.value = "";
                     mdl.lb_document_return_date_exp.innerHTML = "";
                     mdl.tb_amount_cut.value = "0";
+                    
+                    mdl.tb_potadmin.value = "0";
+                    mdl.tb_potpph23.value = "0";
+                    mdl.tb_dp.value = "0";
 
                     apl.func.hideSinkMessage();
                     apl.func.validatorClear("save");
@@ -409,6 +438,10 @@
                             mdl.tb_fee_date.value = data.fee_date;
                             mdl.lb_document_return_date_exp.innerHTML = data.document_return_date_exp;
                             mdl.tb_amount_cut.setValue(data.amount_cut);
+
+                            mdl.tb_potadmin.setValue(data.pot_admin);
+                            mdl.tb_potpph23.setValue(data.pot_pph23);
+                            mdl.tb_dp.setValue(data.downpayment);
 
                             mdl.showEdit("Service - Edit")
                             apl.func.hideSinkMessage();
@@ -468,7 +501,7 @@
                 print:function()
                 {
                     var fname = apl.func.formatFileName(mdl.lb_customer.innerHTML + "_" + mdl.lb_no.innerHTML);                    
-                    window.location = "../../report/report_generator.ashx?ListID=6&invoice_sales_id=" + mdl.invoice_sales_id + "&pdfName=" + fname;
+                    window.location = "../../report/report_generator.ashx?ListID=<%= ListID %>&invoice_sales_id=" + mdl.invoice_sales_id + "&pdfName=" + fname;
                 },
                 cetak_surat_jalan:function()
                 {
@@ -490,7 +523,7 @@
             {
                 if(apl.func.validatorCheck("save"))
                 {
-                    activities.fin_sales_edit(mdl.invoice_sales_id, mdl.tb_date.value, mdl.dl_top.value, mdl.tb_po.value, mdl.tb_afpo.value, mdl.get_term_of_payment_value(), mdl.dl_bill.value, mdl.cb_paid.checked, mdl.tb_paiddate.value,mdl.cb_send.checked,mdl.cb_invoice.checked,mdl.tb_note.value,mdl.cb_pph.checked,mdl.cb_document_return.checked,mdl.tb_document_return_date.value,mdl.tb_fee_payment.getIntValue(),mdl.tb_fee_date.value,mdl.tb_amount_cut.getIntValue(),
+                    activities.fin_sales_edit(mdl.invoice_sales_id, mdl.tb_date.value, mdl.dl_top.value, mdl.tb_po.value, mdl.tb_afpo.value, mdl.get_term_of_payment_value(), mdl.dl_bill.value, mdl.cb_paid.checked, mdl.tb_paiddate.value,mdl.cb_send.checked,mdl.cb_invoice.checked,mdl.tb_note.value,mdl.cb_pph.checked,mdl.cb_document_return.checked,mdl.tb_document_return_date.value,mdl.tb_fee_payment.getIntValue(),mdl.tb_fee_date.value,mdl.tb_amount_cut.getIntValue(),mdl.tb_potadmin.getIntValue(),mdl.tb_potpph23.getIntValue(),mdl.tb_dp.getIntValue(),
                         function()
                         {
                             mdl.edit(mdl.invoice_sales_id);

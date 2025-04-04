@@ -1336,6 +1336,7 @@ public class activities : System.Web.Services.WebService
         public double invoice_sales_id, customer_id, an_id, grand_price, fee, bill_id, surat_jalan_id, fee_payment, amount_cut, total_ppn, fin_receivable_id;
         public string invoice_date, invoice_no, term_of_payment_id, term_of_payment, po_no, afpo_no, customer_name, str_top_value, paid_date, invoice_note, document_return_date, fee_date, document_return_date_exp, bill_name, bill_no;
         public Boolean paid_sts, send_sts, invoice_sts, pph_sts, document_return_sts;
+        public double pot_admin, pot_pph23, downpayment;
 
         public s_fin_sales(double _invoice_sales_id, string _invoice_date, string _invoice_no, string _term_of_payment_id, string _term_of_payment, string _po_no, string _afpo_no,
             double _customer_id, double _an_id, double _grand_price, double _fee, string _customer_name, string _str_top_value, double _bill_id,
@@ -1349,7 +1350,8 @@ public class activities : System.Web.Services.WebService
             double _amount_cut = 0,
             double _total_ppn = 0,
             double _fin_receivable_id = 0,
-            string _bill_name = "", string _bill_no = ""
+            string _bill_name = "", string _bill_no = "",
+            double _pot_admin = 0, double _pot_pph23 = 0, double _downpayment = 0
         )
         {
             invoice_sales_id = _invoice_sales_id;
@@ -1383,6 +1385,9 @@ public class activities : System.Web.Services.WebService
             fin_receivable_id = _fin_receivable_id;
             bill_name = _bill_name;
             bill_no = _bill_no;
+            pot_admin = _pot_admin;
+            pot_pph23 = _pot_pph23;
+            downpayment = _downpayment;
         }
     }
     public struct s_sales_device
@@ -1392,6 +1397,8 @@ public class activities : System.Web.Services.WebService
         public Boolean pph21_sts, draft_sts;
         public string guarantee_id, guarantee_timetype_id, guarantee_timetype_name, availability_id, availability_timetype_id, availability_timetype_name;
         public int inden, guarantee_period;
+        public Boolean purchase_sts;
+        public string purchase_note;
 
         public s_sales_device(double _sales_id, double _device_id, double _cost, double _price, string _device, Boolean _pph21_sts, int _qty,
             string _description = "",
@@ -1402,7 +1409,8 @@ public class activities : System.Web.Services.WebService
             string _creator_id = "", string _create_date = "", string _update_id = "", string _update_date = "",
             Boolean _draft_sts = false,
             string _guarantee_id = "", string _availability_id = "", int _inden = 0, int _guarantee_period = 0,
-            string _guarantee_timetype_id = "", string _guarantee_timetype_name = "", string _availability_timetype_id = "", string _availability_timetype_name = ""
+            string _guarantee_timetype_id = "", string _guarantee_timetype_name = "", string _availability_timetype_id = "", string _availability_timetype_name = "",
+            Boolean _purchase_sts = false, string _purchase_note = ""
             )
         {
             sales_id = _sales_id;
@@ -1431,6 +1439,8 @@ public class activities : System.Web.Services.WebService
             guarantee_timetype_name = _guarantee_timetype_name;
             availability_timetype_id = _availability_timetype_id;
             availability_timetype_name = _availability_timetype_name;
+            purchase_sts = _purchase_sts;
+            purchase_note = _purchase_note;
         }
     }
     public struct s_trimming
@@ -1454,6 +1464,7 @@ public class activities : System.Web.Services.WebService
         public float pcg_principal_price;
         public long additional_cost;
         public string po_no, ctgsales_id, ctgsales;
+        public Boolean complete_sts;
 
         public s_opr_sales(double _sales_id, double _broker_id, double _discount_value, double _fee,
             string _offer_date, string _discount_type_id, string _opr_note, string _broker_name, string _discount_type, string _customer_name, string _offer_no,
@@ -1468,7 +1479,8 @@ public class activities : System.Web.Services.WebService
             long _additional_fee = 0, string _additional_fee_note = "",
             string _sales_status_marketing_updatedate = "",
             long _additional_cost = 0,string _po_no = "",
-            string _ctgsales_id = "", string _ctgsales = ""
+            string _ctgsales_id = "", string _ctgsales = "",
+            Boolean _complete_sts = false
             )
         {
             sales_id = _sales_id;
@@ -1517,6 +1529,8 @@ public class activities : System.Web.Services.WebService
             po_no = _po_no;
             ctgsales = _ctgsales;
             ctgsales_id = _ctgsales_id;
+
+            complete_sts = _complete_sts;
         }
     }
     public struct s_fin_bill
@@ -1551,6 +1565,7 @@ public class activities : System.Web.Services.WebService
         public double invoice_service_id, customer_id, an_id, grand_price, fee, bill_id, surat_jalan_id, fee_payment, amount_cut;
         public string invoice_date, invoice_no, term_of_payment_id, term_of_payment, po_no, afpo_no, customer_name, str_top_value, paid_date, invoice_note, document_return_date, fee_date, document_return_date_exp, bill_name, bill_no;
         public Boolean paid_sts, send_sts, invoice_sts, pph_sts, document_return_sts;
+        public double pot_admin, pot_pph23, downpayment;
 
         public s_fin_service(double _invoice_service_id, string _invoice_date, string _invoice_no, string _term_of_payment_id, string _term_of_payment, string _po_no, string _afpo_no,
             double _customer_id, double _an_id, double _grand_price, double _fee, string _customer_name, string _str_top_value, double _bill_id,
@@ -1562,7 +1577,8 @@ public class activities : System.Web.Services.WebService
             double _fee_payment = 0,
             string _fee_date = "", string _document_return_date_exp = "",
             double _amount_cut = 0,
-            string _bill_name = "", string _bill_no = ""
+            string _bill_name = "", string _bill_no = "",
+            double _pot_admin = 0, double _pot_pph23 = 0 , double _downpayment = 0
         )
         {
             invoice_service_id = _invoice_service_id;
@@ -1594,6 +1610,9 @@ public class activities : System.Web.Services.WebService
             amount_cut = _amount_cut;
             bill_name = _bill_name;
             bill_no = _bill_no;
+            pot_admin = _pot_admin;
+            pot_pph23 = _pot_pph23;
+            downpayment = _downpayment;
         }
     }
     public struct s_opr_service_device_component_price_history
@@ -5165,7 +5184,8 @@ public class activities : System.Web.Services.WebService
                 row["device"].ToString(), Convert.ToBoolean(row["pph21_sts"]), Convert.ToInt32(row["qty"]), row["description"].ToString(),
                 Convert.ToInt32(row["vendor_id"]), row["vendor_name"].ToString(), Convert.ToInt32(row["principal_price"]), Convert.ToInt32(row["price_customer"]), row["marketing_note"].ToString(), row["creator_id"].ToString(), row["create_date"].ToString(), row["update_id"].ToString(), row["update_date"].ToString(), Convert.ToBoolean(row["draft_sts"]),
                 row["guarantee_id"].ToString(), row["availability_id"].ToString(), Convert.ToInt32(row["inden"]), Convert.ToInt32(row["guarantee_period"]),
-                row["guarantee_timetype_id"].ToString(), row["guarantee_timetype_name"].ToString(),row["availability_timetype_id"].ToString(), row["availability_timetype_name"].ToString()
+                row["guarantee_timetype_id"].ToString(), row["guarantee_timetype_name"].ToString(),row["availability_timetype_id"].ToString(), row["availability_timetype_name"].ToString(),
+                Convert.ToBoolean(row["purchase_sts"]),row["purchase_note"].ToString()
             );
     }
     [WebMethod]
@@ -5376,7 +5396,7 @@ public class activities : System.Web.Services.WebService
     {
         s_fin_sales data = new s_fin_sales();
 
-        string strSQL = "select isnull(fin_receivable_id,0)fin_receivable_id,amount_cut, dbo.f_convertDateToChar(document_return_date_exp) document_return_date_exp,dbo.f_convertDateToChar(fee_date)fee_date, fee_payment, dbo.f_convertDateToChar(document_return_date) document_return_date,document_return_sts, pph_sts, invoice_note, surat_jalan_id, paid_sts, dbo.f_convertDateToChar(paid_date) paid_date, bill_id,str_top_value,customer_name, invoice_sales_id,dbo.f_convertdatetochar(invoice_date)str_invoice_date,Invoice_no,term_of_payment_id,term_of_payment,po_no,afpo_no,customer_id, an_id, grand_price,fee,send_sts,invoice_sts,total_ppn, bill_name, bill_no from v_fin_sales where invoice_sales_id=" + invoice_sales_id;
+        string strSQL = "select isnull(fin_receivable_id,0)fin_receivable_id,amount_cut, dbo.f_convertDateToChar(document_return_date_exp) document_return_date_exp,dbo.f_convertDateToChar(fee_date)fee_date, fee_payment, dbo.f_convertDateToChar(document_return_date) document_return_date,document_return_sts, pph_sts, invoice_note, surat_jalan_id, paid_sts, dbo.f_convertDateToChar(paid_date) paid_date, bill_id,str_top_value,customer_name, invoice_sales_id,dbo.f_convertdatetochar(invoice_date)str_invoice_date,Invoice_no,term_of_payment_id,term_of_payment,po_no,afpo_no,customer_id, an_id, grand_price,fee,send_sts,invoice_sts,total_ppn, bill_name, bill_no, pot_admin, pot_pph23, downpayment from v_fin_sales where invoice_sales_id=" + invoice_sales_id;
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
@@ -5389,7 +5409,8 @@ public class activities : System.Web.Services.WebService
                 Convert.ToInt32(row["surat_jalan_id"]), row["invoice_note"].ToString(), Convert.ToBoolean(row["pph_sts"]), Convert.ToBoolean(row["document_return_sts"]),
                 row["document_return_date"].ToString(), Convert.ToInt32(row["fee_payment"]), row["fee_date"].ToString(), row["document_return_date_exp"].ToString(),
                 Convert.ToInt32(row["amount_cut"]), Convert.ToInt32(row["total_ppn"]), Convert.ToInt32(row["fin_receivable_id"]),
-                row["bill_name"].ToString(), row["bill_no"].ToString()
+                row["bill_name"].ToString(), row["bill_no"].ToString(),
+                Convert.ToInt64(row["pot_admin"]), Convert.ToInt64(row["pot_pph23"]), Convert.ToInt64(row["downpayment"])
             );
 
 
@@ -5506,7 +5527,7 @@ public class activities : System.Web.Services.WebService
     {
         s_opr_sales data = new s_opr_sales();
 
-        string strSQL = "select pcg_principal_price,invoice_no, npwp_sts, group_customer_id, total_price, total_cost, total_price_pph21, total_ppn, total_pph21,net,total_discount, grand_price, ppn, pph21, customer_id,sales_status,sales_status_marketing, sales_status_id, sales_status_marketing_id, sales_id, dbo.f_convertDateToChar(offer_date)offer_date, broker_id,discount_type_id,tax_sts,opr_note,broker_name,discount_type, discount_value,customer_name,offer_no,fee,convert(varchar(20),update_status_date,105)+' '+convert(varchar(20),update_status_date,108) update_status_date, reason_marketing_id, reason_marketing, total_principal, principal_net, additional_fee, additional_fee_note,isnull(cast(sales_status_marketing_updatedate as varchar(20)),'')sales_status_marketing_updatedate, additional_cost, po_no, ctgsales_id, ctgsales from v_opr_sales where sales_id=" + sales_id;
+        string strSQL = "select pcg_principal_price,invoice_no, npwp_sts, group_customer_id, total_price, total_cost, total_price_pph21, total_ppn, total_pph21,net,total_discount, grand_price, ppn, pph21, customer_id,sales_status,sales_status_marketing, sales_status_id, sales_status_marketing_id, sales_id, dbo.f_convertDateToChar(offer_date)offer_date, broker_id,discount_type_id,tax_sts,opr_note,broker_name,discount_type, discount_value,customer_name,offer_no,fee,convert(varchar(20),update_status_date,105)+' '+convert(varchar(20),update_status_date,108) update_status_date, reason_marketing_id, reason_marketing, total_principal, principal_net, additional_fee, additional_fee_note,isnull(cast(sales_status_marketing_updatedate as varchar(20)),'')sales_status_marketing_updatedate, additional_cost, po_no, ctgsales_id, ctgsales, complete_sts from v_opr_sales where sales_id=" + sales_id;
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
@@ -5523,7 +5544,7 @@ public class activities : System.Web.Services.WebService
                 row["reason_marketing"].ToString(),
                 Convert.ToInt64(row["total_principal"]), Convert.ToInt64(row["principal_net"]), Convert.ToInt64(row["additional_fee"]), row["additional_fee_note"].ToString(), row["sales_status_marketing_updatedate"].ToString(),
                 Convert.ToInt64(row["additional_cost"]),row["po_no"].ToString(),
-                row["ctgsales_id"].ToString(), row["ctgsales"].ToString()
+                row["ctgsales_id"].ToString(), row["ctgsales"].ToString(), Convert.ToBoolean(row["complete_sts"])
             );
 
         }
@@ -5570,7 +5591,7 @@ public class activities : System.Web.Services.WebService
     {
         s_fin_service data = new s_fin_service();
 
-        string strSQL = "select amount_cut, dbo.f_convertDateToChar(document_return_date_exp) document_return_date_exp,dbo.f_convertDateToChar(fee_date) fee_date, fee_payment, dbo.f_convertDateToChar(document_return_date) document_return_date,pph_sts, invoice_note, surat_jalan_id, send_sts, invoice_sts, paid_sts, dbo.f_convertDateToChar(paid_date) paid_date, bill_id,str_top_value,customer_name, invoice_service_id,dbo.f_convertdatetochar(invoice_date)str_invoice_date,Invoice_no,term_of_payment_id,term_of_payment,po_no,afpo_no,customer_id, an_id, grand_price, fee,document_return_sts, bill_name, bill_no from v_fin_service where invoice_service_id=" + invoice_service_id;
+        string strSQL = "select amount_cut, dbo.f_convertDateToChar(document_return_date_exp) document_return_date_exp,dbo.f_convertDateToChar(fee_date) fee_date, fee_payment, dbo.f_convertDateToChar(document_return_date) document_return_date,pph_sts, invoice_note, surat_jalan_id, send_sts, invoice_sts, paid_sts, dbo.f_convertDateToChar(paid_date) paid_date, bill_id,str_top_value,customer_name, invoice_service_id,dbo.f_convertdatetochar(invoice_date)str_invoice_date,Invoice_no,term_of_payment_id,term_of_payment,po_no,afpo_no,customer_id, an_id, grand_price, fee,document_return_sts, bill_name, bill_no, pot_admin, pot_pph23, downpayment from v_fin_service where invoice_service_id=" + invoice_service_id;
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
@@ -5582,7 +5603,8 @@ public class activities : System.Web.Services.WebService
                 Convert.ToBoolean(row["paid_sts"]), row["paid_date"].ToString(), Convert.ToBoolean(row["send_sts"]), Convert.ToBoolean(row["invoice_sts"]),
                 Convert.ToInt32(row["surat_jalan_id"]), row["invoice_note"].ToString(), Convert.ToBoolean(row["pph_sts"]), Convert.ToBoolean(row["document_return_sts"]),
                 row["document_return_date"].ToString(), Convert.ToInt32(row["fee_payment"]), row["fee_date"].ToString(), row["document_return_date_exp"].ToString(),
-                Convert.ToInt32(row["amount_cut"]), row["bill_name"].ToString(), row["bill_no"].ToString()
+                Convert.ToInt32(row["amount_cut"]), row["bill_name"].ToString(), row["bill_no"].ToString(),
+                Convert.ToInt64(row["pot_admin"]),Convert.ToInt64(row["pot_pph23"]),Convert.ToInt64(row["downpayment"])
             );
         }
         return data;
@@ -6089,6 +6111,25 @@ public class activities : System.Web.Services.WebService
     }
     //#exec
     [WebMethod]
+    public void fin_service_validate_update(long service_id, Boolean validate_sts)
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("fin_service_validate_update", new _DBcon.sComParameter[]{
+            new _DBcon.sComParameter("@service_id",System.Data.SqlDbType.BigInt,0,service_id),
+            new _DBcon.sComParameter("@validate_sts",System.Data.SqlDbType.Bit,0,validate_sts)
+        });
+    }
+    [WebMethod]
+    public void fin_sales_validate_update(long sales_id, Boolean validate_sts, string sales_status_id)
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("fin_sales_validate_update", new _DBcon.sComParameter[]{
+            new _DBcon.sComParameter("@sales_id",System.Data.SqlDbType.BigInt,0,sales_id),
+            new _DBcon.sComParameter("@validate_sts",System.Data.SqlDbType.Bit,0,validate_sts),
+            new _DBcon.sComParameter("@sales_status_id",System.Data.SqlDbType.Char,1,sales_status_id)
+        });
+    }
+    [WebMethod]
     public void act_customer_finance_update(string customer_id, string npwp, string tkuid, string jenisidpembeli_id)
     {
         _DBcon d = new _DBcon();
@@ -6107,7 +6148,7 @@ public class activities : System.Web.Services.WebService
         _DBcon.arrOutComPar hasil = d.executeProcNQ("tmp_generate_cortex", new _DBcon.sComParameter[]{
             new _DBcon.sComParameter("@tanggal",System.Data.SqlDbType.VarChar,10,tanggal),
         });
-
+        
     }
     [WebMethod]
     public void tec_onsite_workorders_parts_add(long workorder_id, int part_id, int total)
@@ -7668,7 +7709,7 @@ public class activities : System.Web.Services.WebService
         });
     }
     [WebMethod]
-    public void fin_sales_edit(int invoice_sales_id, string invoice_date, string term_of_payment_id, string po_no, string afpo_no, string term_of_payment_value, int bill_id, Boolean paid_sts, string paid_date, Boolean send_sts, Boolean invoice_sts, string invoice_note, Boolean pph_sts, Boolean document_return_sts, string document_return_date, double fee_payment, string fee_date, double amount_cut)
+    public void fin_sales_edit(int invoice_sales_id, string invoice_date, string term_of_payment_id, string po_no, string afpo_no, string term_of_payment_value, int bill_id, Boolean paid_sts, string paid_date, Boolean send_sts, Boolean invoice_sts, string invoice_note, Boolean pph_sts, Boolean document_return_sts, string document_return_date, double fee_payment, string fee_date, double amount_cut, double pot_admin, double pot_pph23, double downpayment)
     {
         _DBcon d = new _DBcon();
         _DBcon.arrOutComPar hasil = d.executeProcNQ("fin_sales_edit", new _DBcon.sComParameter[]{    
@@ -7689,7 +7730,10 @@ public class activities : System.Web.Services.WebService
             new _DBcon.sComParameter("@document_return_date",System.Data.SqlDbType.VarChar,10,document_return_date),
             new _DBcon.sComParameter("@fee_payment",System.Data.SqlDbType.Money,0,fee_payment),
             new _DBcon.sComParameter("@fee_date",System.Data.SqlDbType.VarChar,10,fee_date),
-            new _DBcon.sComParameter("@amount_cut",System.Data.SqlDbType.Money,0,amount_cut)
+            new _DBcon.sComParameter("@amount_cut",System.Data.SqlDbType.Money,0,amount_cut),
+            new _DBcon.sComParameter("@pot_admin",System.Data.SqlDbType.Money,0,pot_admin),
+            new _DBcon.sComParameter("@pot_pph23",System.Data.SqlDbType.Money,0,pot_pph23),
+            new _DBcon.sComParameter("@downpayment",System.Data.SqlDbType.Money,0,downpayment)
         });
     }
     [WebMethod]
@@ -7723,7 +7767,8 @@ public class activities : System.Web.Services.WebService
     [WebMethod]
     public string opr_sales_device_save(int sales_id, int device_id, double cost, double price, int qty, Boolean pph21_sts, string description, int vendor_id, double principal_price, string marketing_note = "", string user_id = "", Boolean draft_sts = false,
         string guarantee_id = "", string availability_id = "", int inden = 0, int guarantee_period = 0,
-        string guarantee_timetype_id = "1", string availability_timetype_id = "1"
+        string guarantee_timetype_id = "1", string availability_timetype_id = "1", 
+        Boolean purchasests = false, string purchasenote = ""
         )
     {
         _DBcon d = new _DBcon();
@@ -7746,7 +7791,9 @@ public class activities : System.Web.Services.WebService
             new _DBcon.sComParameter("@inden",System.Data.SqlDbType.Int,0,inden),
             new _DBcon.sComParameter("@guarantee_timetype_id",System.Data.SqlDbType.VarChar,1,guarantee_timetype_id),
             new _DBcon.sComParameter("@availability_timetype_id",System.Data.SqlDbType.VarChar,1,availability_timetype_id),
-            new _DBcon.sComParameter("@retval",System.Data.SqlDbType.VarChar,200,System.Data.ParameterDirection.Output),
+            new _DBcon.sComParameter("@purchasests",System.Data.SqlDbType.Bit,0,purchasests),
+            new _DBcon.sComParameter("@purchasenote",System.Data.SqlDbType.Text,0,purchasenote),
+            new _DBcon.sComParameter("@retval",System.Data.SqlDbType.VarChar,200,System.Data.ParameterDirection.Output)
             
         });
         return hasil["@retval"].ToString();
@@ -7844,6 +7891,29 @@ public class activities : System.Web.Services.WebService
         return hasil["@ret"].ToString();
     }
     [WebMethod]
+    public string opr_sales_register_edit(int sales_id, string offer_date, int broker_id, string discount_type_id, double discount_value, Boolean tax_sts, double fee, string opr_note, string sales_status_id, double additional_fee, string additional_fee_note, string user_id, string ctgsales_id, Boolean completests)
+    {
+        _DBcon d = new _DBcon();
+        _DBcon.arrOutComPar hasil = d.executeProcNQ("opr_sales_register_edit", new _DBcon.sComParameter[]{    
+            new _DBcon.sComParameter("@sales_id",System.Data.SqlDbType.BigInt,0,sales_id),
+            new _DBcon.sComParameter("@offer_date",System.Data.SqlDbType.VarChar,10,offer_date),
+            new _DBcon.sComParameter("@broker_id",System.Data.SqlDbType.Int,0,broker_id),
+            new _DBcon.sComParameter("@discount_type_id",System.Data.SqlDbType.Char,1,discount_type_id),
+            new _DBcon.sComParameter("@discount_value",System.Data.SqlDbType.Money,0,discount_value),
+            new _DBcon.sComParameter("@tax_sts",System.Data.SqlDbType.Bit,0,tax_sts),
+            new _DBcon.sComParameter("@fee",System.Data.SqlDbType.Money,0,fee),
+            new _DBcon.sComParameter("@opr_note",System.Data.SqlDbType.Text,0,opr_note),
+            new _DBcon.sComParameter("@sales_status_id",System.Data.SqlDbType.Char,1,sales_status_id),
+            new _DBcon.sComParameter("@additional_fee",System.Data.SqlDbType.Money,0,additional_fee),
+            new _DBcon.sComParameter("@additional_fee_note",System.Data.SqlDbType.Text,0,additional_fee_note),
+            new _DBcon.sComParameter("@user_id",System.Data.SqlDbType.VarChar,25,user_id),
+            new _DBcon.sComParameter("@ctgsales_id",System.Data.SqlDbType.VarChar,2,ctgsales_id),
+            new _DBcon.sComParameter("@complete_sts",System.Data.SqlDbType.Bit,0,completests),
+            new _DBcon.sComParameter("@ret",System.Data.SqlDbType.VarChar,200,System.Data.ParameterDirection.Output)
+        });
+        return hasil["@ret"].ToString();
+    }
+    [WebMethod]
     public void opr_sales_add(int sales_id, string offer_date, int broker_id, string discount_type_id, double discount_value, Boolean tax_sts, double fee, string opr_note, string sales_status_id, double additional_fee, string additional_fee_note, string user_id, string ctgsales_id)
     {
         _DBcon d = new _DBcon();
@@ -7928,7 +7998,7 @@ public class activities : System.Web.Services.WebService
         });
     }
     [WebMethod]
-    public void fin_service_edit(int invoice_service_id, string invoice_date, string term_of_payment_id, string po_no, string afpo_no, string term_of_payment_value, int bill_id, Boolean paid_sts, string paid_date, Boolean send_sts, Boolean invoice_sts, string invoice_note, Boolean pph_sts, Boolean document_return_sts, string document_return_date, double fee_payment, string fee_date, double amount_cut)
+    public void fin_service_edit(int invoice_service_id, string invoice_date, string term_of_payment_id, string po_no, string afpo_no, string term_of_payment_value, int bill_id, Boolean paid_sts, string paid_date, Boolean send_sts, Boolean invoice_sts, string invoice_note, Boolean pph_sts, Boolean document_return_sts, string document_return_date, double fee_payment, string fee_date, double amount_cut, double pot_admin, double pot_pph23, double downpayment)
     {
         _DBcon d = new _DBcon();
         _DBcon.arrOutComPar hasil = d.executeProcNQ("fin_service_edit", new _DBcon.sComParameter[]{    
@@ -7949,7 +8019,10 @@ public class activities : System.Web.Services.WebService
             new _DBcon.sComParameter("@document_return_date",System.Data.SqlDbType.VarChar,10,document_return_date),
             new _DBcon.sComParameter("@fee_payment",System.Data.SqlDbType.Money,0,fee_payment),
             new _DBcon.sComParameter("@fee_date",System.Data.SqlDbType.VarChar,10,fee_date),
-            new _DBcon.sComParameter("@amount_cut",System.Data.SqlDbType.Money,0,amount_cut)
+            new _DBcon.sComParameter("@amount_cut",System.Data.SqlDbType.Money,0,amount_cut),
+            new _DBcon.sComParameter("@pot_admin",System.Data.SqlDbType.Money,0,pot_admin),
+            new _DBcon.sComParameter("@pot_pph23",System.Data.SqlDbType.Money,0,pot_pph23),
+            new _DBcon.sComParameter("@downpayment",System.Data.SqlDbType.Money,0,downpayment)
         });
     }
     [WebMethod]
@@ -8048,7 +8121,7 @@ public class activities : System.Web.Services.WebService
 
     }
     [WebMethod]
-    public void opr_service_edit(int service_id, string offer_date, int broker_id, string discount_type_id, double discount_value, Boolean tax_sts, double fee, string service_status_id, string opr_note, double additional_fee, string additional_fee_note)
+    public string opr_service_edit(int service_id, string offer_date, int broker_id, string discount_type_id, double discount_value, Boolean tax_sts, double fee, string service_status_id, string opr_note, double additional_fee, string additional_fee_note)
     {
         _DBcon d = new _DBcon();
         _DBcon.arrOutComPar hasil = d.executeProcNQ("opr_service_edit", new _DBcon.sComParameter[]{    
@@ -8062,9 +8135,11 @@ public class activities : System.Web.Services.WebService
             new _DBcon.sComParameter("@service_status_id",System.Data.SqlDbType.Char,1,service_status_id),
             new _DBcon.sComParameter("@opr_note",System.Data.SqlDbType.Text,0,opr_note),
             new _DBcon.sComParameter("@additional_fee",System.Data.SqlDbType.Money,0,additional_fee),
-            new _DBcon.sComParameter("@additional_fee_note",System.Data.SqlDbType.Text,0,additional_fee_note)
+            new _DBcon.sComParameter("@additional_fee_note",System.Data.SqlDbType.Text,0,additional_fee_note),
+            new _DBcon.sComParameter("@retval",System.Data.SqlDbType.Char,1,System.Data.ParameterDirection.Output)
             
         });
+        return hasil["@retval"].ToString();
     }
     [WebMethod]
     public int opr_service_add(string offer_date, int broker_id, string discount_type_id, double discount_value, Boolean tax_sts, double fee, int service_device_id, double additional_fee, string additional_fee_note)

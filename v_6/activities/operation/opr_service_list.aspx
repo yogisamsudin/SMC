@@ -25,6 +25,7 @@
             <asp:QueryStringParameter Name="ts" QueryStringField="ts" DefaultValue="%"/>
             <asp:QueryStringParameter Name="branch_id" QueryStringField="branch" DefaultValue="%"/>
             <asp:QueryStringParameter Name="ssm" QueryStringField="ssm" DefaultValue=" "/>
+            <asp:QueryStringParameter Name="validate" QueryStringField="validate" DefaultValue="%"/>
         </SelectParameters>
     </asp:SqlDataSource>
 

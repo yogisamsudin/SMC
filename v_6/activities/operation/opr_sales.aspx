@@ -316,6 +316,14 @@
                     <td><input id="mdl_device_vendor"/></td>
                 </tr>
                 <tr>
+                    <th>Purchase Sts</th>
+                    <td><input type="checkbox" id="mdl_device_purchasests"/></td>
+                </tr>
+                <tr>
+                    <th>Purchase Note</th>
+                    <td><textarea id="mdl_device_purchasenote"></textarea></td>
+                </tr>
+                <tr>
                     <th>Sts.Garansi</th>
                     <td>
                         <select id="mdl_device_guarantee" style="float:left;"></select>
@@ -629,6 +637,9 @@
 
                     cb_draft: apl.func.get("mdl_device_draft"),
 
+                    cb_purchasests: apl.func.get("mdl_device_purchasests"),
+                    tb_purchasenote: apl.func.get("mdl_device_purchasenote"),
+
                     val01: apl.createValidator("device_save", "mdl_device_name", function () { return apl.func.emptyValueCheck(mdl_device.ac_device.id); }, "Salah input"),
                     val02: apl.createValidator("device_save", "mdl_device_name", function () { return apl.func.emptyValueCheck(mdl_device.tb_cost.value); }, "Salah input"),
                     val03: apl.createValidator("device_save", "mdl_device_principal_price", function () { return apl.func.emptyValueCheck(mdl_device.tb_principal_price.value); }, "Salah input"),
@@ -725,6 +736,9 @@
                         mdl_device.dl_availability.value = "";
                         mdl_device.o_availchange();
                         mdl_device.o_gperiodchange()
+
+                        mdl_device.cb_purchasests.checked = false;
+                        mdl_device.tb_purchasenote.value = "";
                     },
                     tambah: function (id) {
                         mdl_device.kosongkan();
@@ -769,6 +783,9 @@
                                 mdl_device.dl_guarantee_timetype.value = data.guarantee_timetype_id;
                                 mdl_device.dl_availability_timetype.value = data.availability_timetype_id;
 
+                                mdl_device.cb_purchasests.checked = data.purchase_sts;
+                                mdl_device.tb_purchasenote.value = data.purchase_note;
+
                                 mdl_device.showEdit("Device - Edit");
                                 apl.func.hideSinkMessage();
                                 
@@ -787,7 +804,7 @@
                     simpan: function () {
                         if (apl.func.validatorCheck("device_save")) {
                             var vendor_id = (mdl_device.ac_vendor.id == "") ? 0 : mdl_device.ac_vendor.id;
-                            activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.ac_device.id, mdl_device.tb_cost.getIntValue(), mdl_device.tb_price.getIntValue(), mdl_device.tb_qty.getIntValue(), mdl_device.cb_pph.checked, mdl_device.tb_description.value, vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, appuser, mdl_device.cb_draft.checked, mdl_device.dl_guarantee.value, mdl_device.dl_availability.value, mdl_device.tb_inden.getIntValue(), mdl_device.tb_guaranteeperiod.getIntValue(), mdl_device.dl_guarantee_timetype.value, mdl_device.dl_availability_timetype.value,
+                            activities.opr_sales_device_save(mdl_device.sales_id, mdl_device.ac_device.id, mdl_device.tb_cost.getIntValue(), mdl_device.tb_price.getIntValue(), mdl_device.tb_qty.getIntValue(), mdl_device.cb_pph.checked, mdl_device.tb_description.value, vendor_id, mdl_device.tb_principal_price.getIntValue(), mdl_device.tb_note.value, appuser, mdl_device.cb_draft.checked, mdl_device.dl_guarantee.value, mdl_device.dl_availability.value, mdl_device.tb_inden.getIntValue(), mdl_device.tb_guaranteeperiod.getIntValue(), mdl_device.dl_guarantee_timetype.value, mdl_device.dl_availability_timetype.value,mdl_device.cb_purchasests.checked, mdl_device.tb_purchasenote.value,
                                 function (message) {
                                     //mdl.tbl_load();
                                     if (message == "") {

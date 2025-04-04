@@ -116,8 +116,8 @@ public class download_coretax : IHttpHandler {
         ws.Cell(rowHeader, 17).Value = "ID TKU Pembeli";
         ws.Cell(rowHeader, 18).Value = "keterangan";
 
-        string dateString = "20/02/2025"; // Format dd/MM/yyyy
-        DateTime date = DateTime.Parse(dateString);
+        //string dateString = "20/02/2025"; // Format dd/MM/yyyy
+        //DateTime date = DateTime.Parse(dateString);
         // Tambahkan Data
         for (int i = 0; i < dt.Rows.Count; i++)
         {
