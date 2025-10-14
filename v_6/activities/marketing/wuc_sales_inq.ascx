@@ -60,7 +60,11 @@
             <tr>
                 <th>Catatan</th>
                 <td><textarea id="<%= ClientID %>_note" style="max-width:100%;width:600px;height:200px;font-family:'Courier New';" readonly="readonly"></textarea></td>
-            </tr>            
+            </tr>    
+            <tr>
+                <th>Marketing</th>
+                <td><label id="<%= ClientID %>_marketing"></label></td>
+            </tr>         
         </table>                    
 
         <div style="padding-top:5px;" class="button_panel">
@@ -85,7 +89,8 @@
                 lb_npwp: apl.func.get("<%= ClientID %>_npwp"),                
                 lb_phone: apl.func.get("<%= ClientID %>_phone"),                
                 lb_fax: apl.func.get("<%= ClientID %>_fax"),                
-                lb_email: apl.func.get("<%= ClientID %>_email"),                
+                lb_email: apl.func.get("<%= ClientID %>_email"),  
+                lb_marketing: apl.func.get("<%= ClientID %>_marketing"),
                 edit: function (id) {
                     apl.func.showSinkMessage("Memuat Data");
                     activities.act_sales_data(id,
@@ -101,6 +106,7 @@
                             mdl.lb_phone.innerHTML = data.customer_phone;
                             mdl.lb_fax.innerHTML = data.customer_fax;
                             mdl.lb_email.innerHTML = data.customer_email;
+                            mdl.lb_marketing.innerHTML = data.marketing_id;
                             mdl.showEdit("Sales - Edit");
                             apl.func.hideSinkMessage();
                         }, apl.func.showError, ""

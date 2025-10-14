@@ -4,7 +4,7 @@
 
 
 <script runat="server">
-    public string application_date, user_id, style_print;
+    public string application_date, user_id, style_print, ListID;
     public string branch_id, disabled_sts;
 
     void Page_Load(object o, EventArgs e)
@@ -21,6 +21,12 @@
         if (a.UserID == "sa" || a.UserID == "yosephine" || a.UserID == "eko")
         {
             style_print = "visibility:visible;";
+        }
+
+        ListID = "5";
+        if (Request.QueryString["ListID"] != null)
+        {
+            ListID = Request.QueryString["ListID"].ToString();
         }
     }
 </script>
@@ -362,8 +368,8 @@
             load: function () {
                 var no = escape(cari.tb_no.value);
                 var cust = escape(cari.tb_customer.value);
-                var status = "6";
-                var fs = "0";
+                var status = "8";
+                var fs = "%";
                 var ssm = "%";
                 cari.fl.src = "../operation/opr_sales_stsproses_list.aspx?no=" + no + "&cust=" + cust + "&status=" + status + "&fs=" + fs + "&branch=" + cari.dl_branch.value + "&ssm=" + ssm + "&displayadd=1&nopo=%&validate_sts=0";
             },
@@ -608,7 +614,7 @@
                     if (mdl.sales_id != 0) {
                         var fName = mdl.lb_customer.innerHTML + "_" + mdl.lb_no.innerHTML;
                         fName = window.escape(fName.replace(/ /g, "_"));
-                        window.location = "../../report/report_generator.ashx?ListID=5&sales_id=" + mdl.sales_id + "&pdfName=" + fName + "&fileType=" + file_type;
+                        window.location = "../../report/report_generator.ashx?ListID=<%= ListID %>&sales_id=" + mdl.sales_id + "&pdfName=" + fName + "&fileType=" + file_type;
                     }
                 }                
             },
@@ -616,7 +622,7 @@
             function () {
                 if (apl.func.validatorCheck("save")) {
                     apl.func.showSinkMessage("Menyimpan Data");
-                    activities.fin_sales_validate_update(mdl.sales_id, mdl.cb_validatests.checked,mdl.dl_status.value,
+                    activities.fin_sales_validate_update(mdl.sales_id, mdl.cb_validatests.checked,mdl.dl_status.value,'<%= user_id %>',
                         function () {
                             apl.func.hideSinkMessage();
                             mdl.hide();

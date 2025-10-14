@@ -9,13 +9,32 @@
 
 <script runat="server">
     public _test.App a;
-    public string branch_id, disabled_sts;
+    public string branch_id, disabled_sts, li1, li3, li10;
     
     void Page_Load(object o, EventArgs e)
     {
         a = new _test.App(Request, Response);
         branch_id = (a.BranchID == "") ? "%" : a.BranchID;
         disabled_sts = (a.BranchID == "") ? "" : "disabled";
+
+        li1 = "1";
+        if (Request.QueryString["Li1"] != null)
+        {
+            li1 = Request.QueryString["Li1"].ToString();
+        }
+        
+        li3 = "3";
+        if (Request.QueryString["li3"] != null)
+        {
+            li3 = Request.QueryString["li3"].ToString();
+        }
+        
+        li10 = "10";
+        if (Request.QueryString["li10"] != null)
+        {
+            li10 = Request.QueryString["li10"].ToString();
+        }
+        
     }
 
 </script>
@@ -446,17 +465,17 @@
                                 {
                                     fName = "surat_tanda_terima_service_" + data.customer_name;
                                     fName = window.escape(fName.replace(/ /gi, "_"));
-                                    window.location = "../../report/report_generator.ashx?ListID=1&service_id=" + data.service_id + "&pdfName=" + fName;
+                                    window.location = "../../report/report_generator.ashx?ListID=<%= li1 %>&service_id=" + data.service_id + "&pdfName=" + fName;
                                 }
                                     
                                 else
                                 {
                                     fName = "surat_serah_service_" + data.customer_name;
                                     fName = window.escape(fName.replace(/ /gi, "_"));
-                                    if (data.kode_print == 0) {                                        
-                                        window.location = "../../report/report_generator.ashx?ListID=10&service_id=" + data.service_id + "&pdfName=" + fName;
+                                    if (data.kode_print == 0) {
+                                        window.location = "../../report/report_generator.ashx?ListID=<%= li10 %>&service_id=" + data.service_id + "&pdfName=" + fName;
                                     } else {
-                                        window.location = "../../report/report_generator.ashx?ListID=3&invoice_service_id=" + data.kode_print + "&pdfName=" + fName;
+                                        window.location = "../../report/report_generator.ashx?ListID=<%= li3 %>&invoice_service_id=" + data.kode_print + "&pdfName=" + fName;
                                     }
                                     
                                 }

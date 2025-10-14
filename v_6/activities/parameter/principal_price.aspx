@@ -71,8 +71,12 @@
                     <td><input type="text" id="mdl1_range2" size="15" maxlength="15" style="text-align:right;"/></td>
                 </tr>
                 <tr>
-                    <th><label for="mdl1_pcg">Percentase</label></th>
-                    <td><input type="text" id="mdl1_pcg" size="5" maxlength="5" style="text-align:right;"/></td>
+                    <th>Presentasi</th>
+                    <td><input type="checkbox" id="mdl1_pcgsts" /></td>
+                </tr>
+                <tr>
+                    <th><label for="mdl1_pcg">Nilai</label></th>
+                    <td><input type="text" id="mdl1_pcg" size="20" maxlength="20" style="text-align:right;"/></td>
                 </tr>
             </table>
             <div class="button_panel">
@@ -196,6 +200,7 @@
                 param_pp_dtl_id: 0,
                 tb_range1: apl.createNumeric("mdl1_range1"),
                 tb_range2: apl.createNumeric("mdl1_range2"),
+                cb_pcgsts: apl.func.get("mdl1_pcgsts"),
                 tb_pcg: apl.createNumeric("mdl1_pcg", false, 2),
 
                 valrang1: apl.createValidator("dsave", "mdl1_range1", function () { return apl.func.emptyValueCheck(mdl1.tb_range1.value); }, "Salah input"),
@@ -208,6 +213,7 @@
                     mdl1.param_pp_id = mdl.param_pp_id;
                     mdl1.tb_range1.value = "";
                     mdl1.tb_range2.value = "";
+                    mdl1.cb_pcgsts.checked = true;
                     mdl1.tb_pcg.value = "";
                 },
                 add:function()
@@ -223,6 +229,7 @@
                             mdl1.tb_range1.setValue(data.range1);
                             mdl1.tb_range2.setValue(data.range2);
                             mdl1.tb_pcg.setValue(data.pcg);
+                            mdl1.cb_pcgsts.checked = data.pcgsts;
                             mdl1.showEdit("Detail: edit");
                         }, apl.func.showError, ""
                     );                    
@@ -234,7 +241,7 @@
                 if(apl.func.validatorCheck("dsave"))
                 {
                     apl.func.showSinkMessage("Simpan...");
-                    activities.par_principal_price_dtl_add(mdl1.param_pp_id, mdl1.tb_range1.getIntValue(), mdl1.tb_range2.getIntValue(), mdl1.tb_pcg.getIntValue(),
+                    activities.par_principal_price_dtl_add(mdl1.param_pp_id, mdl1.tb_range1.getIntValue(), mdl1.tb_range2.getIntValue(), mdl1.tb_pcg.getIntValue(), mdl1.cb_pcgsts.checked,
                         function ()
                         {
                             mdl1.hide();
@@ -247,7 +254,7 @@
             function () {
                 if (apl.func.validatorCheck("dsave"))
                 {
-                    activities.par_principal_price_dtl_edit(mdl1.param_pp_dtl_id, mdl1.tb_range1.getIntValue(), mdl1.tb_range2.getIntValue(), mdl1.tb_pcg.getIntValue(),
+                    activities.par_principal_price_dtl_edit(mdl1.param_pp_dtl_id, mdl1.tb_range1.getIntValue(), mdl1.tb_range2.getIntValue(), mdl1.tb_pcg.getIntValue(), mdl1.cb_pcgsts.checked,
                         function () {
                             mdl1.hide();
                             mdl.tbl_load(mdl.param_pp_id);

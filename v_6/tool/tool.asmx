@@ -68,9 +68,9 @@ public class tool  : System.Web.Services.WebService {
     {
         public string UserID, UserName, branch_name;
         public int GroupID, branch_id;
-        public Boolean Active;
+        public Boolean Active, admin_sts;
 
-        public appUserStruct(string _UserID, string _UserName, Boolean _Active, int _GroupID, int _branch_id = 0, string _branch_name = "")
+        public appUserStruct(string _UserID, string _UserName, Boolean _Active, int _GroupID, int _branch_id = 0, string _branch_name = "", bool _admin_sts = false)
         {
             UserID = _UserID;
             UserName = _UserName;
@@ -78,6 +78,7 @@ public class tool  : System.Web.Services.WebService {
             GroupID = _GroupID;
             branch_id = _branch_id;
             branch_name = _branch_name;
+            admin_sts = _admin_sts;
         }
     }
     public struct appGroupStruc
@@ -140,12 +141,12 @@ public class tool  : System.Web.Services.WebService {
     {
         appUserStruct data = new appUserStruct();
 
-        string strSQL = "select UserID,UserName,Active,GroupID,isnull(branch_id,0)branch_id , branch_name from v_appUser where UserID='" + UserID + "'";
+        string strSQL = "select UserID,UserName,Active,GroupID,isnull(branch_id,0)branch_id , branch_name, admin_sts from v_appUser where UserID='" + UserID + "'";
 
         _DBcon c = new _DBcon();
         foreach (System.Data.DataRow row in c.executeTextQ(strSQL))
         {
-            data = new appUserStruct(UserID, row["UserName"].ToString(), Convert.ToBoolean(row["Active"]), Convert.ToInt32(row["GroupID"]),Convert.ToInt32(row["branch_id"]), row["branch_name"].ToString());
+            data = new appUserStruct(UserID, row["UserName"].ToString(), Convert.ToBoolean(row["Active"]), Convert.ToInt32(row["GroupID"]),Convert.ToInt32(row["branch_id"]), row["branch_name"].ToString(),Convert.ToBoolean(row["admin_sts"]));
         }
 
         return data;
@@ -201,7 +202,7 @@ public class tool  : System.Web.Services.WebService {
         _DBcon d = new _DBcon();
         _DBcon.arrOutComPar hasil = d.executeProcNQ("appParameter_edit", new _DBcon.sComParameter[]{                
                 new _DBcon.sComParameter("@kode",System.Data.SqlDbType.VarChar,25,kode),
-                new _DBcon.sComParameter("@nilai",System.Data.SqlDbType.VarChar,50,nilai)
+                new _DBcon.sComParameter("@nilai",System.Data.SqlDbType.VarChar,100,nilai)
             });        
     }
     [WebMethod]
@@ -290,7 +291,7 @@ public class tool  : System.Web.Services.WebService {
             });
     }
     [WebMethod]
-    public void appUserSave(string UserID, string Password, int GroupID, Boolean Active, string UserName, int branch_id)
+    public void appUserSave(string UserID, string Password, int GroupID, Boolean Active, string UserName, int branch_id, bool admin_sts)
     {
         if (Password != "")
         {
@@ -303,7 +304,8 @@ public class tool  : System.Web.Services.WebService {
                 new _DBcon.sComParameter("@GroupID",System.Data.SqlDbType.Int,0,GroupID),
                 new _DBcon.sComParameter("@Active",System.Data.SqlDbType.Bit,0,Active),
                 new _DBcon.sComParameter("@UserName",System.Data.SqlDbType.VarChar,50,UserName),
-                new _DBcon.sComParameter("@branch_id",System.Data.SqlDbType.Int,0,branch_id)
+                new _DBcon.sComParameter("@branch_id",System.Data.SqlDbType.Int,0,branch_id),
+                new _DBcon.sComParameter("@admin_sts",System.Data.SqlDbType.Bit,0,admin_sts)
             });
     }        
     [WebMethod]

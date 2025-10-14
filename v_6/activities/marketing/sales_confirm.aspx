@@ -5,7 +5,7 @@
 
 <script runat="server">
     public string user_id;
-    public string branch_id, disabled_sts;
+    public string branch_id, disabled_sts, ListID;
 
     void Page_Load(object o, EventArgs e)
     {
@@ -13,6 +13,11 @@
         user_id = a.cookieUserIDValue;
         branch_id = (a.BranchID == "") ? "%" : a.BranchID;
         disabled_sts = (a.BranchID == "") ? "" : "disabled";
+        ListID = "5";
+        if (Request.QueryString["ListID"] != null)
+        {
+            ListID = Request.QueryString["ListID"].ToString();
+        }
     }
 </script>
 
@@ -557,7 +562,7 @@
                 print_offer: function () {
                     var fName = mdl.ac_customer.text + "_" + mdl.lb_no.innerHTML;
                     fName = window.escape(fName.replace(/ /g, "_"));
-                    window.location = "../../report/report_generator.ashx?ListID=5&sales_id=" + mdl.sales_id + "&pdfName=" + fName;
+                    window.location = "../../report/report_generator.ashx?ListID=<%= ListID %>&sales_id=" + mdl.sales_id + "&pdfName=" + fName;
                 }
             }, undefined,
             function () {

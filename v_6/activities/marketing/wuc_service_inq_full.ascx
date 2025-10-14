@@ -81,6 +81,10 @@
                 <th>Status Backup</th>
                 <td><label id="<%= ClientID %>_backup"></label></td>
             </tr> 
+            <tr>
+                <th>Marketing</th>
+                <td><label id="<%= ClientID %>_marketing"></label></td>
+            </tr>
         </table>                    
 
         <div style="padding-top:5px;" class="button_panel">
@@ -111,6 +115,7 @@
                 lb_fee: apl.func.get("<%= ClientID %>_fee", true),
                 lb_backup: apl.func.get("<%= ClientID %>_backup"),
                 lb_branch_customer: apl.func.get("<%= ClientID %>_branch_customer"),
+                lb_marketing: apl.func.get("<%= ClientID %>_marketing"),
                 edit: function (id) {
                     apl.func.showSinkMessage("Memuat Data");
                     activities.act_service_data(id,
@@ -131,6 +136,7 @@
                             mdl.lb_email.innerHTML = data.customer_email;
                             mdl.lb_backup.innerHTML = data.backup_sts;
                             mdl.lb_branch_customer.innerHTML = data.branch_customer;
+                            mdl.lb_marketing.innerHTML = data.marketing_id;
                             mdl.showEdit("Servis - Edit");
                             apl.func.hideSinkMessage();
                         }, apl.func.showError, ""

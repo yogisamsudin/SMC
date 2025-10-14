@@ -15,7 +15,7 @@
             <div style="height:35px;margin-top:35px;margin-left:50px;">
                 <table style="padding: 0; margin: 0; width:100%; border-spacing: 0px;border:0;">
                     <tr>
-                        <td style="width:100px;"><div class="Logo"></div></td>
+                        <td style="width:130px;"><div class="Logo"></div></td>
                         <td style="vertical-align: bottom;font-family: Arial, Helvetica, sans-serif; font-size: large; font-weight: bold; ">
                             ::<label id="lblJudulModul" style="padding-left: 25px" >Welcome</label>
                         </td>

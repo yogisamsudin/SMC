@@ -3,7 +3,7 @@
 <%@ Register Src="~/activities/marketing/wuc_service_inq_full.ascx" TagPrefix="uc1" TagName="wuc_service_inq_full" %>
 
 <script runat="server">
-    public string branch_id, disabled_sts, style_print;
+    public string branch_id, disabled_sts, style_print, ListID;
 
     void Page_Load(object o, EventArgs e)
     {
@@ -17,6 +17,12 @@
         if (a.UserID == "sa" || a.UserID == "yosephine" || a.UserID == "eko")
         {
             style_print = "visibility:visible;";
+        }
+
+        ListID = "2";
+        if (Request.QueryString["ListID"] != null)
+        {
+            ListID = Request.QueryString["ListID"].ToString();
         }
     }
 </script>
@@ -614,7 +620,7 @@
                     if (mdl.service_id != 0) {
                         var fName = mdl.lb_customer.innerHTML + "_" + mdl.lb_no.innerHTML;
                         fName = window.escape(fName.replace(/ /g, "_"));
-                        window.location = "../../report/report_generator.ashx?ListID=2&service_id=" + mdl.service_id + "&pdfName=" + fName + "&fileType=" + file_type;
+                        window.location = "../../report/report_generator.ashx?ListID=<%= ListID %>&service_id=" + mdl.service_id + "&pdfName=" + fName + "&fileType=" + file_type;
                     }
                 }
             },

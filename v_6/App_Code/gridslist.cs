@@ -43,7 +43,7 @@ public class gridslist : System.Web.Services.WebService {
         List<s_service_device> data = new List<s_service_device>();
 
          _DBcon c = new _DBcon();
-        foreach (System.Data.DataRow row in c.executeProcQ("xml_service_device_list", new _DBcon.sComParameter[]{
+         foreach (System.Data.DataRow row in c.executeProcQ("xmlgrid_service_device", new _DBcon.sComParameter[]{
             new _DBcon.sComParameter("@sn",System.Data.SqlDbType.VarChar,50,sn),
             new _DBcon.sComParameter("@status",System.Data.SqlDbType.Char,1,status),
             new _DBcon.sComParameter("@name",System.Data.SqlDbType.VarChar,50,name),

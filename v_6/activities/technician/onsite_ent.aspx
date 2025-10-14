@@ -1,13 +1,19 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/page.master" Theme="Page"%>
 
 <script runat="server">
-    public string strAppDate;
+    public string strAppDate, ListID;
     
     void Page_Load()
     {
         _test.App a = new _test.App(Request, Response);
 
         strAppDate =  a.ApplicationDate;
+
+        ListID = "35";
+        if (Request.QueryString["ListID"] != null)
+        {
+            ListID = Request.QueryString["ListID"].ToString();
+        }
     }
 </script>
 
@@ -322,7 +328,7 @@
                     if (mdl.sales_id != 0) {
                         var fName = mdl.lb_custname.innerHTML + "_" + mdl.lb_no.innerHTML;
                         fName = window.escape(fName.replace(/ /g, "_"));
-                        window.location = "../../report/report_generator.ashx?ListID=35&onsite_id=" + mdl.onsite_id + "&pdfName=" + fName + "&fileType=" + file_type;
+                        window.location = "../../report/report_generator.ashx?ListID=<%= ListID %>&onsite_id=" + mdl.onsite_id + "&pdfName=" + fName + "&fileType=" + file_type;
                     }
                 }
             },

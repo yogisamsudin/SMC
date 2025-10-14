@@ -12,6 +12,37 @@ using _test;
 
 public class download_coretax : IHttpHandler {
     const int rowHeader = 3;
+    
+    private string getNPWPcom()
+    {
+        string npwp = "";
+        
+        _DBcon d = new _DBcon();
+
+        string _connectionString = d.getConnectionString();
+
+
+        DataTable dt = new DataTable();
+        using (SqlConnection conn = new SqlConnection(_connectionString))
+        {
+            try
+            {
+                conn.Open();
+                string query = "select nilai from appParameter where kode='npwpcom'";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    da.Fill(dt);
+                    npwp = dt.Rows[0]["nilai"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error saat mengambil data dari database: " + ex.Message);
+            }
+        }
+        return npwp;
+    }
 
     private DataTable GetDataFaktur()
     {
@@ -94,7 +125,8 @@ public class download_coretax : IHttpHandler {
         mergeRange.Value = "NPWP Penjual"; // Teks dalam sel yang digabungkan
 
         //ws.Cell(1, 1).Value = "NPWP Penjual";
-        ws.Cell(1, 3).Value = "0537037731044000";
+        //ws.Cell(1, 3).Value = "0537037731044000";
+        ws.Cell(1, 3).Value = getNPWPcom();
 
         // Tambahkan Header
         ws.Cell(rowHeader, 1).Value = "Baris";

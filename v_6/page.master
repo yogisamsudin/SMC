@@ -10,7 +10,7 @@
 <body>
     <div id="main_panel">
         <div id="second_panel">
-            <form id="frm_page" runat="server">
+            <form id="frm_page" runat="server" >
                 <div id="cover_content">
                     <asp:ContentPlaceHolder ID="body" runat="server"></asp:ContentPlaceHolder>
                 </div>

@@ -356,7 +356,7 @@
                     var lat = (document.map.latitude == undefined) ? "" : document.map.latitude;
                     var lng = (document.map.longitude == undefined) ? "" : document.map.longitude;
 
-                    activities.act_customer_add(mdl.tb_name.value, mdl.tb_address.text, mdl.tb_address2.value, mdl.tb_phone.value, mdl.tb_fax.value, mdl.tb_email.value, mdl.dl_marketing.value, mdl.tb_address.id, mdl.tb_npwp.value, lat, lng, mdl.dl_branch.value,mdl.cb_userdevicemandatory.checked,
+                    activities.act_customer_add(mdl.tb_name.value, mdl.tb_address.text, mdl.tb_address2.value, mdl.tb_phone.value, mdl.tb_fax.value, mdl.tb_email.value, mdl.dl_marketing.value, mdl.tb_address.id, mdl.tb_npwp.value, lat, lng, mdl.dl_branch.value,mdl.cb_userdevicemandatory.checked,"1",
                         function (customer_id) {
                             mdl.refresh();
                             mdl.edit(customer_id);

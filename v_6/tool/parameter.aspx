@@ -49,9 +49,9 @@ void Page_Load(object o, EventArgs e)
                 <tr>
                     <th>Nilai</th>
                     <td>
-                        <input type="text" id="mdl_nilai_c" size="50"/>
+                        <input type="text" id="mdl_nilai_c" size="100"/>
                         <input type="text" id="mdl_nilai_d" size="10" style="text-align:right"/>
-                        <input type="text" id="mdl_nilai_n" size="15"/>
+                        <input type="text" id="mdl_nilai_n" size="25"/>
                     </td>
                 </tr>
             </table>

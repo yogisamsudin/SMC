@@ -1,11 +1,19 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/page.master" Theme="Page" %>
 
 <script runat="server">
+    public string ListID;
+
     void page_load()
     {
         string where = "6;SL";
         string[] data = where.Split(';');
         //Response.Write(where.Split(';')[0]);
+
+        ListID = "33";
+        if (Request.QueryString["ListID"] != null)
+        {
+            ListID = Request.QueryString["ListID"].ToString();
+        }
     }
 </script>
 
@@ -228,7 +236,7 @@
                     if (mdl.invoice_receipt_id != 0) {
                         var fName = mdl.ac_customer.text + "_" + mdl.lb_id.innerHTML;
                         fName = window.escape(fName.replace(/ /g, "_"));
-                        window.location = "../../report/report_generator.ashx?ListID=33&id=" + mdl.invoice_receipt_id + "&pdfName=" + fName + "&fileType=" + file_type;
+                        window.location = "../../report/report_generator.ashx?ListID=<%= ListID %>&id=" + mdl.invoice_receipt_id + "&pdfName=" + fName + "&fileType=" + file_type;
                     }
                 },
                 refresh: function () {

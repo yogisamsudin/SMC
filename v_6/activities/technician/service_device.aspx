@@ -240,6 +240,8 @@
                                 <th>Komponen</th>
                                 <th>Biaya</th>
                                 <th>Total</th>
+                                <th>Sts.Req.Purchase</th>
+                                <th>Sts.Purchase Done</th>
                             </tr>
                         </table>
                     </td>
@@ -339,6 +341,18 @@
                     <th>Total</th>
                     <td>
                         <input type="text" size="3" maxlength="3" style="text-align: right;" id="mdl_component_total" /></td>
+                </tr>
+                <tr>
+                    <th>Sts.Req.Purchase </th>
+                    <td><input type="checkbox" id="mdl_component_reqpurchase" /></td>
+                </tr>
+                <tr>
+                    <th>Sts.Purchase </th>
+                    <td><input type="checkbox" id="mdl_component_purchasedone" disabled="disabled"/></td>
+                </tr>
+                <tr>
+                    <th>Nm.Vendor</th>
+                    <td><input type="text" id="mdl_component_vendorname" size="100"/></td>
                 </tr>
             </table>
 
@@ -499,7 +513,10 @@
                         apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("class", "edit")], function (data) { mdl.edit_component(data.service_device_id, data.device_id); }, undefined, undefined),
                         apl.createTableWS.column("device"),
                         apl.createTableWS.column("cost", undefined, undefined, undefined, true),
-                        apl.createTableWS.column("total")
+                        apl.createTableWS.column("total"),
+                        //apl.createTableWS.column("reqpurchase_sts"),
+                        apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("type", "checkbox"), apl.createTableWS.attribute("disabled", "disabled")], undefined, undefined, "input", undefined, function (e, d) { e.checked = d.reqpurchase_sts; }),
+                        apl.createTableWS.column("", undefined, [apl.createTableWS.attribute("type", "checkbox"), apl.createTableWS.attribute("disabled", "disabled")], undefined, undefined, "input", undefined, function (e, d) { e.checked = d.purchasedone_sts; })
                     ]
                 ),
                 tbl_component_load: function () {
@@ -708,15 +725,26 @@
                 ac_device: apl.create_auto_complete_text("mdl_component_device", activities.ac_part),
                 tb_cost: apl.createNumeric("mdl_component_cost", true),
                 tb_total: apl.createNumeric("mdl_component_total"),
+                
+
                 val_device: apl.createValidator("mdl_component_save", "mdl_component_device", function () { return apl.func.emptyValueCheck(mdl_component.ac_device.input.value) }, "Salah input"),
                 val_cost: apl.createValidator("mdl_component_save", "mdl_component_cost", function () { return apl.func.emptyValueCheck(mdl_component.tb_cost.value) }, "Salah input"),
                 val_total: apl.createValidator("mdl_component_save", "mdl_component_total", function () { return apl.func.emptyValueCheck(mdl_component.tb_total.value) }, "Salah input"),
+
+                cb_reqpurchase: apl.func.get("mdl_component_reqpurchase"),
+                cb_purchasedone: apl.func.get("mdl_component_purchasedone"),
+                tb_vendor: apl.func.get("mdl_component_vendorname"),
 
                 kosongkan: function () {
                     mdl_component.service_device_id = 0;
                     mdl_component.ac_device.set_value("", "");
                     mdl_component.tb_cost.value = "";
                     mdl_component.tb_total.value = "";
+
+                    mdl_component.cb_reqpurchase.checked = false;
+                    mdl_component.cb_purchasedone.checked = false;
+                    mdl_component.tb_vendor.value = "";
+
                     apl.func.validatorClear("mdl_component_save");
                 },
                 tambah: function (service_device_id) {
@@ -733,6 +761,11 @@
                             mdl_component.ac_device.set_value(data.device_id, data.device);
                             mdl_component.tb_cost.setValue(data.cost);
                             mdl_component.tb_total.setValue(data.total);
+
+                            mdl_component.cb_reqpurchase.checked = data.reqpurchase_sts;
+                            mdl_component.cb_purchasedone.checked = data.purchasedone_sts;
+                            mdl_component.tb_vendor.value = data.vendorname;
+
                             mdl_component.showEdit("Komponen - Edit");
                             apl.func.hideSinkMessage();
                         }, apl.func.showError, ""
@@ -745,7 +778,7 @@
                 },
                 save: function () {
                     apl.func.showSinkMessage("Menyimpan");
-                    activities.tec_service_device_component_save(mdl_component.service_device_id, mdl_component.ac_device.id, mdl_component.tb_cost.getIntValue(), mdl_component.tb_total.getIntValue(), mdl_component.refresh, apl.func.showError, "");
+                    activities.tec_service_device_component_save(mdl_component.service_device_id, mdl_component.ac_device.id, mdl_component.tb_cost.getIntValue(), mdl_component.tb_total.getIntValue(),mdl_component.cb_reqpurchase.checked,mdl_component.cb_purchasedone.checked,mdl_component.tb_vendor.value, mdl_component.refresh, apl.func.showError, "");
                 }
             },
             function () {

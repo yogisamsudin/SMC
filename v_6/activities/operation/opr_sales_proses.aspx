@@ -4,7 +4,7 @@
 
 <script runat="server">
     public string application_date, user_id, style_print;
-    public string branch_id, disabled_sts;
+    public string branch_id, disabled_sts, ListID;
 
     void Page_Load(object o, EventArgs e)
     {
@@ -20,6 +20,12 @@
         if (a.UserID == "sa" || a.UserID == "yosephine" || a.UserID == "eko")
         {
             style_print = "visibility:visible;";
+        }
+
+        ListID = "5";
+        if (Request.QueryString["ListID"] != null)
+        {
+            ListID = Request.QueryString["ListID"].ToString();
         }
     }
 </script>
@@ -616,7 +622,7 @@
                     if (mdl.sales_id != 0) {
                         var fName = mdl.lb_customer.innerHTML + "_" + mdl.lb_no.innerHTML;
                         fName = window.escape(fName.replace(/ /g, "_"));
-                        window.location = "../../report/report_generator.ashx?ListID=5&sales_id=" + mdl.sales_id + "&pdfName=" + fName + "&fileType=" + file_type;
+                        window.location = "../../report/report_generator.ashx?ListID=<%= ListID %>&sales_id=" + mdl.sales_id + "&pdfName=" + fName + "&fileType=" + file_type;
                     }
                 },
                 save_data: function () {

@@ -1,0 +1,96 @@
+--begin tran
+--human resource
+truncate table hr_nonsalary_employee_wageparam
+truncate table hr_nonsalary_employee
+truncate table hr_nonsalary
+
+truncate table hr_salary_employee_wageparam
+truncate table hr_salary_employee
+truncate table hr_salary
+
+truncate table hr_employee_wageparam
+truncate table hr_employee_loan_installment
+truncate table hr_employee_loan
+truncate table hr_employee
+
+--finance
+truncate table acc_journal_transaction_detail
+truncate table acc_journal_transaction
+
+truncate table fin_transaction_vendor
+truncate table fin_receivable_payment_reverse
+truncate table fin_receivable_payment
+
+truncate table fin_receivable_sales
+truncate table fin_receivable_service
+
+truncate table fin_receivable_reverse_sales_device
+truncate table fin_receivable_reverse_sales
+truncate table fin_receivable_reverse
+
+truncate table fin_receivable_reverse_service_device_component
+truncate table fin_receivable_reverse_service_device
+truncate table fin_receivable_reverse_service
+truncate table fin_receivable_reverse_service
+
+truncate table fin_receivable
+
+truncate table fin_proforma_sales_opr
+truncate table fin_proforma_sales
+truncate table fin_proforma_service_opr
+truncate table fin_proforma_service
+
+truncate table fin_invoice_receipt_sales
+truncate table fin_invoice_receipt_service
+truncate table fin_invoice_receipt
+
+truncate table fin_claim_debt
+
+truncate table fin_sales_opr
+truncate table fin_sales
+truncate table fin_service_opr
+truncate table fin_service
+
+--expedition
+truncate table exp_address
+truncate table exp_location
+truncate table exp_messanger_geotag
+truncate table exp_schedule_service_fin
+truncate table exp_schedule_service
+truncate table exp_schedule_sales_fin
+truncate table exp_schedule_sales
+truncate table exp_schedule_borrow
+truncate table exp_schedule
+
+--technician
+truncate table tec_borrow_service
+truncate table tec_device_register
+truncate table tec_onsite_workorders_parts
+truncate table tec_onsite_workorders
+truncate table tec_onsite
+truncate table tec_service_device_vendor
+truncate table tec_service_device_trimming
+truncate table tec_service_device_component
+truncate table tec_service_device
+
+--operation
+truncate table opr_sales_principal_price
+truncate table opr_sales_log
+truncate table opr_sales_lock
+truncate table opr_sales_document
+truncate table opr_sales_device
+truncate table opr_sales_approver
+truncate table opr_sales_addicost
+truncate table opr_sales
+
+truncate table opr_service_document
+truncate table opr_service_device_component
+truncate table opr_service_device
+truncate table opr_service_addicost
+truncate table opr_service
+
+--action
+truncate table act_sales_customer_log
+truncate table act_sales
+truncate table act_service
+--rollback

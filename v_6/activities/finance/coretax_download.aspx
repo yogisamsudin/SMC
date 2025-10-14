@@ -1,11 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/page.master" Theme="Page" %>
 
 <script runat="server">
-    string pesan;
+    string pesan, apl_date;
 
     void Page_Load(object o, EventArgs e)
     {
-        pesan = (Request.QueryString["pesan"]!=null)?Request.QueryString["pesan"].ToString():"";        
+        pesan = (Request.QueryString["pesan"]!=null)?Request.QueryString["pesan"].ToString():"";
+
+        _test.App a = new _test.App(Request, Response);
+        apl_date = a.cookieApplicationDateValue;
     }
 </script>
 
@@ -22,7 +25,7 @@
     <table class="formview">
         <tr>
             <th>Tanggal Invoice</th>
-            <td><input type="text" id="cari_invoicedate" size="10" readOnly value="05/12/2024"/></td>
+            <td><input type="text" id="cari_invoicedate" size="10" readOnly value="<%= apl_date %>"/></td>
         </tr>
         <tr>
             <th></th>

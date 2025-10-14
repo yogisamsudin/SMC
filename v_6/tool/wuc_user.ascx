@@ -39,6 +39,10 @@
                 <th>Cabang</th>
                 <td><select id="wucuser_cabang"></select></td>
             </tr>
+            <tr>
+                <th style="width:100px;">Sts.Admin</th>
+                <td><input type="checkbox" id="wucuser_adminsts" /></td>
+            </tr>
         </table>
         <div style="padding-top:5px;">
             <input type="button" value="Add"/>
@@ -60,7 +64,7 @@
     var wucUser = document.wucUser = {
         list: document.getElementById("wucUser_frame_list"),        
         refreshData: function () {
-            wucUser.list.contentWindow.location.reload(true);
+            wucUser.list.contentWindow.location.reload(false);
         }
     }
 
@@ -74,6 +78,8 @@
             ddlUserGroup: apl.func.get("wucuser_Group"),
             ddlcabang: apl.createDropdownWS("wucuser_cabang", tool.par_branch_list),
             iSandiTitle: apl.func.get("wucuser_sandititle"),
+            cbadminsts: apl.func.get("wucuser_adminsts"),
+
             tambah:function()
             {
                 modal_User.status = 0;
@@ -84,6 +90,7 @@
                 modal_User.tbUserSandi.value = "";
                 modal_User.cbUserActive.checked = true;
                 modal_User.ddlcabang.setValue("", "");
+                modal_User.cbadminsts.checked = false;
                 apl.func.validatorClear("user_simpan");
                 modal_User.iSandiTitle.Hide();
             },
@@ -103,6 +110,7 @@
                         modal_User.cbUserActive.checked = data.Active;                        
                         modal_User.ddlUserGroup.setValue(data.GroupID);
                         modal_User.ddlcabang.setValue(data.branch_id, data.branch_name);
+                        modal_User.cbadminsts.checked = data.admin_sts;
 
                         apl.func.hideSinkMessage();
                         modal_User.showEdit("User - Edit");
@@ -113,7 +121,7 @@
         function () {
             if (apl.func.validatorCheck("user_simpan")) {
                 apl.func.showSinkMessage("Simpan");
-                tool.appUserSave(modal_User.tbUserID.value, modal_User.tbUserSandi.value, modal_User.ddlUserGroup.value, modal_User.cbUserActive.checked, modal_User.tbUserName.value,modal_User.ddlcabang.value,
+                tool.appUserSave(modal_User.tbUserID.value, modal_User.tbUserSandi.value, modal_User.ddlUserGroup.value, modal_User.cbUserActive.checked, modal_User.tbUserName.value, modal_User.ddlcabang.value, modal_User.cbadminsts.checked,
                     function () {
                         modal_User.hide();
                         wucUser.refreshData();
@@ -125,7 +133,7 @@
         function () {
             if (apl.func.validatorCheck("user_simpan")) {
                 apl.func.showSinkMessage("Simpan");
-                tool.appUserSave(modal_User.tbUserID.value, modal_User.tbUserSandi.value, modal_User.ddlUserGroup.value, modal_User.cbUserActive.checked, modal_User.tbUserName.value, modal_User.ddlcabang.value,
+                tool.appUserSave(modal_User.tbUserID.value, modal_User.tbUserSandi.value, modal_User.ddlUserGroup.value, modal_User.cbUserActive.checked, modal_User.tbUserName.value, modal_User.ddlcabang.value, modal_User.cbadminsts.checked,
                     function () {
                         modal_User.hide();
                         wucUser.refreshData();

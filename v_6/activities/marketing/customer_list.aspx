@@ -10,11 +10,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="Body_Content" Runat="Server">
     <asp:SqlDataSource runat="server" ID="sdsdata" 
         ConnectionString="<%$ ConnectionStrings:csApp %>" 
-        SelectCommand="select case when @marketing=marketing_id then 'visible' when (select all_access from act_marketing where marketing_id=@marketing)=1 then 'visible' else 'hidden' end visible, customer_id, customer_name, customer_address,customer_phone,customer_fax,marketing_id from v_act_customer where customer_name like @name and marketing_id like @marketing0">
+        SelectCommand="select case when @marketing=marketing_id then 'visible' when (select all_access from act_marketing where marketing_id=@marketing)=1 then 'visible' else 'hidden' end visible, customer_id, customer_name, customer_address,customer_phone,customer_fax,marketing_id from v_act_customer where customer_name like @name and marketing_id like @marketing0 and status like @status">
         <SelectParameters>
             <asp:QueryStringParameter Name="marketing" QueryStringField="marketing"/>
             <asp:QueryStringParameter Name="marketing0" QueryStringField="marketing0"/>
             <asp:QueryStringParameter Name="name" QueryStringField="name" DefaultValue=" "/>
+            <asp:QueryStringParameter Name="status" QueryStringField="status" DefaultValue="1"/>
         </SelectParameters>
     </asp:SqlDataSource>
 

@@ -6,7 +6,7 @@
 
 
 <script runat="server">
-    public string apl_date, disabled_sts, branch_id, ListID;
+    public string apl_date, disabled_sts, branch_id, ListID, ListIDSJ;
     
     void Page_Load(object o, EventArgs e)
     {
@@ -17,9 +17,14 @@
         disabled_sts = (a.BranchID == "") ? "" : "disabled";
 
         ListID = "4";
+        ListIDSJ = "3";
         if (Request.QueryString["ListID"] != null)
         {
             ListID = Request.QueryString["ListID"].ToString();
+        }
+        if (Request.QueryString["ListIDSJ"] != null)
+        {
+            ListIDSJ = Request.QueryString["ListIDSJ"].ToString();
         }
     }
 </script>
@@ -40,7 +45,7 @@
             <td><input type="text" id="cari_kode"/></td>
             <td style="width:20px;"></td>
             <th>No.Invoice</th>
-            <td><input type="text" id="cari_no" value="SC7/SMC/I/25"/></td>
+            <td><input type="text" id="cari_no" value="%"/></td>
         </tr>
         <tr>
             <th>Lunas</th>
@@ -194,6 +199,10 @@
                     <th>DP</th>
                     <td><input type="text" id="mdl_dp" size="20" style="text-align:right"/></td>
                 </tr>
+                <tr>
+                    <th>Total Tagihan</th>
+                    <td><input type="text" id="mdl_paidtotal" size="20" style="text-align:right" disabled="disabled"/></td>
+                </tr>
             </table>
 
             <div style="padding-top:5px;" class="button_panel">
@@ -313,6 +322,7 @@
                 tb_potadmin: apl.createNumeric("mdl_potadmin"),
                 tb_potpph23: apl.createNumeric("mdl_potpph23"),
                 tb_dp: apl.createNumeric("mdl_dp"),
+                tb_paidtotal: apl.createNumeric("mdl_paidtotal"),
 
                 val01: apl.createValidator("save", "mdl_bill", function () { return apl.func.emptyValueCheck(mdl.dl_bill.value); }, "Salah input"),
                 val02: apl.createValidator("save", "mdl_date", function () { return apl.func.emptyValueCheck(mdl.tb_date.value); }, "Salah input"),
@@ -391,6 +401,7 @@
                     mdl.tb_potadmin.value = "0";
                     mdl.tb_potpph23.value = "0";
                     mdl.tb_dp.value = "0";
+                    mdl.tb_paidtotal.value = "0";
 
                     apl.func.hideSinkMessage();
                     apl.func.validatorClear("save");
@@ -451,6 +462,7 @@
                             mdl.tb_potadmin.setValue(data.pot_admin);
                             mdl.tb_potpph23.setValue(data.pot_pph23);
                             mdl.tb_dp.setValue(data.downpayment);
+                            mdl.tb_paidtotal.setValue(data.total_paid);
 
                             if (show_sts == undefined || show_sts == true) mdl.showEdit("Service - Edit ");
                             apl.func.hideSinkMessage();
@@ -503,6 +515,10 @@
                             break;
                     }
                 },
+                dp_out: function () {
+                    var total = mdl.tb_value.getIntValue() - mdl.tb_dp.getIntValue();
+                    mdl.tb_paidtotal.setValue(total);
+                },
                 tambah_service:function()
                 {
                     if (apl.func.validatorCheck("save")) mdl_service.open(mdl.customer_id, mdl.an_id);
@@ -519,7 +535,7 @@
                         {
                             fName = "surat_serah_service_" + mdl.lb_customer.innerHTML;
                             fName = window.escape(fName.replace(/ /gi, "_"));
-                            window.location = "../../report/report_generator.ashx?ListID=3&invoice_service_id=" + mdl.invoice_service_id + "&pdfName=" + fName;
+                            window.location = "../../report/report_generator.ashx?ListID=<%= ListIDSJ %>&invoice_service_id=" + mdl.invoice_service_id + "&pdfName=" + fName;
                         }, apl.func.showError, ""
 );
                 }
@@ -606,6 +622,7 @@
 
         window.addEventListener("load", function () {
             mdl.dl_top.addEventListener("change", mdl.top_change);
+            mdl.tb_dp.addEventListener("focusout", mdl.dp_out);
             document.list_select = mdl.select;
             document.list_add = mdl.tambah;
             document.list_edit = mdl.edit;
