@@ -6,7 +6,7 @@
 
 
 <script runat="server">
-    public string branch_id, disabled_sts, style_print, ListID;
+    public string branch_id, disabled_sts, style_print, ListID, user_id;
 
     void Page_Load(object o, EventArgs e)
     {
@@ -17,7 +17,9 @@
         mdl_opr_service_assign.str_branch_id = branch_id;
 
         style_print = "visibility:hidden;";
-        if (a.UserID == "sa" || a.UserID == "yosephine" || a.UserID == "eko")
+
+        user_id = a.UserID;
+        if (user_id == "sa" || user_id == "yosephine" || user_id == "eko")
         {
             style_print = "visibility:visible;";
         }
@@ -27,6 +29,8 @@
         {
             ListID = Request.QueryString["ListID"].ToString();
         }
+
+        //Response.Write("user id: "+user_id);
     }
 </script>
 
@@ -890,7 +894,7 @@
                 {
                     if (apl.func.validatorCheck("mdl_component_save")) {
                         apl.func.showSinkMessage("Menyimpan data");
-                        activities.opr_service_device_component_save(mdl_component.service_id, mdl_component.service_device_id, mdl_component.ac_device.id, mdl_component.tb_price.getIntValue(), mdl_component.tb_total2.getIntValue(), mdl_component.cb_pph21.checked, mdl_component.refresh, apl.func.showError, "");
+                        activities.opr_service_device_component_save(mdl_component.service_id, mdl_component.service_device_id, mdl_component.ac_device.id, mdl_component.tb_price.getIntValue(), mdl_component.tb_total2.getIntValue(), mdl_component.cb_pph21.checked,"<%= user_id %>", mdl_component.refresh, apl.func.showError, "");
                     }
                 }
             },

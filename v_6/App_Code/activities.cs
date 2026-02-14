@@ -8365,7 +8365,7 @@ public class activities : System.Web.Services.WebService
 
     }
     [WebMethod]
-    public void opr_service_device_component_save(int service_id, int service_device_id, int device_id, double price, int total, Boolean pph21)
+    public void opr_service_device_component_save(int service_id, int service_device_id, int device_id, double price, int total, Boolean pph21, string userid)
     {
         _DBcon d = new _DBcon();
         _DBcon.arrOutComPar hasil = d.executeProcNQ("opr_service_device_component_save", new _DBcon.sComParameter[]{    
@@ -8374,7 +8374,8 @@ public class activities : System.Web.Services.WebService
             new _DBcon.sComParameter("@device_id",System.Data.SqlDbType.Int,0,device_id),
             new _DBcon.sComParameter("@price",System.Data.SqlDbType.Money,0,price),
             new _DBcon.sComParameter("@total",System.Data.SqlDbType.SmallInt,0,total),
-            new _DBcon.sComParameter("@pph21",System.Data.SqlDbType.Bit,0,pph21)
+            new _DBcon.sComParameter("@pph21",System.Data.SqlDbType.Bit,0,pph21),
+            new _DBcon.sComParameter("@userid",System.Data.SqlDbType.VarChar,25,userid)
         });
 
     }

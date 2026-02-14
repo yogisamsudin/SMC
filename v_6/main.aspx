@@ -176,6 +176,8 @@
             newList.style.backgroundColor = "black";
             newPanel.style.display = "block";
 
+            newList.style.Color = "white";
+
             lastModul.modalList = newList;
             lastModul.modalPanel = newPanel;
 

@@ -63,7 +63,7 @@
                     o.text = text;
                     o.id = value;
                 },
-                timer: {},
+                timer: undefined,
                 loadingsts: false,
 
             };
@@ -99,18 +99,12 @@
 
                 //penambahan
                 clearTimeout(o.timer);
-                if (o.loadingsts == false) {
-                    o.loadingsts = true;
-                    alert("hai");
-                    o.timer = setTimeout(function () {
-                        o.panel.show();
-                        o.panel.load(o.input.value);
-                    }, 2000);
-                }
+                o.timer = setTimeout(function () { o.panel.show(); o.panel.load(o.input.value); }, 2000);
                 //penambahan
             });
-            //KEYPRESS
-            o.input.addEventListener("keypress", function (event) {
+            //KEYDOWN
+            o.input.addEventListener("keydown", function (event) {
+                
                 if (event.keyCode == 13) {
                     if (o.row_active == undefined) {
                         o.panel.show();
@@ -125,6 +119,7 @@
                 }
                 if (event.keyCode == 27) {
                     o.panel.hide();
+                    o.row_active = undefined;
                     return;
                 }
                 //goes up
@@ -174,7 +169,9 @@
                 },
                 //penambahan script
                 load: function (nilai) {
-                    
+                    if (o.loadingsts == false)
+                    {
+                        o.loadingsts = true;
 
                         var tbl = o.panel.table;
                         var fws = o.function_ws;
@@ -209,6 +206,7 @@
                             },
                             apl.func.showError, ""
                         );
+                    }
                     
                 }
             }

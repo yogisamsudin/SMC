@@ -295,12 +295,13 @@
     text-align:center;
     vertical-align:central;
     padding-top:5px;
+    color:gray;
 }
 .favorite:hover
 {
     border: thin solid Black; 
     background-color: Black;                       
-    
+    color:white;
 }
 .contentButton
 {
